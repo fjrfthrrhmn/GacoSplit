@@ -1,0 +1,14 @@
+{
+  "name": "gacosplit",
+  "version": "0.1.0",
+  "private": true,
+  "description": "GacoSplit - Split bill application for Gacoan restaurant",
+  "scripts": {
+    "tailwind:dev": "tailwindcss -i ./src/main/resources/static/css/tailwind.css -o ./src/main/resources/static/css/styles.css --watch",
+    "tailwind:build": "tailwindcss -i ./src/main/resources/static/css/tailwind.css -o ./src/main/resources/static/css/styles.css --minify",
+    "build": "npm run tailwind:build"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  }
+}
