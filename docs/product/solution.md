@@ -17,7 +17,8 @@ GacoSplit memberikan pengalaman split bill yang:
   - Framework: Spring Boot 3.x
   - Database: SQLite (untuk simplicity) atau H2 (embedded)
   - API: RESTful JSON API
-- **Frontend:** HTML + CSS + Vanilla JavaScript
+- **Frontend:** Multi-Page Application (MPA) — HTML + CSS + Vanilla JavaScript
+  - Arsitektur: Halaman terpisah (`index.html`, `about.html`) dengan navigasi bersama
   - Styling: TailwindCSS
   - Build: Standalone (no bundler diperlukan untuk MVP)
 - **Hosting:** Single deployment (JAR + static files)

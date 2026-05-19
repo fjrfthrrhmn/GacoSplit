@@ -18,6 +18,7 @@
 | ------------------- | -------------------------------------------------------------- |
 | Shared = bagi rata  | Simple, tidak bingung, tapi tidak fleksibel untuk kasus khusus |
 | Spring Boot backend | Structured, scalable, tapi butuh deployment lebih kompleks     |
+| MPA over SPA        | Simpler dev, SEO-friendly, lebih ringan; kurang dinamis       |
 | TailwindCSS         | Rapid development, tapi perlu network untuk load CSS           |
 | SQLite/H2 DB        | Simple setup, tapi tidak cocok untuk production scale          |
 | REST API            | Standard, familiar, tapi overhead dibanding WebSocket          |

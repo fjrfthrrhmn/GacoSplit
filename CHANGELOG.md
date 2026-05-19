@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.2.2] - 2026-05-19
+
+### Changed
+
+- **Arsitektur: SPA → MPA** — Migrasi dari Single-Page Application ke Multi-Page Application:
+  - `docs/architecture/technical-notes.md` — Definisi arsitektur MPA, struktur halaman, navigasi global, file structure
+  - `docs/architecture/functionality.md` — State management diagram MPA (client state di Home, halaman lain statis)
+  - `docs/architecture/assumptions.md` — Trade-off baru: MPA over SPA
+  - `docs/design/ui-ux.md` — Navigasi halaman MPA, layout About page
+  - `docs/product/solution.md` — Update tech stack frontend: MPA
+  - `README.md` — Update arsitektur sistem dan struktur proyek untuk MPA
+
+---
+
 ## [0.2.1] - 2026-05-19
 
 ### Added

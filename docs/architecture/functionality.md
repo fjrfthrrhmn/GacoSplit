@@ -1,4 +1,4 @@
-> **Tujuan File:** Menjelaskan spesifikasi fungsional setiap fitur secara detail, termasuk logika perhitungan split bill, state management, aturan validasi, dan penanganan error.
+> **Tujuan File:** Menjelaskan spesifikasi fungsional setiap fitur secara detail, termasuk logika perhitungan split bill, state management (client-side di halaman Home), aturan validasi, dan penanganan error.
 
 # Functionality Specification
 
@@ -91,7 +91,25 @@ Total: Rp 76.000
 
 ## State Management
 
-**Frontend State (JavaScript):**
+### Arsitektur State (MPA)
+
+GacoSplit menggunakan arsitektur **MPA** — state per session dikelola di sisi klien (halaman Home) menggunakan JavaScript, dan akan disinkronkan ke backend (Spring Boot) melalui REST API.
+
+```
+┌───────────────────────┐       ┌────────────────────────┐
+│  Halaman Home         │       │  Spring Boot Backend   │
+│  ───────────           │       │  ───────────           │
+│  Client State (JS)    │──────▶│  REST API              │
+│  - people             │       │  - Sessions CRUD       │
+│  - personalItems      │       │  - People CRUD         │
+│  - sharedItems        │       │  - Items CRUD          │
+│  - calculationResult  │       │  - Calculate Logic     │
+│  - error              │       │                        │
+│                       │◀──────│  Database (H2/SQLite)  │
+└───────────────────────┘       └────────────────────────┘
+```
+
+**Client State (JavaScript)** — dikelola di halaman Home (`index.html` + `app.js`):
 
 ```javascript
 const initialState = {
@@ -109,6 +127,8 @@ const initialState = {
   error: null,
 };
 ```
+
+**Halaman other (About, dll)** — tidak memiliki state client-side, murni halaman statis informasional.
 
 **Backend State (Spring Boot):**
 

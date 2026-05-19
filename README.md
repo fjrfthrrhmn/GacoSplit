@@ -40,7 +40,7 @@ GacoSplit menyediakan:
 
 ## Arsitektur Sistem
 
-Proyek ini mengikuti **arsitektur monolitik** menggunakan satu aplikasi Spring Boot yang melayani logika backend dan sumber daya frontend secara bersamaan.
+Proyek ini mengikuti **arsitektur Multi-Page Application (MPA)** monolitik — setiap halaman adalah dokumen HTML terpisah yang dilayani oleh Spring Boot sebagai static resources.
 
 ### Backend
 
@@ -50,8 +50,9 @@ Proyek ini mengikuti **arsitektur monolitik** menggunakan satu aplikasi Spring B
 
 ### Frontend
 
-- HTML yang dirender dari server
-- Vanilla JavaScript untuk interaktivitas
+- Multi-Page Application: `index.html` (Home), `about.html` (Tentang)
+- Navigasi global yang konsisten di semua halaman
+- Vanilla JavaScript untuk interaktivitas (halaman Home)
 - TailwindCSS untuk styling
 
 ---
@@ -68,11 +69,11 @@ src/
      │       ├── model/
      │       └── repository/
      └── resources/
-         ├── templates/
-         ├── static/
-         │   ├── css/
-         │   └── js/
-         └── application.properties
+         └── static/
+             ├── index.html          # Halaman Home — Split Bill Calculator
+             ├── about.html          # Halaman Tentang
+             ├── css/
+             └── js/
 ```
 
 ---
