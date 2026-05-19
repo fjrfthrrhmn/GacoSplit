@@ -1,11 +1,349 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 flex justify-center items-center h-screen">
-    <h1 class="text-3xl font-bold text-blue-500">
-        Hello World 🚀
-    </h1>
-</body>
+<!-- Landing Screen - GacoSplit -->
+<!doctype html>
+
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>GacoSplit - Split Bill Jadi Gampang</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Material Symbols -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Tailwind Config -->
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-secondary": "#ffffff",
+              "surface-container": "#eeeeee",
+              tertiary: "#006a1b",
+              "tertiary-container": "#1c852c",
+              "on-surface": "#1a1c1c",
+              "on-secondary-container": "#5d1900",
+              "on-primary-fixed-variant": "#93000d",
+              "surface-container-high": "#e8e8e8",
+              "secondary-fixed-dim": "#ffb59d",
+              "on-primary-fixed": "#410002",
+              "on-primary": "#ffffff",
+              "on-background": "#1a1c1c",
+              "tertiary-fixed": "#94f990",
+              "tertiary-fixed-dim": "#78dc77",
+              secondary: "#ab3500",
+              "surface-variant": "#e2e2e2",
+              "on-tertiary-fixed": "#002204",
+              "primary-fixed-dim": "#ffb4ac",
+              "on-secondary-fixed-variant": "#832600",
+              "primary-container": "#e31b23",
+              "on-tertiary-container": "#f0ffe9",
+              "inverse-surface": "#2f3131",
+              "on-error-container": "#93000a",
+              "inverse-primary": "#ffb4ac",
+              "surface-dim": "#dadada",
+              "inverse-on-surface": "#f1f1f1",
+              "surface-container-lowest": "#ffffff",
+              "on-error": "#ffffff",
+              "secondary-container": "#fe6a34",
+              "surface-tint": "#c00015",
+              surface: "#f9f9f9",
+              "on-tertiary-fixed-variant": "#005313",
+              "surface-container-low": "#f3f3f3",
+              error: "#ba1a1a",
+              "surface-bright": "#f9f9f9",
+              "on-secondary-fixed": "#390c00",
+              primary: "#b90014",
+              "on-tertiary": "#ffffff",
+              "secondary-fixed": "#ffdbd0",
+              "error-container": "#ffdad6",
+              "on-surface-variant": "#5d3f3c",
+              "primary-fixed": "#ffdad6",
+              background: "#f9f9f9",
+              "outline-variant": "#e7bdb8",
+              "on-primary-container": "#fff9f8",
+              "surface-container-highest": "#e2e2e2",
+              outline: "#926e6b",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              md: "16px",
+              "container-padding": "20px",
+              sm: "8px",
+              xs: "4px",
+              gutter: "16px",
+              lg: "24px",
+              xl: "32px",
+              base: "8px",
+            },
+            fontFamily: {
+              "display-lg": ["Plus Jakarta Sans"],
+              "body-md": ["Inter"],
+              "body-lg": ["Inter"],
+              "label-md": ["Plus Jakarta Sans"],
+              "headline-lg": ["Plus Jakarta Sans"],
+              "headline-md": ["Plus Jakarta Sans"],
+              "headline-lg-mobile": ["Plus Jakarta Sans"],
+              "label-sm": ["Plus Jakarta Sans"],
+            },
+            fontSize: {
+              "display-lg": [
+                "40px",
+                {
+                  lineHeight: "48px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "800",
+                },
+              ],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "label-md": ["14px", { lineHeight: "20px", fontWeight: "600" }],
+              "headline-lg": [
+                "32px",
+                {
+                  lineHeight: "40px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "700",
+                },
+              ],
+              "headline-md": [
+                "20px",
+                { lineHeight: "28px", fontWeight: "600" },
+              ],
+              "headline-lg-mobile": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "700" },
+              ],
+              "label-sm": ["12px", { lineHeight: "16px", fontWeight: "500" }],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 1,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-surface-container-highest min-h-screen flex items-center justify-center p-0 md:p-6"
+  >
+    <!-- Responsive Flat Container (Max 1080px, No Frame Border on Desktop) -->
+    <div
+      class="relative w-full max-w-[390px] md:max-w-[1080px] md:h-[844px] md:h-auto md:bg-background shadow-[0_20px_50px_rgba(0,0,0,0.1)] md:rounded-3xl overflow-hidden flex flex-col md:my-8"
+    >
+      <!-- Decorative Top Blur -->
+      <div
+        class="absolute top-0 left-0 w-full h-40 bg-gradient-to-b from-primary/10 to-transparent pointer-events-none z-0"
+      ></div>
+      
+      <!-- Header -->
+      <header
+        class="relative z-10 flex flex-col items-center justify-center pt-[60px] pb-lg md:pt-10 md:pb-8"
+      >
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary text-[32px]"
+            >ramen_dining</span
+          >
+          <span
+            class="font-display-lg text-headline-md font-extrabold text-primary"
+            >GacoSplit</span
+          >
+        </div>
+      </header>
+
+      <!-- Main Layout (No-Card Layout Structure) -->
+      <main
+        class="relative z-10 flex-1 overflow-y-auto px-container-padding pb-xl no-scrollbar flex flex-col gap-lg md:grid md:grid-cols-2 md:gap-xl md:items-start md:px-16 md:pb-16"
+      >
+        <!-- Left Section: Header, Illustration, and CTAs -->
+        <div class="flex flex-col gap-lg md:gap-8">
+          <!-- Hero Text -->
+          <section class="flex flex-col items-center text-center gap-sm md:text-left md:items-start">
+            <h1
+              class="font-headline-lg-mobile text-headline-lg-mobile md:text-headline-lg text-on-surface"
+            >
+              Split bill makan Gacoan jadi gampang
+            </h1>
+            <p class="font-body-md text-body-md text-on-surface-variant px-4 md:px-0">
+              Tambah teman, pilih menu, lalu lihat siapa bayar berapa.
+            </p>
+          </section>
+
+          <!-- Borderless Bento Hero Illustration -->
+          <section class="relative w-full overflow-hidden">
+            <div
+              class="w-full h-48 md:h-64 bg-surface-container rounded-2xl overflow-hidden relative shadow-sm"
+            >
+              <img
+                alt="Spicy noodles flat lay"
+                class="w-full h-full object-cover"
+                data-alt="A bright, high-contrast overhead photograph of a spicy Indonesian noodle dish (Mie Gacoan) served alongside dim sum and a refreshing iced tea. The composition is modern, energetic, and highly saturated, set on a clean white surface with subtle soft gray ambient shadows. The bright, inviting lighting highlights the vibrant reds of the chili and the fresh, appetizing textures of the food, perfectly capturing the youthful, casual dining vibe of a modern food-sharing app in a light-mode setting."
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuChrqeDytxIP4te_1k0X_816d4mVtRIkpg8Dti4j9Ih-333KUdg9HbrgD-4-ZWujDc8J7_Gnll3ETMDHfpOvaxsqfLXt5t8kTMCho8uWahRQ0k01R33zZ0sDT-NVkv1tHRGfPh5AQJgetxNyTxJ9qiuX3ah0kIAUUnIs8GNlV4_DvZDyRddLvT27GV3aq033ZfLHfwgU5HpQIZsJBmerfANt7U1CL0m_piM5mP7epG0pdOImadvQSa4U9QHxzdntS9x3NnLwale1Ag"
+              />
+              <!-- Floating Elements (Kept for active preview context) -->
+              <div
+                class="absolute top-4 left-4 bg-surface-container-lowest/90 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center gap-2 shadow-sm border border-white/50"
+              >
+                <div
+                  class="w-5 h-5 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary"
+                >
+                  <span class="material-symbols-outlined text-[12px]"
+                    >person</span
+                  >
+                </div>
+                <span class="font-label-sm text-label-sm text-on-surface"
+                  >Raka - Rp 25k</span
+                >
+              </div>
+              <div
+                class="absolute bottom-4 right-4 bg-surface-container-lowest/90 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center gap-2 shadow-sm border border-white/50"
+              >
+                <div
+                  class="w-5 h-5 rounded-full bg-tertiary flex items-center justify-center text-on-tertiary"
+                >
+                  <span class="material-symbols-outlined text-[12px]"
+                    >person</span
+                  >
+                </div>
+                <span class="font-label-sm text-label-sm text-on-surface"
+                  >Siti - Rp 15k</span
+                >
+              </div>
+            </div>
+          </section>
+
+          <!-- CTA Buttons -->
+          <section class="flex flex-col gap-3 mt-sm md:mt-0">
+            <button
+              class="w-full bg-primary text-on-primary font-label-md text-label-md py-4 rounded-xl shadow-[0_10px_30px_rgba(185,0,20,0.15)] active:scale-[0.98] transition-transform duration-150 flex items-center justify-center gap-2"
+            >
+              Mulai Split Bill
+              <span class="material-symbols-outlined text-[20px]"
+                >arrow_forward</span
+              >
+            </button>
+            <div
+              class="flex items-center justify-center gap-1.5 text-on-surface-variant opacity-80 md:justify-start"
+            >
+              <span class="material-symbols-outlined text-[16px]">bolt</span>
+              <p class="font-body-md text-[13px] font-medium">
+                Tanpa login, langsung hitung
+              </p>
+            </div>
+          </section>
+        </div>
+
+        <!-- Right Section: Pure Typography Step Guide (No Wrapper Card) -->
+        <div class="md:pt-2">
+          <section class="flex flex-col gap-md">
+            <h2 class="font-headline-md text-headline-md text-on-surface mb-2 md:mb-4">
+              Cara kerja
+            </h2>
+            <div class="flex flex-col gap-6 relative pl-2">
+              <!-- Timeline Connection Line -->
+              <div
+                class="absolute left-[26px] top-4 bottom-6 w-[2px] bg-surface-variant rounded-full opacity-60"
+              ></div>
+              
+              <!-- Step 1 -->
+              <div class="flex items-start gap-md relative z-10">
+                <div
+                  class="w-10 h-10 rounded-full bg-primary-container text-primary shadow-sm flex items-center justify-center shrink-0 border-2 border-background font-label-md text-label-md"
+                >
+                  1
+                </div>
+                <div class="pt-1.5 flex flex-col gap-1">
+                  <span class="font-label-md text-label-md text-on-surface"
+                    >Tambah teman</span
+                  >
+                  <span
+                    class="font-body-md text-[14px] leading-snug text-on-surface-variant"
+                    >Siapa aja yang ikut makan? Masukkan nama-nama gengmu.</span
+                  >
+                </div>
+              </div>
+
+              <!-- Step 2 -->
+              <div class="flex items-start gap-md relative z-10">
+                <div
+                  class="w-10 h-10 rounded-full bg-surface-container-low text-on-surface-variant shadow-sm flex items-center justify-center shrink-0 border-2 border-background font-label-md text-label-md"
+                >
+                  2
+                </div>
+                <div class="pt-1.5 flex flex-col gap-1">
+                  <span class="font-label-md text-label-md text-on-surface"
+                    >Pilih menu</span
+                  >
+                  <span
+                    class="font-body-md text-[14px] leading-snug text-on-surface-variant"
+                    >Masukkan semua pesanan dan harga dari struk makan.</span
+                  >
+                </div>
+              </div>
+
+              <!-- Step 3 -->
+              <div class="flex items-start gap-md relative z-10">
+                <div
+                  class="w-10 h-10 rounded-full bg-surface-container-low text-on-surface-variant shadow-sm flex items-center justify-center shrink-0 border-2 border-background font-label-md text-label-md"
+                >
+                  3
+                </div>
+                <div class="pt-1.5 flex flex-col gap-1">
+                  <span class="font-label-md text-label-md text-on-surface"
+                    >Bagi menu bareng</span
+                  >
+                  <span
+                    class="font-body-md text-[14px] leading-snug text-on-surface-variant"
+                    >Tandai siapa yang makan menu apa. Bisa dibagi rata juga!</span
+                  >
+                </div>
+              </div>
+
+              <!-- Step 4 -->
+              <div class="flex items-start gap-md relative z-10">
+                <div
+                  class="w-10 h-10 rounded-full bg-surface-container-low text-on-surface-variant shadow-sm flex items-center justify-center shrink-0 border-2 border-background font-label-md text-label-md"
+                >
+                  4
+                </div>
+                <div class="pt-1.5 flex flex-col gap-1">
+                  <span class="font-label-md text-label-md text-on-surface"
+                    >Salin hasil</span
+                  >
+                  <span
+                    class="font-body-md text-[14px] leading-snug text-on-surface-variant"
+                    >Total pajak &amp; diskon otomatis terhitung. Tinggal share ke WhatsApp.</span
+                  >
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        
+        <!-- Bottom Spacer -->
+        <div class="h-8 md:hidden"></div>
+      </main>
+    </div>
+  </body>
 </html>
