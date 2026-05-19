@@ -43,14 +43,13 @@ gacosplit/
 
 **Catatan Struktur:**
 
-| Lokasi                          | Deskripsi                                    |
-| ------------------------------- | -------------------------------------------- |
-| `controller/`                   | REST API endpoints                            |
-| `model/`                        | JPA entities dan DTOs                         |
-| `repository/`                   | Data access layer                             |
-| `service/`                      | Business logic dan calculation                |
-| `static/`                       | Frontend assets (HTML, CSS, JS)               |
-| `static/index.html`             | SPA entry point - semua UI dalam satu file    |
+| Lokasi        | Deskripsi                       |
+| ------------- | ------------------------------- |
+| `controller/` | REST API endpoints              |
+| `model/`      | JPA entities dan DTOs           |
+| `repository/` | Data access layer               |
+| `service/`    | Business logic dan calculation  |
+| `static/*`    | Frontend assets (HTML, CSS, JS) |
 
 ## API Endpoints
 

@@ -28,7 +28,6 @@
 ### Task 1.1: Design System & Theme Tokens
 
 **Files:**
-- Create: `src/main/resources/static/css/tailwind.css` — CSS-first config dengan `@theme`
 - Modify: `src/main/resources/static/index.html` — tautkan stylesheet
 
 **Langkah:**
@@ -48,7 +47,6 @@
 ### Task 1.2: Layout Utama (index.html)
 
 **Files:**
-- Create: `src/main/resources/static/index.html`
 - Referensi: `docs/design/ui-ux.md`
 
 **Langkah:**
@@ -62,21 +60,6 @@
 - [ ] **Daftar shared item** — item bersama dengan notasi pembagian
 - [ ] **Summary section** — total per orang dan grand total
 - [ ] **Tombol aksi** — Salin hasil, Mulai Baru
-
-### Task 1.3: Responsif & Mobile-first Polish
-
-**Files:**
-- Modify: `src/main/resources/static/index.html`
-- Modify: `src/main/resources/static/css/tailwind.css`
-
-**Langkah:**
-
-- [ ] **Terapkan breakpoint mobile-first**:
-  - `< 640px`: Single column, full-width buttons, stacked layout
-  - `640px - 1024px`: Side-by-side input forms dan list
-  - `> 1024px`: Max-width 800px centered dengan card shadow
-- [ ] **Touch-friendly sizing**: Minimal touch target 44x44px untuk tombol
-- [ ] **Aksesibilitas dasar**: Semantic HTML (`<button>`, `<input>`, `<label>`), ARIA labels, focus-visible ring
 
 ---
 
