@@ -25,26 +25,7 @@
 
 > Prioritas: Membangun antarmuka pengguna yang utuh sebelum logika backend.
 
-### Task 1.1: Design System & Theme Tokens
-
-**Files:**
-- Modify: `src/main/resources/static/index.html` — tautkan stylesheet
-
-**Langkah:**
-
-- [ ] **Buat file CSS dengan konfigurasi `@theme` untuk palet Biru (Primary) dan Pink (Accent)**
-  - Primary Biru: gradasi dari biru laut tua (`#1e3a5f`) hingga biru muda (`#bfdbfe`)
-  - Accent Pink: gradasi dari pink tua (`#9d174d`) hingga pink lembut (`#fbcfe8`)
-  - Token semantik: `--color-primary`, `--color-primary-foreground`, `--color-accent`, `--color-accent-foreground`, `--color-background`, `--color-card`, `--color-border`
-  - Implementasi menggunakan Tailwind CSS v4 `@import "tailwindcss"` dan `@theme` block
-
-- [ ] **Terapkan reset/base styles global** di dalam `@layer base`
-  - Border default: `border-border`
-  - Body: `bg-background text-foreground antialiased`
-
-- [ ] **Buat direktori `src/main/resources/static/css/`** jika belum ada, tempatkan file CSS di sana
-
-### Task 1.2: Layout Utama (index.html)
+### Task 1.1: Layout Utama (index.html)
 
 **Files:**
 - Referensi: `docs/design/ui-ux.md`

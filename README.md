@@ -46,7 +46,7 @@ Proyek ini mengikuti **arsitektur monolitik** menggunakan satu aplikasi Spring B
 
 - Java dengan Spring Boot
 - RESTful API untuk penanganan sesi dan perhitungan
-- Basis data embedded (H2 / SQLite)
+- Basis data embedded
 
 ### Frontend
 
@@ -60,6 +60,7 @@ Proyek ini mengikuti **arsitektur monolitik** menggunakan satu aplikasi Spring B
 
 ```
 src/
+ ├── tailwind.config.js
  └── main/
      ├── java/
      │   └── com/gacosplit/
@@ -70,7 +71,7 @@ src/
      └── resources/
          ├── templates/
          ├── static/
-         │   ├── css/
+         │   ├── css/ // Styling
          │   └── js/
          └── application.properties
 ```

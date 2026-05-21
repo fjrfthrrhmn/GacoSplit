@@ -1,0 +1,65 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  darkMode: "class",
+  content: [
+    "./src/**/*.{html,js}",
+    "./src/main/resources/templates/**/*.{html,js}",
+    "./src/main/resources/static/**/*.{html,js}",
+    "./src/main/resources/static/css/index.css",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          DEFAULT: "#2563eb",
+          50: "#eff6ff",
+          100: "#dbeafe",
+          200: "#bfdbfe",
+          300: "#93c5fd",
+          400: "#60a5fa",
+          500: "#3b82f6",
+          600: "#2563eb",
+          700: "#1d4ed8",
+          800: "#1e3a5f",
+          900: "#1e2d4a",
+          foreground: "#ffffff",
+        },
+        accent: {
+          DEFAULT: "#ec4899",
+          50: "#fdf2f8",
+          100: "#fce7f3",
+          200: "#fbcfe8",
+          300: "#f9a8d4",
+          400: "#f472b6",
+          500: "#ec4899",
+          600: "#db2777",
+          700: "#be185d",
+          800: "#9d174d",
+          900: "#831843",
+          foreground: "#ffffff",
+        },
+        ink: {
+          DEFAULT: "#1d1d1f",
+          "muted-80": "#333333",
+          "muted-48": "#7a7a7a",
+        },
+        background: "#f8fafc",
+        "background-card": "#ffffff",
+        border: "#e2e8f0",
+        ring: "#2563eb",
+      },
+      fontFamily: {
+        sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
+      },
+      borderRadius: {
+        none: "0px",
+        xs: "5px",
+        sm: "8px",
+        md: "11px",
+        lg: "18px",
+        pill: "9999px",
+      },
+    },
+  },
+  plugins: [],
+};
