@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>About Us - GacoSplit</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#1c852c",
+                    "surface-container": "#eeeeee",
+                    "outline": "#926e6b",
+                    "on-secondary-fixed": "#390c00",
+                    "surface-variant": "#e2e2e2",
+                    "primary-fixed-dim": "#ffb4ac",
+                    "on-primary-fixed-variant": "#93000d",
+                    "surface-dim": "#dadada",
+                    "background": "#f9f9f9",
+                    "surface-bright": "#f9f9f9",
+                    "tertiary": "#006a1b",
+                    "tertiary-fixed": "#94f990",
+                    "on-surface-variant": "#5d3f3c",
+                    "on-secondary-container": "#5d1900",
+                    "on-tertiary-container": "#f0ffe9",
+                    "outline-variant": "#e7bdb8",
+                    "on-background": "#1a1c1c",
+                    "surface-container-highest": "#e2e2e2",
+                    "secondary-fixed": "#ffdbd0",
+                    "surface-container-high": "#e8e8e8",
+                    "primary-fixed": "#ffdad6",
+                    "on-secondary-fixed-variant": "#832600",
+                    "surface-tint": "#c00015",
+                    "primary": "#b90014",
+                    "on-primary-container": "#fff9f8",
+                    "error": "#ba1a1a",
+                    "on-tertiary": "#ffffff",
+                    "surface": "#f9f9f9",
+                    "surface-container-low": "#f3f3f3",
+                    "primary-container": "#e31b23",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed": "#002204",
+                    "secondary": "#ab3500",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-container": "#fe6a34",
+                    "inverse-primary": "#ffb4ac",
+                    "error-container": "#ffdad6",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-fixed-variant": "#005313",
+                    "inverse-surface": "#2f3131",
+                    "inverse-on-surface": "#f1f1f1",
+                    "on-primary": "#ffffff",
+                    "on-primary-fixed": "#410002",
+                    "on-surface": "#1a1c1c",
+                    "tertiary-fixed-dim": "#78dc77",
+                    "secondary-fixed-dim": "#ffb59d",
+                    "on-secondary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "16px",
+                    "xl": "24px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "lg": "24px",
+                    "container-padding": "20px",
+                    "md": "16px",
+                    "base": "8px",
+                    "xs": "4px",
+                    "xl": "32px",
+                    "sm": "8px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "label-sm": ["Plus Jakarta Sans"],
+                    "body-md": ["Inter"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "label-md": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #f8f8f8;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        .bento-item-large {
+            grid-column: span 2;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md shadow-sm h-16">
+<div class="flex justify-between items-center px-container-padding h-full w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-2">
+<span class="font-headline-md text-headline-md font-bold text-primary">GacoSplit</span>
+</div>
+<div class="hidden md:flex items-center gap-xl">
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Home</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Friends</a>
+<a class="text-primary font-bold border-b-2 border-primary py-1" href="#">About</a>
+</div>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors active:scale-95" data-icon="history">history</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors active:scale-95" data-icon="help">help</button>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-24 pb-12 px-container-padding max-w-2xl mx-auto">
+<!-- Hero Section -->
+<section class="mb-xl animate-fade-in">
+<div class="relative rounded-xl overflow-hidden mb-lg aspect-[16/9] shadow-lg">
+<img class="w-full h-full object-cover" data-alt="A vibrant and bustling modern noodle restaurant interior with warm ambient lighting and colorful decor. The scene captures a group of diverse young adults laughing and sharing spicy noodle dishes. The visual style is high-energy and clean, with a focus on spicy red accents and a bright, friendly atmosphere consistent with a modern startup aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4OFY5d3KFSOaZvL-dTQTvPkHKSENLp0P1KvBfrJrq2JhvuxgNa_dBkQ-uV7mxdj2xTrS18URuQCssyaJ0lfPKltyy5ldoUqMJ1b2zFJYubtu7j-TENRQ27__auycDEx8a6URZwEZhVixm1RUoObeaoDlEv81MV0N_1Hd-i-h7JAGSJuUSSLwLx-gJedq-pImxKH7tRp9mGI04Z-hD5z6_1-Kh7oryMexrpazeJIdO-osKNfGGBi9F_mk73wp2hLDvXwhHh3A4qVg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-lg">
+<h1 class="font-display-lg text-display-lg text-white leading-tight">Tentang GacoSplit</h1>
+</div>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-md">
+                GacoSplit adalah alat independen yang dirancang khusus untuk para pecinta mie pedas agar dapat membagi tagihan dengan mudah, adil, dan cepat.
+            </p>
+<div class="bg-primary-container/10 border-l-4 border-primary p-md rounded-r-lg">
+<p class="font-headline-md text-headline-md text-primary italic">
+                    "Misi kami adalah memastikan tidak ada lagi perdebatan di meja makan soal siapa bayar berapa."
+                </p>
+</div>
+</section>
+<!-- Feature Highlights (Bento-ish Grid) -->
+<section class="mb-xl">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile mb-md text-on-surface">Kenapa GacoSplit?</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<!-- Cepat -->
+<div class="bg-surface-container-lowest p-lg rounded-xl shadow-sm flex flex-col items-center text-center border border-outline-variant/30 transition-transform hover:scale-[1.02]">
+<div class="w-12 h-12 bg-secondary-container rounded-full flex items-center justify-center mb-md">
+<span class="material-symbols-outlined text-white text-[28px]" data-icon="bolt">bolt</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-xs">Cepat</h3>
+<p class="text-label-md text-on-surface-variant">Hitung total dalam hitungan detik tanpa ribet.</p>
+</div>
+<!-- Adil -->
+<div class="bg-surface-container-lowest p-lg rounded-xl shadow-sm flex flex-col items-center text-center border border-outline-variant/30 transition-transform hover:scale-[1.02]">
+<div class="w-12 h-12 bg-primary-container rounded-full flex items-center justify-center mb-md">
+<span class="material-symbols-outlined text-white text-[28px]" data-icon="balance">balance</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-xs">Adil</h3>
+<p class="text-label-md text-on-surface-variant">Sistem pembagian yang transparan dan akurat.</p>
+</div>
+<!-- Tanpa Login -->
+<div class="bg-surface-container-lowest p-lg rounded-xl shadow-sm flex flex-col items-center text-center border border-outline-variant/30 transition-transform hover:scale-[1.02]">
+<div class="w-12 h-12 bg-tertiary-container rounded-full flex items-center justify-center mb-md">
+<span class="material-symbols-outlined text-white text-[28px]" data-icon="no_accounts">no_accounts</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-xs">Tanpa Login</h3>
+<p class="text-label-md text-on-surface-variant">Langsung pakai tanpa perlu mendaftar akun.</p>
+</div>
+</div>
+</section>
+<!-- Team Section -->
+<section class="mb-xl">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile mb-md text-on-surface">Tim Kami</h2>
+<div class="space-y-md">
+<!-- CEO Card - Horizontal Layout -->
+<div class="flex items-center gap-md bg-white p-md rounded-xl shadow-sm border border-outline-variant/20">
+<img class="w-20 h-20 rounded-lg object-cover" data-alt="A professional portrait of a charismatic young male entrepreneur with a friendly smile, set against a clean, minimalist studio background with soft warm lighting. He wears a smart-casual outfit in neutral tones. The image style is polished, sharp, and modern, reflecting the leadership and vision of a tech-forward startup founder." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4W4bma3ODCLcxVIzcmuvPI8eqKOrxK159qlvkAmDptV6l5x66jS_csMACkvaHy0ZtDkOBXlwUUiez4Vq1MlflHOKg7XofzmFXgOYahCZSrg8wkH_Se8MRKqtMaloGosMefEpn3_8SW5WwuDXm9OU-YzeFEFxqoV8hTmWDoMDbjaVgBtb_FpuESUYuuBC8c9FlolPfgqxsfywUEAnD_Bmmd2AABD8vRleBAEl6nzeyZ0HM6ENysQyzVtUhAuZf5feWYiuZiLR-Qyw"/>
+<div>
+<h4 class="font-headline-md text-headline-md text-primary">CEO &amp; Founder</h4>
+<p class="text-label-md text-on-surface-variant">Visi utama di balik setiap porsi mie yang terbagi sempurna.</p>
+</div>
+</div>
+<!-- Bento for other roles -->
+<div class="grid grid-cols-2 gap-md">
+<div class="bg-white p-md rounded-xl shadow-sm border border-outline-variant/20 flex flex-col items-center text-center">
+<img class="w-16 h-16 rounded-full object-cover mb-md border-2 border-primary/20" data-alt="A creative professional woman with a stylish, modern aesthetic, smiling warmly in a bright, sun-drenched design studio. The background shows blurred artistic elements and design software. The lighting is soft and natural, emphasizing a vibrant yet clean look consistent with the spicy red brand identity of GacoSplit." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDm6XdLd2KmYbhgHHhj7_9ciFSpY0z-uQvlLmc_GhDoQLLacDkYAQawKaPcxgUghSH8HInp6o4hiRgT-b1Y7GQbAV41nAMT3piiNt8GlTSFHkjbv75GAcqR0fE_0BG3DerFtmqHUBfrmIkY-P9DIV-ETwzJPjvkMHRENwp6ZxTBb9u6cam6nR0m8LRXzAbPjKegI5kIz8t431wPMoeWyegsojH7Du2jII4NaQuhjRw0v7HNSOS2_cQ6pTYi6ZdmqvC0a19kJtNk3hc"/>
+<h4 class="font-label-md text-label-md font-bold text-primary">Lead Designer</h4>
+<p class="text-[12px] text-on-surface-variant mt-1">Pembuat interface yang 'pedas' &amp; rapi.</p>
+</div>
+<div class="bg-white p-md rounded-xl shadow-sm border border-outline-variant/20 flex flex-col items-center text-center">
+<img class="w-16 h-16 rounded-full object-cover mb-md border-2 border-primary/20" data-alt="A focused male software developer in a tech-centric workspace with ambient blue and red lighting from computer monitors. He has a calm, confident expression and a professional appearance. The image style is high-tech and sleek, suggesting precision and efficiency in high-performance coding for a modern web application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPM_ti0p8fXI3iTa0HrkC-KpP8Qha5jx45pwbH1EeUB1qaeyiBNlZa46VwgIxK56Nn6jU-XZeH8EcZ6i8CLxrtO1LHCubi9IYQLJD5VTw7zHnMHBP-3DvWVqwWmvSCtFFP7dgiUn8KumMr7_4W2pf4HjrYs9oHFLybalh0T0b_rKMDnPLua-IJ0YjFxafKBuFF6xUIVrLsFFtq1sIn2y4xYQRArmFlWSBaYGlgjPK4B8k4VeS6qlFg5Ks30deE5Z0wuCtoB11Kafg"/>
+<h4 class="font-label-md text-label-md font-bold text-primary">Lead Developer</h4>
+<p class="text-[12px] text-on-surface-variant mt-1">Arsitek sistem yang menjamin kecepatan aplikasi.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="mt-xl text-center">
+<button class="bg-primary text-white font-headline-md text-headline-md px-xl py-md rounded-lg shadow-md hover:bg-primary-container active:scale-95 transition-all w-full">
+                Mulai Split Bill Sekarang
+            </button>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-xl bg-surface-container-low dark:bg-surface-dim border-t border-outline-variant text-center px-container-padding flex flex-col items-center gap-md mt-auto">
+<span class="font-headline-md text-headline-md text-primary font-bold">GacoSplit</span>
+<div class="flex flex-wrap justify-center gap-lg">
+<a class="text-on-surface-variant hover:text-secondary underline transition-all" href="#">About</a>
+<a class="text-on-surface-variant hover:text-secondary underline transition-all" href="#">History</a>
+<a class="text-on-surface-variant hover:text-secondary underline transition-all" href="#">Privacy</a>
+<a class="text-on-surface-variant hover:text-secondary underline transition-all" href="#">Support</a>
+</div>
+<p class="font-body-md text-body-md text-secondary">© 2024 GacoSplit. Stay Spicy.</p>
+</footer>
+<!-- SideNavBar (Hidden on desktop, logic for mobile trigger can be added) -->
+<aside class="hidden fixed inset-0 z-[60]" id="sidebar">
+<div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="toggleSidebar()"></div>
+<div class="h-full w-64 bg-surface dark:bg-surface-container fixed left-0 top-0 border-r border-outline-variant shadow-lg flex flex-col p-md">
+<div class="mb-xl">
+<span class="font-headline-lg text-headline-lg text-primary block">GacoSplit</span>
+<span class="text-label-md text-on-surface-variant">Split your spicy noodles</span>
+</div>
+<nav class="flex-1 space-y-base">
+<a class="flex items-center gap-md p-md rounded-lg text-on-surface-variant hover:bg-surface-container-low" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-md">Home</span>
+</a>
+<a class="flex items-center gap-md p-md rounded-lg text-on-surface-variant hover:bg-surface-container-low" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-label-md">Friends</span>
+</a>
+<a class="flex items-center gap-md p-md rounded-lg text-on-surface-variant hover:bg-surface-container-low" href="#">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+<span class="font-label-md">New Split</span>
+</a>
+<a class="flex items-center gap-md p-md rounded-lg text-on-surface-variant hover:bg-surface-container-low" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-label-md">History</span>
+</a>
+<a class="flex items-center gap-md p-md bg-primary-container text-on-primary-container rounded-lg font-bold" href="#">
+<span class="material-symbols-outlined" data-icon="info">info</span>
+<span class="font-label-md">About</span>
+</a>
+</nav>
+<button class="mt-auto bg-primary text-white p-md rounded-lg font-bold active:opacity-80">New Split</button>
+</div>
+</aside>
+<script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('hidden');
+        }
+
+        // Interaction for buttons
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('mousedown', () => el.classList.add('scale-95'));
+            el.addEventListener('mouseup', () => el.classList.remove('scale-95'));
+            el.addEventListener('mouseleave', () => el.classList.remove('scale-95'));
+        });
+    </script>
+</body></html>
