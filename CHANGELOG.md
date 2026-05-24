@@ -7,7 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [0.2.1] - 2026-05-19
+## [0.2.0] - 2026-05-24
+
+### Added
+- Implementasi state management client-side (`app.js`) dengan struktur `state` sesuai `docs/architecture/functionality.md`.
+- Fungsi CRUD: `addPerson`, `removePerson`, `addPersonalItem`, `addSharedItem`, `removeItem`.
+- Implementasi rumus kalkulasi split bill (Personal + Shared / TotalPeople).
+- **Task 2.1: State Management** — file `api.js` (placeholder) dan `app.js` (state + CRUD + kalkulasi).
+- **Task 2.2: Data Binding & DOM Rendering**
+- **Task 2.3: Copy to Clipboard**
+- Placeholder API layer (`api.js`) sebagai plain script.
+- Integrasi script `api.js` dan `app.js` pada `templates/index.html`.
+
+---
+
+## [0.1.1] - 2026-05-19
 
 ### Added
 

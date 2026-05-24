@@ -3,25 +3,373 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GacoSplit - Beranda</title>
+    <title>GacoSplit - Split Bill Calculator</title>
+
+    <!--
+        CSS minimal untuk layout.
+        Tidak pakai framework CSS — hanya style dasar agar halaman rapi.
+        Fokus ke struktur HTML untuk data binding, bukan desain dekoratif.
+    -->
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .section {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            margin-top: 0;
+            font-size: 1.1rem;
+            color: #333;
+        }
+        input, select, button {
+            font-size: 1rem;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+        input:focus, select:focus {
+            outline: 2px solid #3b82f6;
+            border-color: transparent;
+        }
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        button:hover {
+            background: #2563eb;
+        }
+        button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+        button.danger {
+            background: #ef4444;
+        }
+        button.danger:hover {
+            background: #dc2626;
+        }
+        .form-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+        .form-row > * {
+            flex: 1;
+            min-width: 120px;
+        }
+        .person-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #e5e7eb;
+            padding: 6px 12px;
+            border-radius: 20px;
+            margin: 4px;
+            font-size: 0.9rem;
+        }
+        .person-chip.active {
+            background: #3b82f6;
+            color: white;
+        }
+        .person-chip button {
+            background: none;
+            color: #666;
+            padding: 0 4px;
+            font-size: 1.1rem;
+            min-width: unset;
+        }
+        .person-chip.active button {
+            color: #cbd5e1;
+        }
+        .person-chip button:hover {
+            color: #ef4444;
+        }
+        .item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .item-row:last-child {
+            border-bottom: none;
+        }
+        .item-info {
+            flex: 1;
+        }
+        .item-price {
+            font-weight: 600;
+            color: #333;
+        }
+        .empty-state {
+            color: #9ca3af;
+            font-style: italic;
+            text-align: center;
+            padding: 16px;
+        }
+        .summary-grid {
+            display: grid;
+            gap: 8px;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .summary-row.total {
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-bottom: none;
+            border-top: 2px solid #333;
+            padding-top: 12px;
+        }
+        .error-text {
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-top: 4px;
+            display: none;
+        }
+        .error-text.visible {
+            display: block;
+        }
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #1f2937;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        .toast.visible {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .shared-badge {
+            background: #fef3c7;
+            color: #92400e;
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-left: 8px;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .action-buttons button {
+            flex: 1;
+        }
+    </style>
 </head>
 <body>
-    <!--
-        Halaman utama (landing page).
-        Dirender oleh PageController.home() → return "index"
-    -->
-    <h1>GacoSplit</h1>
-    <p>Split bill jadi gampang!</p>
 
-    <hr>
+    <!-- ============================================================
+         HEADER — Judul aplikasi + tombol reset
+         ============================================================ -->
+    <div class="header-actions">
+        <h1 style="margin:0; font-size:1.4rem;">GacoSplit</h1>
+        <button id="resetButton" class="danger" title="Hapus semua data dan mulai dari awal">
+            Mulai Baru
+        </button>
+    </div>
 
-    <h2>Menu Navigasi</h2>
-    <ul>
-        <li><a href="/tambah-teman">Tambah Teman</a></li>
-        <li><a href="/order-input">Input Pesanan</a></li>
-        <li><a href="/hasil">Lihat Hasil</a></li>
-        <li><a href="/riwayat">Riwayat Split Bill</a></li>
-        <li><a href="/tentang">Tentang Aplikasi</a></li>
-    </ul>
+    <!-- ============================================================
+         SECTION 1: FORM TAMBAH ORANG
+         Tempat input nama peserta split bill.
+         ============================================================ -->
+    <div class="section">
+        <h2>Tambah Peserta</h2>
+
+        <!--
+            Form ini pakai event submit (bukan klik tombol).
+            Keuntungan: user bisa tekan Enter di input, dan form tetap
+            jalan meskipun JS mati (progressive enhancement).
+        -->
+        <form id="addPersonForm" class="form-row">
+            <input
+                type="text"
+                id="personNameInput"
+                placeholder="Nama peserta (min 2 huruf)"
+                maxlength="30"
+                autocomplete="off"
+            >
+            <button type="submit">Tambah</button>
+        </form>
+
+        <!-- Tempat munculnya pesan error validasi nama -->
+        <div id="personNameError" class="error-text">
+            Nama harus minimal 2 karakter dan maksimal 10 orang
+        </div>
+    </div>
+
+    <!-- ============================================================
+         SECTION 2: DAFTAR ORANG (Person Chips)
+         Menampilkan chip untuk setiap peserta.
+         Render otomatis dari state.people via renderPeople().
+         ============================================================ -->
+    <div class="section">
+        <h2>Peserta</h2>
+        <div id="peopleList">
+            <!--
+                Akan diisi oleh renderPeople().
+                Setiap chip: <span class="person-chip" data-person-id="...">
+                             Nama
+                             <button class="remove-person" data-person-id="...">x</button>
+                           </span>
+            -->
+            <div class="empty-state" id="peopleEmpty">
+                Belum ada peserta. Tambahkan minimal 2 orang.
+            </div>
+        </div>
+        <div id="peopleCountError" class="error-text">
+            Minimal 2 orang untuk memulai perhitungan
+        </div>
+    </div>
+
+    <!-- ============================================================
+         SECTION 3: FORM INPUT PESANAN PRIBADI
+         Pilih peserta, pilih menu, tentukan jumlah, lalu tambah.
+         ============================================================ -->
+    <div class="section">
+        <h2>Pesanan Pribadi</h2>
+
+        <form id="addPersonalItemForm" class="form-row">
+            <!-- Dropdown pilih orang — diisi otomatis oleh renderPeople() -->
+            <select id="personalPersonSelect" required>
+                <option value="">— Pilih orang —</option>
+            </select>
+
+            <!-- Dropdown menu Gacoan — diisi otomatis dari menuItems -->
+            <select id="personalMenuSelect" required>
+                <option value="">— Pilih menu —</option>
+            </select>
+
+            <input
+                type="number"
+                id="personalQuantityInput"
+                placeholder="Jumlah"
+                min="1"
+                max="99"
+                value="1"
+                required
+            >
+
+            <button type="submit">Tambah</button>
+        </form>
+
+        <!-- Tempat daftar item personal — diisi oleh renderPersonalItems() -->
+        <div id="personalItemsList">
+            <div class="empty-state">Belum ada pesanan pribadi.</div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         SECTION 4: FORM INPUT SHARED ITEM (Menu Bersama)
+         Item yang dipesan bersama dan dibagi rata ke semua peserta.
+         ============================================================ -->
+    <div class="section">
+        <h2>Menu Bersama (Shared)</h2>
+
+        <!--
+            Informasi: shared item dibagi rata ke semua peserta.
+        -->
+        <p style="font-size:0.85rem; color:#666; margin-top:-8px;">
+            Menu bersama akan dibagi rata ke <strong>semua</strong> peserta
+        </p>
+
+        <form id="addSharedItemForm" class="form-row">
+            <!-- Dropdown menu Gacoan — isinya sama dengan personal -->
+            <select id="sharedMenuSelect" required>
+                <option value="">— Pilih menu —</option>
+            </select>
+
+            <input
+                type="number"
+                id="sharedQuantityInput"
+                placeholder="Jumlah"
+                min="1"
+                max="99"
+                value="1"
+                required
+            >
+
+            <button type="submit" id="addSharedBtn">Tambah</button>
+        </form>
+
+        <!--
+            Error: shared item hanya bisa ditambah jika minimal 2 orang.
+        -->
+        <div id="sharedError" class="error-text">
+            Minimal 2 orang untuk menambah menu bersama
+        </div>
+
+        <!-- Tempat daftar shared item — diisi oleh renderSharedItems() -->
+        <div id="sharedItemsList">
+            <div class="empty-state">Belum ada menu bersama.</div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         SECTION 5: SUMMARY / HASIL PERHITUNGAN
+         Menampilkan total per orang, shared portion, grand total.
+         ============================================================ -->
+    <div class="section">
+        <h2>Ringkasan Tagihan</h2>
+        <div id="summaryContent">
+            <div class="empty-state">
+                Tambahkan minimal 2 orang untuk melihat hasil perhitungan.
+            </div>
+        </div>
+
+        <!-- Tombol aksi: salin hasil atau reset -->
+        <div class="action-buttons">
+            <button id="copyButton">Salin Hasil</button>
+            <button id="resetButton2" class="danger">Mulai Baru</button>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         TOAST NOTIFICATION
+         Notifikasi melayang "Tersalin!" setelah copy berhasil.
+         Posisi fixed di tengah bawah layar.
+         ============================================================ -->
+    <div id="toast" class="toast">Tersalin!</div>
+
+    <!-- ============================================================
+         LOAD JAVASCRIPT
+         Urutan penting: api.js dulu (data layer), lalu app.js (logic).
+         Pakai script biasa (bukan module) agar fungsi global mudah
+         dipahami oleh pemula.
+         ============================================================ -->
+    <script src="/js/api.js"></script>
+    <script src="/js/app.js"></script>
+
 </body>
 </html>

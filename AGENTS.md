@@ -20,21 +20,6 @@
 
 ---
 
-## Agent Workflow
-
-```
-┌─────────────┐     ┌──────────────┐     ┌─────────────┐
-│  Sisyphus   │────▶│  Explore     │────▶│  Sisyphus-   │
-│  (Orch.)    │     │  (Research)  │     │  Junior      │
-└──────┬──────┘     └──────────────┘     └──────┬──────┘
-       │                                         │
-       ▼                                         ▼
-┌─────────────┐                          ┌──────────────┐
-│  Oracle /   │◀─────────────────────────│  Verify      │
-│  Momus      │                          │  (LSP/Test)  │
-└─────────────┘                          └──────────────┘
-```
-
 **Principle:** Setiap tugas melewati siklus: Research → Plan → Execute → Review → Verify. Setiap agen wajib memvalidasi output terhadap `DESIGN.md` (SSOT) dan constraint di direktori `docs/` sebelum memberikan hasil akhir.
 
 ---

@@ -56,7 +56,7 @@
 
 **Langkah:**
 
-- [ ] **Implementasi state management client-side** mengikuti struktur dari `docs/architecture/functionality.md`:
+- [x] **Implementasi state management client-side** mengikuti struktur dari `docs/architecture/functionality.md`:
   ```javascript
   const state = {
     session: null,
@@ -68,13 +68,13 @@
     error: null,
   };
   ```
-- [ ] **Fungsi CRUD state**:
+- [x] **Fungsi CRUD state**:
   - `addPerson(name)` — tambah orang ke daftar
   - `removePerson(id)` — hapus orang dan item personal-nya, update shared
   - `addPersonalItem(personId, menuItem, quantity)` — tambah pesanan personal
   - `addSharedItem(menuItem, quantity)` — tambah item bersama
   - `removeItem(itemId)` — hapus item
-- [ ] **Fungsi kalkulasi** sesuai rumus di `docs/architecture/functionality.md#f5-calculation-logic`
+- [x] **Fungsi kalkulasi** sesuai rumus di `docs/architecture/functionality.md#f5-calculation-logic`
 
 ### Task 2.2: Data Binding & DOM Rendering
 
@@ -84,10 +84,10 @@
 
 **Langkah:**
 
-- [ ] **Fungsi render** — `renderPeople()`, `renderPersonalItems()`, `renderSharedItems()`, `renderSummary()`
-- [ ] **Event binding** — wire form inputs ke state functions
-- [ ] **Dropdown menu template Gacoan** — data menu dari `docs/architecture/data-model.md`
-- [ ] **Error state handling** — validasi form: nama minimal 2 karakter, min 2 orang, quantity 1-99
+- [x] **Fungsi render** — `renderPeople()`, `renderPersonalItems()`, `renderSharedItems()`, `renderSummary()`
+- [x] **Event binding** — wire form inputs ke state functions
+- [x] **Dropdown menu template Gacoan** — data menu dari `docs/architecture/data-model.md`
+- [x] **Error state handling** — validasi form: nama minimal 2 karakter, min 2 orang, quantity 1-99
 
 ### Task 2.3: Copy to Clipboard
 
@@ -96,9 +96,9 @@
 
 **Langkah:**
 
-- [ ] **Fungsi format hasil** — format teks sesuai template di `docs/architecture/functionality.md#f6`
-- [ ] **Fungsi copy** — `navigator.clipboard.writeText()` dengan fallback
-- [ ] **Feedback visual** — toast notification "Tersalin!" setelah copy
+- [x] **Fungsi format hasil** — format teks sesuai template di `docs/architecture/functionality.md#f6`
+- [x] **Fungsi copy** — `navigator.clipboard.writeText()` dengan fallback
+- [x] **Feedback visual** — toast notification "Tersalin!" setelah copy
 
 ---
 
