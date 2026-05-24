@@ -116,11 +116,14 @@
 
 **Langkah:**
 
-- [ ] **Entity Session** — field: id (UUID), name, createdAt, totalAmount, sharedAmount
-- [ ] **Entity Person** — field: id (UUID), name, personalTotal, sharedPortion, amountOwed
-- [ ] **Entity Item** — field: id (UUID), name, price, quantity, isShared, orderedBy
-- [ ] **JPA Repositories** — `SessionRepository`, `PersonRepository`, `ItemRepository`
-- [ ] **DTO classes** — `SessionRequest`, `SessionResponse` di `model/dto/`
+- [x] **Entity Session** — field: id (UUID), name, createdAt, totalAmount, sharedAmount
+- [x] **Entity Person** — field: id (UUID), name, personalTotal, sharedPortion, amountOwed
+- [x] **Entity Item** — field: id (UUID), name, price, quantity, isShared, orderedBy
+- [x] **JPA Repositories** — `SessionRepository`, `PersonRepository`, `ItemRepository`
+- [x] **DTO classes** — `SessionRequest`, `SessionResponse` di `model/dto/`
+- [x] **Dependencies** — `spring-boot-starter-data-jpa` + `h2` di `pom.xml`
+- [x] **Database config** — H2 in-memory, `ddl-auto=create-drop`, SQL logging di `application.properties`
+- [x] **Component scan** — `@SpringBootApplication(scanBasePackages = {...})` di `DemoApplication.java` untuk scan `com.gacosplit`
 
 ### Task 3.2: REST API Endpoints
 
@@ -131,11 +134,11 @@
 
 **Langkah:**
 
-- [ ] **Endpoint sessions**: POST `/api/sessions`, GET `/api/sessions/{id}`, DELETE `/api/sessions/{id}/reset`
-- [ ] **Endpoint people**: POST `/api/sessions/{id}/people`, DELETE `/api/sessions/{id}/people/{personId}`
-- [ ] **Endpoint items**: POST `/api/sessions/{id}/items`, PUT `/api/sessions/{id}/items/{itemId}`, DELETE `/api/sessions/{id}/items/{itemId}`
-- [ ] **Endpoint calculate**: GET `/api/sessions/{id}/calculate`
-- [ ] **Endpoint menu**: GET `/api/menu`
+- [x] **Endpoint sessions**: POST `/api/sessions`, GET `/api/sessions/{id}`, DELETE `/api/sessions/{id}/reset`
+- [x] **Endpoint people**: POST `/api/sessions/{id}/people`, DELETE `/api/sessions/{id}/people/{personId}`
+- [x] **Endpoint items**: POST `/api/sessions/{id}/items`, PUT `/api/sessions/{id}/items/{itemId}`, DELETE `/api/sessions/{id}/items/{itemId}`
+- [x] **Endpoint calculate**: GET `/api/sessions/{id}/calculate`
+- [x] **Endpoint menu**: GET `/api/menu`
 
 ### Task 3.3: Service Layer & Calculation Logic
 
@@ -145,9 +148,9 @@
 
 **Langkah:**
 
-- [ ] **SessionService** — business logic CRUD session, validasi aturan bisnis
-- [ ] **CalculationService** — implementasi logika split bill (personal + shared)
-- [ ] **Database config** — `application.properties` dengan H2 in-memory atau SQLite
+- [x] **SessionService** — business logic CRUD session, validasi aturan bisnis
+- [x] **CalculationService** — implementasi logika split bill (personal + shared)
+- [x] **Database config** — `application.properties` dengan H2 in-memory atau SQLite
 
 ### Task 3.4: Frontend-Backend Integration
 
@@ -157,9 +160,9 @@
 
 **Langkah:**
 
-- [ ] **API client** — fungsi `fetchSession()`, `createSession()`, `addPerson()`, `addItem()`, `calculate()`, `resetSession()`
-- [ ] **Error handling** — toast untuk HTTP errors, retry option
-- [ ] **Loading states** — skeleton/spinner selama API call berlangsung
+- [x] **API client** — fungsi `fetchSession()`, `createSession()`, `addPerson()`, `addItem()`, `calculate()`, `resetSession()`
+- [x] **Error handling** — toast untuk HTTP errors, retry option
+- [x] **Loading states** — skeleton/spinner selama API call berlangsung
 
 ---
 

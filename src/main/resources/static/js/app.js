@@ -18,10 +18,10 @@
 
 // =========================================================================
 //  DATA MENU GACOAN
-//  Hardcoded dari docs/architecture/data-model.md
-//  Nanti di Fase 3 akan diambil dari API (/api/menu)
+//  Diambil dari API (/api/menu) saat inisialisasi.
+//  Data hardcoded di sini sebagai fallback jika API gagal.
 // =========================================================================
-const menuItems = [
+let menuItems = [
     { name: "Mie Gacoan Level 1", price: 16000 },
     { name: "Mie Gacoan Level 2", price: 17000 },
     { name: "Mie Gacoan Level 3", price: 18000 },
@@ -41,10 +41,13 @@ const menuItems = [
 //  Struktur ini mengikuti docs/architecture/functionality.md
 // =========================================================================
 const state = {
+    sessionId: null,     // String | null — ID session dari backend
     people: [],          // Array { id, name }
     personalItems: [],   // Array { id, personId, name, price, quantity }
     sharedItems: [],     // Array { id, name, price, quantity }
-    activePersonId: null // String | null — orang yang sedang dipilih di tab
+    activePersonId: null, // String | null — orang yang sedang dipilih di tab
+    loading: false,      // Boolean — true saat ada API call berlangsung
+    calculationResult: null // Object | null — hasil dari API /calculate
 };
 
 // =========================================================================
@@ -118,34 +121,50 @@ function validasiQuantity(value) {
  * Melewati validasi terlebih dahulu.
  * Jika validasi gagal, tampilkan error di UI.
  */
-function addPerson(name) {
+async function addPerson(name) {
     // Validasi input
     const error = validasiNama(name);
     if (error) {
-        // Tampilkan error di UI
         tampilkanError('personNameError', error);
         return false;
     }
-
-    // Hapus error jika sebelumnya muncul
     sembunyikanError('personNameError');
 
-    // Tambah orang baru ke array state
-    // Note: pake Date.now() sebagai ID sementara.
-    // Nanti di Fase 3, ID akan dari database.
-    state.people.push({
-        id: 'person_' + Date.now(),
-        name: name.trim()
-    });
-
-    // Kalau ini orang pertama, jadikan activePerson
-    if (state.people.length === 1) {
-        state.activePersonId = state.people[0].id;
+    // Validasi: session harus sudah siap
+    if (!state.sessionId) {
+        tampilkanToast('Session belum siap. Coba refresh halaman.');
+        return false;
     }
 
-    // Update DOM
-    renderAll();
-    return true;
+    // Tampilkan loading
+    state.loading = true;
+    tampilkanLoading();
+
+    try {
+        // Panggil API — dapatkan data dengan ID dari server
+        const person = await api.addPerson(state.sessionId, name.trim());
+
+        // Tambah ke state lokal dengan ID dari server
+        state.people.push({
+            id: person.id,
+            name: person.name
+        });
+
+        // Kalau ini orang pertama, jadikan activePerson
+        if (state.people.length === 1) {
+            state.activePersonId = state.people[0].id;
+        }
+
+        sembunyikanLoading();
+        state.loading = false;
+        renderAll();
+        return true;
+    } catch (err) {
+        sembunyikanLoading();
+        state.loading = false;
+        tampilkanToast('Gagal menambah peserta: ' + err.message);
+        return false;
+    }
 }
 
 /*
@@ -153,20 +172,32 @@ function addPerson(name) {
  * Hapus orang dari state.people.
  * Juga hapus semua personalItems milik orang tersebut.
  */
-function removePerson(id) {
-    // Hapus orang dari array
-    state.people = state.people.filter(p => p.id !== id);
+async function removePerson(id) {
+    if (!state.sessionId) return;
 
-    // Hapus semua item personal milik orang yang dihapus
-    state.personalItems = state.personalItems.filter(i => i.personId !== id);
+    state.loading = true;
+    tampilkanLoading();
 
-    // Jika activePerson dihapus, pindah ke orang pertama yang tersisa
-    if (state.activePersonId === id) {
-        state.activePersonId = state.people.length > 0 ? state.people[0].id : null;
+    try {
+        // Panggil API hapus orang (backend juga hapus item personal-nya)
+        await api.removePerson(state.sessionId, id);
+
+        state.people = state.people.filter(p => p.id !== id);
+        state.personalItems = state.personalItems.filter(i => i.personId !== id);
+
+        // Jika activePerson dihapus, pindah ke orang pertama
+        if (state.activePersonId === id) {
+            state.activePersonId = state.people.length > 0 ? state.people[0].id : null;
+        }
+
+        sembunyikanLoading();
+        state.loading = false;
+        renderAll();
+    } catch (err) {
+        sembunyikanLoading();
+        state.loading = false;
+        tampilkanToast('Gagal menghapus peserta: ' + err.message);
     }
-
-    // Update DOM
-    renderAll();
 }
 
 /*
@@ -174,7 +205,7 @@ function removePerson(id) {
  * Tambah item personal untuk orang tertentu.
  * menuKey adalah nama menu dari dropdown.
  */
-function addPersonalItem(personId, menuKey, quantity) {
+async function addPersonalItem(personId, menuKey, quantity) {
     // Validasi quantity
     const qtyError = validasiQuantity(quantity);
     if (qtyError) {
@@ -182,31 +213,52 @@ function addPersonalItem(personId, menuKey, quantity) {
         return false;
     }
 
-    // Cari data menu dari template Gacoan
+    // Cari data menu
     const menuItem = menuItems.find(m => m.name === menuKey);
     if (!menuItem) {
         alert("Pilih menu yang valid");
         return false;
     }
 
-    // Tambah item personal ke state
-    state.personalItems.push({
-        id: 'pitem_' + Date.now(),
-        personId: personId,
-        name: menuItem.name,
-        price: menuItem.price,
-        quantity: parseInt(quantity, 10)
-    });
+    if (!state.sessionId) return false;
 
-    renderAll();
-    return true;
+    state.loading = true;
+    tampilkanLoading();
+
+    try {
+        const item = await api.addItem(state.sessionId, {
+            name: menuItem.name,
+            price: menuItem.price,
+            quantity: parseInt(quantity, 10),
+            isShared: false,
+            orderedBy: personId
+        });
+
+        state.personalItems.push({
+            id: item.id,
+            personId: personId,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity
+        });
+
+        sembunyikanLoading();
+        state.loading = false;
+        renderAll();
+        return true;
+    } catch (err) {
+        sembunyikanLoading();
+        state.loading = false;
+        tampilkanToast('Gagal menambah pesanan: ' + err.message);
+        return false;
+    }
 }
 
 /*
  * addSharedItem(menuKey, quantity)
  * Tambah item bersama (shared) yang akan dibagi rata.
  */
-function addSharedItem(menuKey, quantity) {
+async function addSharedItem(menuKey, quantity) {
     // Validasi: minimal 2 orang untuk shared item
     if (state.people.length < 2) {
         tampilkanError('sharedError', 'Minimal 2 orang untuk menambah menu bersama');
@@ -228,16 +280,37 @@ function addSharedItem(menuKey, quantity) {
         return false;
     }
 
-    // Tambah shared item ke state
-    state.sharedItems.push({
-        id: 'sitem_' + Date.now(),
-        name: menuItem.name,
-        price: menuItem.price,
-        quantity: parseInt(quantity, 10)
-    });
+    if (!state.sessionId) return false;
 
-    renderAll();
-    return true;
+    state.loading = true;
+    tampilkanLoading();
+
+    try {
+        const item = await api.addItem(state.sessionId, {
+            name: menuItem.name,
+            price: menuItem.price,
+            quantity: parseInt(quantity, 10),
+            isShared: true,
+            orderedBy: null
+        });
+
+        state.sharedItems.push({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity
+        });
+
+        sembunyikanLoading();
+        state.loading = false;
+        renderAll();
+        return true;
+    } catch (err) {
+        sembunyikanLoading();
+        state.loading = false;
+        tampilkanToast('Gagal menambah menu bersama: ' + err.message);
+        return false;
+    }
 }
 
 /*
@@ -245,38 +318,69 @@ function addSharedItem(menuKey, quantity) {
  * Hapus item baik personal maupun shared berdasarkan ID.
  * Digunakan oleh tombol hapus di kedua daftar.
  */
-function removeItem(itemId) {
-    // Coba hapus dari personalItems dulu
-    const isPersonal = state.personalItems.some(i => i.id === itemId);
-    if (isPersonal) {
+async function removeItem(itemId) {
+    if (!state.sessionId) return;
+
+    state.loading = true;
+    tampilkanLoading();
+
+    try {
+        await api.removeItem(state.sessionId, itemId);
+
         state.personalItems = state.personalItems.filter(i => i.id !== itemId);
-    }
-
-    // Coba hapus dari sharedItems
-    const isShared = state.sharedItems.some(i => i.id === itemId);
-    if (isShared) {
         state.sharedItems = state.sharedItems.filter(i => i.id !== itemId);
-    }
 
-    renderAll();
+        sembunyikanLoading();
+        state.loading = false;
+        renderAll();
+    } catch (err) {
+        sembunyikanLoading();
+        state.loading = false;
+        tampilkanToast('Gagal menghapus item: ' + err.message);
+    }
 }
 
 /*
  * resetAll()
  * Hapus semua data — kembali ke keadaan awal.
  */
-function resetAll() {
+async function resetAll() {
+    if (!state.sessionId) {
+        resetStateLokal();
+        renderAll();
+        return;
+    }
+
+    state.loading = true;
+    tampilkanLoading();
+
+    try {
+        await api.resetSession(state.sessionId);
+
+        const session = await api.createSession('Split Bill Gacoan');
+        state.sessionId = session.id;
+
+        resetStateLokal();
+        sembunyikanLoading();
+        state.loading = false;
+        renderAll();
+    } catch (err) {
+        sembunyikanLoading();
+        state.loading = false;
+        tampilkanToast('Gagal mereset session: ' + err.message);
+    }
+}
+
+function resetStateLokal() {
     state.people = [];
     state.personalItems = [];
     state.sharedItems = [];
     state.activePersonId = null;
+    state.calculationResult = null;
 
-    // Sembunyikan semua error
     sembunyikanError('personNameError');
     sembunyikanError('peopleCountError');
     sembunyikanError('sharedError');
-
-    renderAll();
 }
 
 // =========================================================================
@@ -732,6 +836,97 @@ function updateButtonStates() {
 }
 
 // =========================================================================
+//  LOADING STATE — Indikator visual selama API call
+// =========================================================================
+
+/*
+ * buatLoadingOverlay()
+ * Membuat elemen loading overlay di DOM (hanya sekali).
+ * Overlay mencakup seluruh halaman dengan spinner + teks.
+ */
+function buatLoadingOverlay() {
+    if (document.getElementById('loadingOverlay')) return;
+
+    const overlay = document.createElement('div');
+    overlay.id = 'loadingOverlay';
+    overlay.style.cssText = [
+        'position: fixed',
+        'inset: 0',
+        'background: rgba(255,255,255,0.8)',
+        'display: none',
+        'align-items: center',
+        'justify-content: center',
+        'flex-direction: column',
+        'z-index: 9999',
+        'backdrop-filter: blur(2px)'
+    ].join(';');
+
+    overlay.innerHTML = [
+        '<div style="width:40px;height:40px;border:4px solid #e5e7eb;border-top-color:#3b82f6;border-radius:50%;animation:spin 0.8s linear infinite;"></div>',
+        '<p style="margin-top:12px;color:#6b7280;font-size:0.9rem;">Memproses...</p>'
+    ].join('');
+
+    // Tambah keyframes spinner (hanya sekali)
+    if (!document.getElementById('loadingSpinnerStyle')) {
+        const style = document.createElement('style');
+        style.id = 'loadingSpinnerStyle';
+        style.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
+        document.head.appendChild(style);
+    }
+
+    document.body.appendChild(overlay);
+}
+
+function tampilkanLoading() {
+    buatLoadingOverlay();
+    const overlay = document.getElementById('loadingOverlay');
+    if (overlay) overlay.style.display = 'flex';
+}
+
+function sembunyikanLoading() {
+    const overlay = document.getElementById('loadingOverlay');
+    if (overlay) overlay.style.display = 'none';
+}
+
+// =========================================================================
+//  INISIALISASI APLIKASI — Buat session + fetch menu dari backend
+// =========================================================================
+
+/*
+ * initApp()
+ * Dipanggil saat halaman selesai dimuat.
+ * 1. Buat session baru via API
+ * 2. Fetch menu dari API (fallback ke data hardcoded)
+ * 3. Render UI dan pasang event listener
+ */
+async function initApp() {
+    tampilkanLoading();
+
+    try {
+        const menuDariApi = await api.fetchMenu();
+        if (menuDariApi && menuDariApi.length > 0) {
+            menuItems = menuDariApi;
+        }
+    } catch (err) {
+        console.warn('Gagal fetch menu dari API, pakai data lokal:', err.message);
+    }
+
+    try {
+        const session = await api.createSession('Split Bill Gacoan');
+        state.sessionId = session.id;
+    } catch (err) {
+        console.error('Gagal membuat session:', err.message);
+        tampilkanToast('Gagal terhubung ke server. Beberapa fitur mungkin tidak tersedia.');
+    }
+
+    sembunyikanLoading();
+
+    renderMenuDropdowns();
+    renderAll();
+    initEventListeners();
+}
+
+// =========================================================================
 //  EVENT BINDING — Menghubungkan interaksi user ke fungsi state
 //
 //  Strategi: Event Delegation
@@ -748,19 +943,16 @@ function updateButtonStates() {
 function initEventListeners() {
 
     // ----- FORM TAMBAH ORANG -----
-    // Event: submit form tambah orang
     const formOrang = document.getElementById('addPersonForm');
     if (formOrang) {
-        formOrang.addEventListener('submit', function(e) {
-            e.preventDefault(); // Mencegah reload halaman
+        formOrang.addEventListener('submit', async function(e) {
+            e.preventDefault();
 
             const input = document.getElementById('personNameInput');
             const nama = input.value;
 
-            // Panggil fungsi CRUD — validasi di dalamnya
-            const berhasil = addPerson(nama);
+            const berhasil = await addPerson(nama);
 
-            // Jika berhasil, kosongkan input
             if (berhasil) {
                 input.value = '';
                 input.focus();
@@ -769,10 +961,9 @@ function initEventListeners() {
     }
 
     // ----- FORM TAMBAH PERSONAL ITEM -----
-    // Event: submit form personal item
     const formPersonal = document.getElementById('addPersonalItemForm');
     if (formPersonal) {
-        formPersonal.addEventListener('submit', function(e) {
+        formPersonal.addEventListener('submit', async function(e) {
             e.preventDefault();
 
             const personSelect = document.getElementById('personalPersonSelect');
@@ -783,23 +974,19 @@ function initEventListeners() {
             const menuKey = menuSelect.value;
             const quantity = qtyInput.value;
 
-            // Validasi: pilih orang dulu
             if (!personId) {
                 alert('Pilih orang terlebih dahulu');
                 return;
             }
 
-            // Validasi: pilih menu
             if (!menuKey) {
                 alert('Pilih menu');
                 return;
             }
 
-            // Panggil fungsi CRUD
-            const berhasil = addPersonalItem(personId, menuKey, quantity);
+            const berhasil = await addPersonalItem(personId, menuKey, quantity);
 
             if (berhasil) {
-                // Reset form
                 menuSelect.value = '';
                 qtyInput.value = '1';
             }
@@ -807,10 +994,9 @@ function initEventListeners() {
     }
 
     // ----- FORM TAMBAH SHARED ITEM -----
-    // Event: submit form shared item
     const formShared = document.getElementById('addSharedItemForm');
     if (formShared) {
-        formShared.addEventListener('submit', function(e) {
+        formShared.addEventListener('submit', async function(e) {
             e.preventDefault();
 
             const menuSelect = document.getElementById('sharedMenuSelect');
@@ -819,14 +1005,12 @@ function initEventListeners() {
             const menuKey = menuSelect.value;
             const quantity = qtyInput.value;
 
-            // Validasi: pilih menu
             if (!menuKey) {
                 alert('Pilih menu');
                 return;
             }
 
-            // Panggil fungsi CRUD
-            const berhasil = addSharedItem(menuKey, quantity);
+            const berhasil = await addSharedItem(menuKey, quantity);
 
             if (berhasil) {
                 menuSelect.value = '';
@@ -889,12 +1073,12 @@ function initEventListeners() {
     // ----- TOMBOL RESET / MULAI BARU -----
     const resetBtns = document.querySelectorAll('#resetButton, #resetButton2');
     resetBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', async function() {
             if (state.people.length === 0 && state.personalItems.length === 0 && state.sharedItems.length === 0) {
-                return; // Tidak ada data, tidak perlu reset
+                return;
             }
             if (confirm('Mulai baru akan menghapus semua data. Lanjutkan?')) {
-                resetAll();
+                await resetAll();
             }
         });
     });
@@ -1059,15 +1243,10 @@ function tampilkanToast(pesan) {
 // =========================================================================
 
 /*
- * Perintah di bawah ini jalan saat file JavaScript selesai diparsing.
+ * initApp() dipanggil saat halaman selesai dimuat.
  * Urutan:
- * 1. Isi dropdown menu
- * 2. Render semua section (kosong — state belum ada data)
- * 3. Pasang event listener
- *
- * Note: event listener dipasang lewat initEventListeners(), bukan
- * inline di HTML. Ini memisahkan struktur (HTML) dari perilaku (JS).
+ * 1. Fetch menu dari API (fallback ke data hardcoded)
+ * 2. Buat session baru via API
+ * 3. Render UI dan pasang event listener
  */
-renderMenuDropdowns();
-renderAll();
-initEventListeners();
+initApp();

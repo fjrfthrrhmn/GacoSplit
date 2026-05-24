@@ -41,6 +41,20 @@
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 
+		<!-- JPA + Hibernate: mengelola penyimpanan data ke database -->
+		<!-- Entity otomatis di-scan, repository dibuat otomatis -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<!-- H2 Database (development): database in-memory, tidak perlu instalasi -->
+		<!-- Nanti di production akan diganti PostgreSQL/MySQL -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
