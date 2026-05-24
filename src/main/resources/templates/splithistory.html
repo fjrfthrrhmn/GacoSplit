@@ -1,311 +1,51 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GacoSplit - Riwayat</title>
+</head>
+<body>
+    <!--
+        Halaman riwayat split bill.
+        Dirender oleh PageController.history() → return "splithistory"
+        URL: /riwayat
+    -->
+    <h1>Riwayat Split Bill</h1>
+    <p>Daftar sesi split bill sebelumnya.</p>
 
-    <html class="light" lang="id"><head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>GacoSplit - Riwayat Split Bill</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-    <style>
-            .material-symbols-outlined {
-                font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-                vertical-align: middle;
-            }
-            .card-shadow {
-                box-shadow: 0px 4px 20px rgba(0,0,0,0.05);
-            }
-            .active-scale:active {
-                transform: scale(0.98);
-            }
-            ::-webkit-scrollbar {
-                width: 6px;
-            }
-            ::-webkit-scrollbar-track {
-                background: #f1f1f1;
-            }
-            ::-webkit-scrollbar-thumb {
-                background: #e7bdb8;
-                border-radius: 10px;
-            }
-        </style>
-    <script id="tailwind-config">
-            tailwind.config = {
-                darkMode: "class",
-                theme: {
-                    extend: {
-                        "colors": {
-                            "tertiary-container": "#1c852c",
-                            "surface-container": "#eeeeee",
-                            "outline": "#926e6b",
-                            "on-secondary-fixed": "#390c00",
-                            "surface-variant": "#e2e2e2",
-                            "primary-fixed-dim": "#ffb4ac",
-                            "on-primary-fixed-variant": "#93000d",
-                            "surface-dim": "#dadada",
-                            "background": "#f9f9f9",
-                            "surface-bright": "#f9f9f9",
-                            "tertiary": "#006a1b",
-                            "tertiary-fixed": "#94f990",
-                            "on-surface-variant": "#5d3f3c",
-                            "on-secondary-container": "#5d1900",
-                            "on-tertiary-container": "#f0ffe9",
-                            "outline-variant": "#e7bdb8",
-                            "on-background": "#1a1c1c",
-                            "surface-container-highest": "#e2e2e2",
-                            "secondary-fixed": "#ffdbd0",
-                            "surface-container-high": "#e8e8e8",
-                            "primary-fixed": "#ffdad6",
-                            "on-secondary-fixed-variant": "#832600",
-                            "surface-tint": "#c00015",
-                            "primary": "#b90014",
-                            "on-primary-container": "#fff9f8",
-                            "error": "#ba1a1a",
-                            "on-tertiary": "#ffffff",
-                            "surface": "#f9f9f9",
-                            "surface-container-low": "#f3f3f3",
-                            "primary-container": "#e31b23",
-                            "on-error": "#ffffff",
-                            "on-tertiary-fixed": "#002204",
-                            "secondary": "#ab3500",
-                            "surface-container-lowest": "#ffffff",
-                            "secondary-container": "#fe6a34",
-                            "inverse-primary": "#ffb4ac",
-                            "error-container": "#ffdad6",
-                            "on-error-container": "#93000a",
-                            "on-tertiary-fixed-variant": "#005313",
-                            "inverse-surface": "#2f3131",
-                            "inverse-on-surface": "#f1f1f1",
-                            "on-primary": "#ffffff",
-                            "on-primary-fixed": "#410002",
-                            "on-surface": "#1a1c1c",
-                            "tertiary-fixed-dim": "#78dc77",
-                            "secondary-fixed-dim": "#ffb59d",
-                            "on-secondary": "#ffffff"
-                        },
-                        "borderRadius": {
-                            "DEFAULT": "0.25rem",
-                            "lg": "16px",
-                            "xl": "24px",
-                            "full": "9999px"
-                        },
-                        "spacing": {
-                            "lg": "24px",
-                            "container-padding": "20px",
-                            "md": "16px",
-                            "base": "8px",
-                            "xs": "4px",
-                            "xl": "32px",
-                            "sm": "8px",
-                            "gutter": "16px"
-                        },
-                        "fontFamily": {
-                            "body-lg": ["Inter"],
-                            "headline-lg": ["Plus Jakarta Sans"],
-                            "headline-md": ["Plus Jakarta Sans"],
-                            "label-sm": ["Plus Jakarta Sans"],
-                            "body-md": ["Inter"],
-                            "headline-lg-mobile": ["Plus Jakarta Sans"],
-                            "display-lg": ["Plus Jakarta Sans"],
-                            "label-md": ["Plus Jakarta Sans"]
-                        },
-                        "fontSize": {
-                            "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-                            "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
-                            "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
-                            "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
-                            "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                            "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
-                            "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
-                            "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}]
-                        }
-                    },
-                },
-            }
-        </script>
-    </head>
-    <body class="bg-surface font-body-md text-on-surface min-h-screen">
-    <!-- TopNavBar -->
-    <nav class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md shadow-sm">
-    <div class="flex justify-between items-center px-container-padding h-16 w-full max-w-7xl mx-auto">
-    <div class="flex items-center gap-md">
-    <button class="active:scale-95 transition-transform text-primary">
-    <span class="material-symbols-outlined">arrow_back</span>
-    </button>
-    <span class="font-headline-md text-headline-md font-bold text-primary">GacoSplit</span>
-    </div>
-    <div class="flex items-center gap-md text-on-surface-variant">
-    <span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors">history</span>
-    <span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors">help</span>
-    </div>
-    </div>
-    </nav>
-    <!-- Main Content Canvas -->
-    <main class="pt-24 pb-32 px-container-padding max-w-[390px] mx-auto min-h-screen">
-    <!-- Header Section -->
-    <header class="mb-lg">
-    <h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-xs">Riwayat Split Bill</h1>
-    <p class="text-on-surface-variant font-body-md">Lihat semua kenangan makan barengmu</p>
-    </header>
-    <!-- Search & Filter -->
-    <div class="mb-lg sticky top-20 z-10">
-    <div class="relative group">
-    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-colors">search</span>
-    <input class="w-full pl-12 pr-4 py-3 bg-surface-container-low border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all font-body-md" placeholder="Cari riwayat..." type="text"/>
-    </div>
-    </div>
-    <!-- History List -->
-    <div class="space-y-md">
-    <!-- Card 1 -->
-    <div class="bg-surface-container-lowest rounded-xl p-md card-shadow border border-white/50 active-scale transition-transform">
-    <div class="flex justify-between items-start mb-md">
-    <div>
-    <h3 class="font-headline-md text-headline-md text-on-surface mb-1">Makan Bareng Geng</h3>
-    <div class="flex items-center gap-xs text-on-surface-variant font-label-sm">
-    <span class="material-symbols-outlined text-[16px]">calendar_today</span>
-    <span>12 Okt 2024</span>
-    <span class="mx-1">•</span>
-    <span class="material-symbols-outlined text-[16px]">group</span>
-    <span>4 Orang</span>
-    </div>
-    </div>
-    <span class="bg-tertiary/10 text-tertiary px-3 py-1 rounded-full font-label-md text-label-md flex items-center gap-xs">
-    <span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-                            Selesai
-                        </span>
-    </div>
-    <div class="flex items-center justify-between pt-md border-t border-surface-container">
-    <div>
-    <p class="text-on-surface-variant font-label-sm">Total Bill</p>
-    <p class="text-primary font-headline-md text-headline-md">Rp75.000</p>
-    </div>
-    <button class="bg-secondary-container text-on-secondary-container px-md py-2 rounded-lg font-label-md text-label-md active-scale transition-all hover:bg-secondary-container/90">
-                            Lihat Detail
-                        </button>
-    </div>
-    </div>
-    <!-- Card 2 -->
-    <div class="bg-surface-container-lowest rounded-xl p-md card-shadow border border-white/50 active-scale transition-transform">
-    <div class="flex justify-between items-start mb-md">
-    <div>
-    <h3 class="font-headline-md text-headline-md text-on-surface mb-1">Dinner Squad</h3>
-    <div class="flex items-center gap-xs text-on-surface-variant font-label-sm">
-    <span class="material-symbols-outlined text-[16px]">calendar_today</span>
-    <span>5 Okt 2024</span>
-    <span class="mx-1">•</span>
-    <span class="material-symbols-outlined text-[16px]">group</span>
-    <span>3 Orang</span>
-    </div>
-    </div>
-    <span class="bg-tertiary/10 text-tertiary px-3 py-1 rounded-full font-label-md text-label-md flex items-center gap-xs">
-    <span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-                            Selesai
-                        </span>
-    </div>
-    <div class="flex items-center justify-between pt-md border-t border-surface-container">
-    <div>
-    <p class="text-on-surface-variant font-label-sm">Total Bill</p>
-    <p class="text-primary font-headline-md text-headline-md">Rp45.000</p>
-    </div>
-    <button class="bg-secondary-container text-on-secondary-container px-md py-2 rounded-lg font-label-md text-label-md active-scale transition-all hover:bg-secondary-container/90">
-                            Lihat Detail
-                        </button>
-    </div>
-    </div>
-    <!-- Card 3 -->
-    <div class="bg-surface-container-lowest rounded-xl p-md card-shadow border border-white/50 active-scale transition-transform">
-    <div class="flex justify-between items-start mb-md">
-    <div>
-    <h3 class="font-headline-md text-headline-md text-on-surface mb-1">Lunch Kantor</h3>
-    <div class="flex items-center gap-xs text-on-surface-variant font-label-sm">
-    <span class="material-symbols-outlined text-[16px]">calendar_today</span>
-    <span>1 Okt 2024</span>
-    <span class="mx-1">•</span>
-    <span class="material-symbols-outlined text-[16px]">group</span>
-    <span>6 Orang</span>
-    </div>
-    </div>
-    <span class="bg-tertiary/10 text-tertiary px-3 py-1 rounded-full font-label-md text-label-md flex items-center gap-xs">
-    <span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-                            Selesai
-                        </span>
-    </div>
-    <div class="flex items-center justify-between pt-md border-t border-surface-container">
-    <div>
-    <p class="text-on-surface-variant font-label-sm">Total Bill</p>
-    <p class="text-primary font-headline-md text-headline-md">Rp120.000</p>
-    </div>
-    <button class="bg-secondary-container text-on-secondary-container px-md py-2 rounded-lg font-label-md text-label-md active-scale transition-all hover:bg-secondary-container/90">
-                            Lihat Detail
-                        </button>
-    </div>
-    </div>
-    </div>
-    <!-- Empty State (Demonstration of hidden logic) -->
-    <div class="hidden flex-col items-center justify-center py-xl text-center" id="empty-state">
-    <div class="w-32 h-32 mb-lg bg-surface-container flex items-center justify-center rounded-full">
-    <span class="material-symbols-outlined text-outline-variant text-[64px]">history_toggle_off</span>
-    </div>
-    <h4 class="font-headline-md text-headline-md text-on-surface mb-xs">Belum Ada Riwayat</h4>
-    <p class="text-on-surface-variant font-body-md px-lg">Mulailah split bill pertamamu sekarang juga!</p>
-    <button class="mt-lg bg-primary text-on-primary px-xl py-3 rounded-lg font-label-md text-label-md active-scale">
-                    Split Bill Sekarang
-                </button>
-    </div>
-    </main>
-    <!-- Footer -->
-    <footer class="w-full py-xl bg-surface-container-low dark:bg-surface-dim border-t border-outline-variant flex flex-col items-center gap-md px-container-padding text-center">
-    <span class="font-headline-md text-headline-md text-primary font-bold">GacoSplit</span>
-    <div class="flex gap-md">
-    <a class="text-on-surface-variant font-body-md hover:text-secondary underline transition-all" href="#">About</a>
-    <a class="text-primary font-bold font-body-md" href="#">History</a>
-    <a class="text-on-surface-variant font-body-md hover:text-secondary underline transition-all" href="#">Privacy</a>
-    <a class="text-on-surface-variant font-body-md hover:text-secondary underline transition-all" href="#">Support</a>
-    </div>
-    <p class="text-secondary font-body-md mt-sm">© 2024 GacoSplit. Stay Spicy.</p>
-    </footer>
-    <!-- FAB for New Split -->
-    <div class="fixed bottom-8 right-8 z-50 md:hidden">
-    <button class="bg-primary-container text-on-primary-container w-16 h-16 rounded-full shadow-lg flex items-center justify-center active-scale transition-all group">
-    <span class="material-symbols-outlined text-[32px]">add</span>
-    </button>
-    </div>
-    <script>
-            // Simple micro-interaction for cards
-            document.querySelectorAll('.active-scale').forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    card.style.transform = 'translateY(-4px)';
-                });
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'translateY(0px)';
-                });
-            });
+    <table border="1" cellpadding="8">
+        <thead>
+            <tr>
+                <th>Tanggal</th>
+                <th>Nama Sesi</th>
+                <th>Total</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>12 Okt 2024</td>
+                <td>Makan Bareng Geng</td>
+                <td>Rp75.000</td>
+                <td>Selesai</td>
+            </tr>
+            <tr>
+                <td>5 Okt 2024</td>
+                <td>Dinner Squad</td>
+                <td>Rp45.000</td>
+                <td>Selesai</td>
+            </tr>
+            <tr>
+                <td>1 Okt 2024</td>
+                <td>Lunch Kantor</td>
+                <td>Rp120.000</td>
+                <td>Selesai</td>
+            </tr>
+        </tbody>
+    </table>
 
-            // Search highlight effect
-            const searchInput = document.querySelector('input');
-            searchInput.addEventListener('input', (e) => {
-                const query = e.target.value.toLowerCase();
-                const cards = document.querySelectorAll('.bg-surface-container-lowest');
-                let hasResults = false;
-
-                cards.forEach(card => {
-                    const title = card.querySelector('h3').textContent.toLowerCase();
-                    if (title.includes(query)) {
-                        card.style.display = 'block';
-                        hasResults = true;
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-
-                const emptyState = document.getElementById('empty-state');
-                if (!hasResults && query !== "") {
-                    emptyState.classList.remove('hidden');
-                    emptyState.classList.add('flex');
-                } else {
-                    emptyState.classList.add('hidden');
-                    emptyState.classList.remove('flex');
-                }
-            });
-        </script>
-    </body></html>
+    <br>
+    <a href="/">Kembali ke Beranda</a>
+</body>
+</html>

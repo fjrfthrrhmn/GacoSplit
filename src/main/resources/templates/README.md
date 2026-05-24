@@ -4,22 +4,22 @@ Folder ini berisi file **HTML template** yang dirender oleh Thymeleaf.
 
 ## Cara Kerja
 
-- Saat Controller me-return `"index"`, Thymeleaf akan mencari `templates/index.html`
-- File di sini bisa berisi template Thymeleaf (dengan atribut `th:*`) atau HTML biasa
-- Untuk project ini, file HTML masih murni statis (pure HTML + Tailwind CDN)
+1. `PageController.java` me-return nama view, misalnya `"index"`
+2. Thymeleaf mencari file yang sesuai di folder ini: `templates/index.html`
+3. HTML dikirim ke browser user
 
 ## Daftar Halaman
 
-| File                | Route            | Halaman                    |
-|---------------------|------------------|----------------------------|
-| `index.html`        | `/`              | Landing page               |
-| `about.html`        | `/tentang`       | Tentang aplikasi           |
-| `addfriends.html`   | `/tambah-teman`  | Tambah peserta             |
-| `orderinput.html`   | `/order-input`   | Input pesanan              |
-| `result.html`       | `/hasil`         | Hasil perhitungan          |
-| `splithistory.html` | `/riwayat`       | Riwayat split bill         |
+| File                | Route            | Method Controller         | Halaman                    |
+|---------------------|------------------|---------------------------|----------------------------|
+| `index.html`        | `/`              | `home()`                  | Landing page               |
+| `about.html`        | `/tentang`       | `about()`                 | Tentang aplikasi           |
+| `addfriends.html`   | `/tambah-teman`  | `addFriends()`            | Tambah peserta             |
+| `orderinput.html`   | `/order-input`   | `orderInput()`            | Input pesanan              |
+| `result.html`       | `/hasil`         | `result()`                | Hasil perhitungan          |
+| `splithistory.html` | `/riwayat`       | `history()`               | Riwayat split bill         |
 
 ## Catatan
 
 - File di `templates/` TIDAK bisa diakses langsung lewat URL (harus lewat Controller).
-- File statis seperti CSS/JS tetap di `static/` dan bisa diakses langsung.
+- Semua file HTML di sini adalah plain HTML (tanpa framework CSS) agar fokus belajar Spring Boot MVC.
