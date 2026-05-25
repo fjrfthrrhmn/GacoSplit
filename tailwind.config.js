@@ -43,7 +43,7 @@ module.exports = {
       fontFamily: {
         sans: ["Geist", "ui-sans-serif", "sans-serif", "system-ui"],
         serif: ["Lora", "ui-serif", "serif"],
-        mono: ["DM Mono", "ui-monospace", "monospace"],
+        mono: ["DM Mono", "monospace"],
       },
       borderRadius: {
         DEFAULT: "var(--radius)",
@@ -53,5 +53,33 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  daisyui: {
+    themes: [
+      {
+        gaco: {
+          "primary": "#f04eb8",
+          "primary-content": "#ffffff",
+          "secondary": "#00b4d8",
+          "secondary-content": "#ffffff",
+          "accent": "#fef0f5",
+          "accent-content": "#000000",
+          "neutral": "#1d1d1f",
+          "neutral-content": "#f5f5f7",
+          "base-100": "#fdfcfc",
+          "base-200": "#f5f5f5",
+          "base-300": "#ebebeb",
+          "base-content": "#000000",
+          "info": "#3b82f6",
+          "info-content": "#ffffff",
+          "success": "#22c55e",
+          "success-content": "#ffffff",
+          "warning": "#f59e0b",
+          "warning-content": "#ffffff",
+          "error": "#e84a5f",
+          "error-content": "#ffffff",
+        },
+      },
+    ],
+  },
+  plugins: [require("daisyui")],
 };

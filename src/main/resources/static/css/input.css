@@ -23,9 +23,9 @@
     --border: 240 17.0732% 91.9608%;
     --input: 0 0% 92.1569%;
     --ring: 0 0% 0%;
-    --font-sans: Geist, ui-sans-serif, sans-serif, system-ui;
-    --font-serif: Lora, ui-serif, serif;
-    --font-mono: DM Mono, ui-monospace, monospace;
+    --font-sans: "Geist", ui-sans-serif, sans-serif, system-ui;
+    --font-serif: "Lora", ui-serif, serif;
+    --font-mono: "DM Mono", monospace;
     --radius: 1.4rem;
     --tracking-normal: -0.025em;
     --spacing: 0.27rem;
