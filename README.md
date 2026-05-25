@@ -50,30 +50,47 @@ Proyek ini mengikuti **arsitektur monolitik** menggunakan satu aplikasi Spring B
 
 ### Frontend
 
-- HTML yang dirender dari server
+- HTML yang dirender dari server (Thymeleaf)
 - Vanilla JavaScript untuk interaktivitas
-- TailwindCSS untuk styling
+- **TailwindCSS v3** untuk styling — build via PostCSS
 
 ---
 
 ## Struktur Proyek
 
 ```
-src/
- ├── tailwind.config.js
- └── main/
-     ├── java/
-     │   └── com/gacosplit/
-     │       ├── controller/
-     │       ├── service/
-     │       ├── model/
-     │       └── repository/
-     └── resources/
-         ├── templates/
-         ├── static/
-         │   ├── css/ // Styling
-         │   └── js/
-         └── application.properties
+gacosplit/
+├── package.json              # Node dependencies
+├── tailwind.config.js        # Tailwind v3 config (referensi docs/UI-UX.md)
+├── postcss.config.js         # PostCSS plugin config
+├── pom.xml                   # Maven build
+├── src/
+│   ├── main/
+│   │   ├── java/com/gacosplit/
+│   │   │   ├── controller/
+│   │   │   ├── service/
+│   │   │   ├── model/
+│   │   │   └── repository/
+│   │   └── resources/
+│   │       ├── templates/          # HTML Thymeleaf
+│   │       ├── static/
+│   │       │   ├── css/
+│   │       │   │   ├── input.css   # Entry Tailwind + CSS variables
+│   │       │   │   └── output.css  # Build output
+│   │       │   └── js/
+│   │       └── application.properties
+│   └── test/
+├── docs/                    # Dokumentasi (CAPITALIZE, flat)
+│   ├── ARCHITECTURE.md
+│   ├── FEATURES.md
+│   ├── PRODUCT.md
+│   ├── UI-UX.md
+│   ├── UX-FLOW.md
+│   └── UX-WRITING.md
+├── DESIGN.md                # SSOT (Single Source of Truth)
+├── AGENTS.md
+├── CHANGELOG.md
+└── README.md
 ```
 
 ---
@@ -82,11 +99,8 @@ src/
 
 Perhitungan terdiri dari dua komponen:
 
-1. **Total Personal**
-   Jumlah seluruh item yang dipesan secara individu.
-
-2. **Bagian Shared**
-   Total item bersama dibagi rata ke seluruh peserta.
+1. **Total Personal** — Jumlah seluruh item yang dipesan secara individu.
+2. **Bagian Shared** — Total item bersama dibagi rata ke seluruh peserta.
 
 Rumus akhir:
 
@@ -102,32 +116,29 @@ JumlahTagihan = TotalPersonal + (TotalShared / JumlahPeserta)
 
 - Java 17+
 - Maven
+- Node.js 18+ (untuk build CSS)
 
 ### Instalasi
 
-Kloning repositori:
-
-```
+```bash
 git clone https://github.com/fjrfthrrhmn/GacoSplit.git
-```
-
-Masuk ke direktori proyek:
-
-```
 cd GacoSplit
+```
+
+Install dependencies dan build CSS:
+
+```bash
+npm install
+npm run build:css
 ```
 
 Jalankan aplikasi:
 
-```
+```bash
 ./mvnw spring-boot:run
 ```
 
-Akses aplikasi:
-
-```
-http://localhost:8080
-```
+Akses aplikasi di `http://localhost:8080`
 
 ---
 
@@ -161,12 +172,16 @@ http://localhost:8080
 
 | Dokumen | Deskripsi |
 |---|---|
-| `CHANGELOG.md` | Pencatat perubahan dan iterasi pengembangan |
+| `DESIGN.md` | SSOT — Apple-inspired design system |
 | `AGENTS.md` | Definisi peran agen dan keahlian pengembangan |
-| `ROADMAP.md` | Milestone pengembangan dari inisiasi hingga deployment |
-| `docs/product/` | Definisi produk, fitur, alur pengguna, kriteria penerimaan |
-| `docs/architecture/` | Model data, spesifikasi API, catatan teknis |
-| `docs/design/` | Spesifikasi UI/UX, tata letak, desain responsif |
+| `CHANGELOG.md` | Catatan perubahan dan iterasi pengembangan |
+| `ROADMAP.md` | Milestone pengembangan |
+| `docs/PRODUCT.md` | Gambaran produk, problem, solusi, tech stack |
+| `docs/FEATURES.md` | Prioritas MoSCoW, acceptance criteria, roadmap fitur |
+| `docs/ARCHITECTURE.md` | Data model, fungsionalitas, API endpoints |
+| `docs/UX-FLOW.md` | Alur pengguna dari awal hingga hasil |
+| `docs/UI-UX.md` | Token desain: warna, tipografi, shadow, spacing |
+| `docs/UX-WRITING.md` | Panduan UX writing dan copy |
 
 ---
 

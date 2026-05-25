@@ -22,6 +22,15 @@ public class PageController {
     }
 
     /**
+     * Halaman kalkulator (aplikasi utama).
+     * URL: http://localhost:8080/start
+     */
+    @GetMapping("/start")
+    public String start() {
+        return "start";
+    }
+
+    /**
      * Halaman tentang aplikasi.
      * URL: http://localhost:8080/tentang
      */

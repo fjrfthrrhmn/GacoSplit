@@ -28,7 +28,7 @@
 ### Task 1.1: Layout Utama (index.html)
 
 **Files:**
-- Referensi: `docs/design/ui-ux.md`
+- Referensi: `docs/UI-UX.md`
 
 **Langkah:**
 
@@ -56,7 +56,7 @@
 
 **Langkah:**
 
-- [x] **Implementasi state management client-side** mengikuti struktur dari `docs/architecture/functionality.md`:
+- [x] **Implementasi state management client-side** mengikuti struktur dari `docs/ARCHITECTURE.md`:
   ```javascript
   const state = {
     session: null,
@@ -74,7 +74,7 @@
   - `addPersonalItem(personId, menuItem, quantity)` — tambah pesanan personal
   - `addSharedItem(menuItem, quantity)` — tambah item bersama
   - `removeItem(itemId)` — hapus item
-- [x] **Fungsi kalkulasi** sesuai rumus di `docs/architecture/functionality.md#f5-calculation-logic`
+- [x] **Fungsi kalkulasi** sesuai rumus di `docs/ARCHITECTURE.md#f5-calculation-logic`
 
 ### Task 2.2: Data Binding & DOM Rendering
 
@@ -86,7 +86,7 @@
 
 - [x] **Fungsi render** — `renderPeople()`, `renderPersonalItems()`, `renderSharedItems()`, `renderSummary()`
 - [x] **Event binding** — wire form inputs ke state functions
-- [x] **Dropdown menu template Gacoan** — data menu dari `docs/architecture/data-model.md`
+- [x] **Dropdown menu template Gacoan** — data menu dari `docs/ARCHITECTURE.md`
 - [x] **Error state handling** — validasi form: nama minimal 2 karakter, min 2 orang, quantity 1-99
 
 ### Task 2.3: Copy to Clipboard
@@ -96,7 +96,7 @@
 
 **Langkah:**
 
-- [x] **Fungsi format hasil** — format teks sesuai template di `docs/architecture/functionality.md#f6`
+- [x] **Fungsi format hasil** — format teks sesuai template di `docs/ARCHITECTURE.md`
 - [x] **Fungsi copy** — `navigator.clipboard.writeText()` dengan fallback
 - [x] **Feedback visual** — toast notification "Tersalin!" setelah copy
 
@@ -112,7 +112,7 @@
 - Create: `src/main/java/com/gacosplit/model/Session.java`
 - Create: `src/main/java/com/gacosplit/model/Person.java`
 - Create: `src/main/java/com/gacosplit/model/Item.java`
-- Referensi: `docs/architecture/data-model.md`
+- Referensi: `docs/ARCHITECTURE.md`
 
 **Langkah:**
 
@@ -130,7 +130,7 @@
 **Files:**
 - Create: `src/main/java/com/gacosplit/controller/SessionController.java`
 - Create: `src/main/java/com/gacosplit/controller/MenuController.java`
-- Referensi: `docs/architecture/technical-notes.md`
+- Referensi: `docs/ARCHITECTURE.md`
 
 **Langkah:**
 

@@ -37,7 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.0] - 2026-05-24
 
 ### Added
-- Implementasi state management client-side (`app.js`) dengan struktur `state` sesuai `docs/architecture/functionality.md`.
+- Implementasi state management client-side (`app.js`) dengan struktur `state` sesuai `docs/ARCHITECTURE.md`.
 - Fungsi CRUD: `addPerson`, `removePerson`, `addPersonalItem`, `addSharedItem`, `removeItem`.
 - Implementasi rumus kalkulasi split bill (Personal + Shared / TotalPeople).
 - **Task 2.1: State Management** — file `api.js` (placeholder) dan `app.js` (state + CRUD + kalkulasi).
@@ -52,10 +52,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **Documentation Restructure**: Modular documentation system with dedicated directories:
-  - `docs/product/` — Product overview, problem breakdown, solution, features, user flow, acceptance criteria, future improvements
-  - `docs/architecture/` — Data model, functionality specification, technical notes, assumptions & trade-offs
-  - `docs/design/` — UI/UX specification, layout structure, responsive breakpoints, TailwindCSS configuration
+- **Documentation Restructure**: Dokumentasi sistem dengan struktur flat dan CAPITALIZE:
+  - `docs/ARCHITECTURE.md` — Data model, fungsionalitas, endpoint API
+  - `docs/FEATURES.md` — Prioritas MoSCoW, acceptance criteria, rencana pengembangan
+  - `docs/PRODUCT.md` — Gambaran produk, problem, solusi, tech stack
+  - `docs/UX-FLOW.md` — Alur pengguna
+  - `docs/UI-UX.md` — Token desain: warna, tipografi, shadow, spacing
+  - `docs/UX-WRITING.md` — Panduan UX writing dan copy
 - `CHANGELOG.md` — Change tracking file for iteration recording
 - `AGENTS.md` — Agent role definitions with development team structure and skills table
 - `ROADMAP.md` — Development milestones from initiation to deployment
