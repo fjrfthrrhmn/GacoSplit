@@ -3,18 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GacoSplit — Split Bill Calculator</title>
+  <title>GacoSplit — Gak Pusing Lagi Urusan Split Bill!</title>
   <link rel="stylesheet" href="/css/output.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=DM+Mono:wght@300;400;500&display=swap"
+    rel="stylesheet"
+  />
   <style>
-    body { font-family: 'Inter', system-ui, sans-serif; }
-
     /* JS-generated person chip */
     .person-chip {
       display: inline-flex; align-items: center; gap: 0.5rem;
       padding: 0.5rem 1rem; cursor: pointer;
-      border-radius: var(--rounded-badge, 9999px);
+      border-radius: 9999px;
       background-color: color-mix(in oklab, var(--fallback-bc, #000) 8%, transparent);
       color: var(--fallback-bc, #000);
       font-size: 0.875rem; font-weight: 500;
@@ -28,6 +29,7 @@
       background: none; border: none; cursor: pointer;
       font-size: 1rem; padding: 0; line-height: 1;
       color: color-mix(in oklab, var(--fallback-bc, #000) 40%, transparent);
+      display: inline-flex; align-items: center;
     }
     .person-chip .remove-person:hover { color: var(--fallback-er, #e84a5f); }
 
@@ -35,7 +37,7 @@
     .item-row {
       display: flex; align-items: center; justify-content: space-between;
       padding: 0.75rem 0;
-      border-bottom: 1px solid var(--fallback-b2, #f5f5f5);
+      border-bottom: 1px solid var(--fallback-b2, #ebebeb);
     }
     .item-row:last-child { border-bottom: none; }
     .item-row .item-name { font-weight: 500; }
@@ -44,21 +46,24 @@
     .item-row .item-info { display: flex; align-items: center; gap: 0.5rem; }
     .item-row .shared-badge {
       font-size: 0.75rem; padding: 0.125rem 0.5rem;
-      border-radius: var(--rounded-badge, 9999px);
+      border-radius: 9999px;
       background-color: color-mix(in oklab, var(--fallback-bc, #000) 8%, transparent);
     }
     .item-row .danger {
       background: none; border: none; cursor: pointer;
-      font-size: 0.75rem; padding: 0; line-height: 1;
+      font-size: 0.75rem; padding: 0.5rem; line-height: 1;
       color: color-mix(in oklab, var(--fallback-bc, #000) 30%, transparent);
+      border-radius: 9999px;
+      display: inline-flex; align-items: center;
+      transition: all 0.2s;
     }
-    .item-row .danger:hover { color: var(--fallback-er, #e84a5f); }
+    .item-row .danger:hover { color: var(--fallback-er, #e84a5f); background-color: color-mix(in oklab, var(--fallback-er, #e84a5f) 10%, transparent); }
 
     /* JS-generated summary row */
     .summary-row {
       display: flex; justify-content: space-between; align-items: center;
       padding: 0.5rem 0;
-      border-bottom: 1px solid var(--fallback-b2, #f5f5f5);
+      border-bottom: 1px solid var(--fallback-b2, #ebebeb);
     }
     .summary-row:last-child { border-bottom: none; }
     .summary-row.total {
@@ -77,9 +82,11 @@
     }
   </style>
 </head>
-<body class="bg-base-200 min-h-screen">
+<body class="font-sans bg-base-200 min-h-screen">
 
-  <!-- HEADER -->
+  <!-- ============================================================
+     NAVBAR
+     ============================================================ -->
   <div class="navbar bg-base-100 shadow-sm sticky top-0 z-40 mb-6">
     <div class="navbar-start">
       <a href="/" class="btn btn-ghost text-xl font-bold tracking-tight">
@@ -87,165 +94,284 @@
       </a>
     </div>
     <div class="navbar-end">
-      <button id="resetButton" class="btn btn-sm btn-error" title="Hapus semua data dan mulai dari awal">
+      <button id="resetButton" class="btn btn-sm btn-error rounded-full" title="Hapus semua data dan mulai dari awal">
+        <!-- Refresh icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+        </svg>
         Mulai Baru
       </button>
     </div>
   </div>
 
-  <div class="max-w-2xl mx-auto px-4 pb-20 space-y-4">
-
-    <!-- SECTION 1: FORM TAMBAH ORANG -->
-    <div class="card card-border bg-base-100 shadow-sm">
-      <div class="card-body">
-        <h2 class="card-title text-lg">
-          <span class="text-primary">+</span> Tambah Bestie
-        </h2>
-
-        <form id="addPersonForm" class="flex flex-wrap gap-2">
-          <input
-            type="text"
-            id="personNameInput"
-            placeholder="Nama peserta (min 2 huruf)"
-            maxlength="30"
-            autocomplete="off"
-            class="input input-bordered flex-1 min-w-[180px]"
-          />
-          <button type="submit" class="btn btn-primary">Tambah</button>
-        </form>
-
-        <div id="personNameError" class="text-error text-sm hidden">
-          Nama harus minimal 2 karakter dan maksimal 10 orang
-        </div>
-      </div>
+  <!-- ============================================================
+     PAGE HEADER
+     ============================================================ -->
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="mb-8 space-y-2">
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight">
+        Yuk, Mulai Hitung!
+      </h1>
+      <p class="text-base-content/60 text-lg max-w-xl">
+        Tambahin bestie, masukin pesanan, gua otomatis hitung. <strong class="text-base-content">Gampang kan?</strong>
+      </p>
     </div>
 
-    <!-- SECTION 2: DAFTAR ORANG -->
-    <div class="card card-border bg-base-100 shadow-sm">
-      <div class="card-body">
-        <h2 class="card-title text-lg">Peserta</h2>
+    <!-- ============================================================
+       BENTO GRID
+       ============================================================ -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pb-20">
 
-        <div id="peopleList" class="flex flex-wrap gap-2 min-h-[48px]">
-          <div class="empty-state text-base-content/40 text-sm italic w-full text-center py-4" id="peopleEmpty">
-            Belum ada peserta. Tambahkan minimal 2 orang.
-          </div>
-        </div>
+      <!-- ============================================================
+         CELL 1: FORM TAMBAH BESTIE
+         ============================================================ -->
+      <div class="card bg-base-100 border border-base-200 shadow-sm rounded-2xl">
+        <div class="card-body p-5">
+          <h2 class="card-title text-lg">
+            <!-- User Plus icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+            </svg>
+            Tambah Bestie
+          </h2>
 
-        <div id="peopleCountError" class="text-error text-sm hidden">
-          Minimal 2 orang untuk memulai perhitungan
-        </div>
-      </div>
-    </div>
+          <form id="addPersonForm" class="flex flex-wrap gap-2">
+            <input
+              type="text"
+              id="personNameInput"
+              placeholder="Nama peserta (min 2 huruf)"
+              maxlength="30"
+              autocomplete="off"
+              class="input input-bordered flex-1 min-w-[180px] rounded-full"
+            />
+            <button type="submit" class="btn btn-primary rounded-full">Tambah</button>
+          </form>
 
-    <!-- SECTION 3: FORM INPUT PESANAN PRIBADI -->
-    <div class="card card-border bg-base-100 shadow-sm">
-      <div class="card-body">
-        <h2 class="card-title text-lg">
-          <span class="text-secondary">🍜</span> Pesanan Pribadi
-        </h2>
-
-        <form id="addPersonalItemForm" class="flex flex-wrap gap-2">
-          <select id="personalPersonSelect" class="select select-bordered flex-1 min-w-[130px]" required>
-            <option value="">— Pilih orang —</option>
-          </select>
-
-          <select id="personalMenuSelect" class="select select-bordered flex-1 min-w-[140px]" required>
-            <option value="">— Pilih menu —</option>
-          </select>
-
-          <input
-            type="number"
-            id="personalQuantityInput"
-            placeholder="Jumlah"
-            min="1"
-            max="99"
-            value="1"
-            required
-            class="input input-bordered w-20"
-          />
-
-          <button type="submit" class="btn btn-primary">Tambah</button>
-        </form>
-
-        <div id="personalItemsList">
-          <div class="empty-state text-base-content/40 text-sm italic text-center py-4">
-            Belum ada pesanan pribadi.
+          <div id="personNameError" class="text-error text-sm hidden">
+            Nama harus minimal 2 karakter dan maksimal 10 orang
           </div>
         </div>
       </div>
+
+      <!-- ============================================================
+         CELL 2: PESERTA
+         ============================================================ -->
+      <div class="card bg-base-100 border border-base-200 shadow-sm rounded-2xl">
+        <div class="card-body p-5">
+          <h2 class="card-title text-lg">
+            <!-- Users icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+            </svg>
+            Peserta
+          </h2>
+
+          <div id="peopleList" class="flex flex-wrap gap-2 min-h-[48px]">
+            <div class="empty-state text-base-content/40 text-sm italic w-full text-center py-4" id="peopleEmpty">
+              Belum ada peserta. Tambahkan minimal 2 orang.
+            </div>
+          </div>
+
+          <div id="peopleCountError" class="text-error text-sm hidden">
+            Minimal 2 orang untuk memulai perhitungan
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================
+         CELL 3: PESANAN PRIBADI — full width, spans both columns
+         ============================================================ -->
+      <div class="card bg-base-100 border border-base-200 shadow-sm rounded-2xl md:col-span-2">
+        <div class="card-body p-5">
+          <h2 class="card-title text-lg">
+            <!-- Shopping bag icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+            </svg>
+            Pesanan Pribadi
+          </h2>
+
+          <form id="addPersonalItemForm" class="flex flex-wrap gap-2">
+            <select id="personalPersonSelect" class="select select-bordered flex-1 min-w-[130px] rounded-full" required>
+              <option value="">— Pilih orang —</option>
+            </select>
+
+            <select id="personalMenuSelect" class="select select-bordered flex-1 min-w-[140px] rounded-full" required>
+              <option value="">— Pilih menu —</option>
+            </select>
+
+            <input
+              type="number"
+              id="personalQuantityInput"
+              placeholder="Jumlah"
+              min="1"
+              max="99"
+              value="1"
+              required
+              class="input input-bordered w-20 rounded-full"
+            />
+
+            <button type="submit" class="btn btn-primary rounded-full">Tambah</button>
+          </form>
+
+          <div id="personalItemsList">
+            <div class="empty-state text-base-content/40 text-sm italic text-center py-4">
+              Belum ada pesanan pribadi.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================
+         CELL 4: MAKAN BARENG (SHARED)
+         ============================================================ -->
+      <div class="card bg-base-100 border border-base-200 shadow-sm rounded-2xl">
+        <div class="card-body p-5">
+          <h2 class="card-title text-lg">
+            <!-- Share/network icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+            </svg>
+            Makan Bareng
+            <span class="badge badge-soft badge-sm">dibagi rata</span>
+          </h2>
+
+          <p class="text-sm text-base-content/50 -mt-2">
+            Menu bersama akan dibagi rata ke <strong>semua</strong> peserta
+          </p>
+
+          <form id="addSharedItemForm" class="flex flex-wrap gap-2">
+            <select id="sharedMenuSelect" class="select select-bordered flex-1 min-w-[180px] rounded-full" required>
+              <option value="">— Pilih menu —</option>
+            </select>
+
+            <input
+              type="number"
+              id="sharedQuantityInput"
+              placeholder="Jumlah"
+              min="1"
+              max="99"
+              value="1"
+              required
+              class="input input-bordered w-20 rounded-full"
+            />
+
+            <button type="submit" id="addSharedBtn" class="btn btn-secondary rounded-full">Tambah</button>
+          </form>
+
+          <div id="sharedError" class="text-error text-sm hidden">
+            Minimal 2 orang untuk menambah menu bersama
+          </div>
+
+          <div id="sharedItemsList">
+            <div class="empty-state text-base-content/40 text-sm italic text-center py-4">
+              Belum ada menu bersama.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================
+         CELL 5: RINGKASAN TAGIHAN
+         ============================================================ -->
+      <div class="card bg-base-100 border border-base-200 shadow-sm rounded-2xl">
+        <div class="card-body p-5">
+          <h2 class="card-title text-lg">
+            <!-- Wallet icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+            </svg>
+            Ringkasan Tagihan
+          </h2>
+
+          <div id="summaryContent">
+            <div class="empty-state text-base-content/40 text-sm italic text-center py-4">
+              Tambahkan minimal 2 orang untuk melihat hasil perhitungan.
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-2 mt-4">
+            <button id="copyButton" class="btn btn-primary flex-1 rounded-full">
+              <!-- Clipboard icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+              </svg>
+              Salin Hasil
+            </button>
+            <button id="resetButton2" class="btn btn-error flex-1 rounded-full">
+              <!-- Refresh icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              Mulai Baru
+            </button>
+          </div>
+        </div>
+      </div>
+
     </div>
 
-    <!-- SECTION 4: FORM INPUT SHARED ITEM -->
-    <div class="card card-border bg-base-100 shadow-sm">
-      <div class="card-body">
-        <h2 class="card-title text-lg">
-          <span class="text-secondary">🤝</span> Makan Bareng <span class="badge badge-soft badge-sm">dibagi rata</span>
-        </h2>
-
-        <p class="text-sm text-base-content/50 -mt-2">
-          Menu bersama akan dibagi rata ke <strong>semua</strong> peserta
+    <!-- ============================================================
+       FOOTER — matching index.html
+       ============================================================ -->
+    <footer class="footer sm:footer-horizontal bg-neutral text-neutral-content p-10 rounded-2xl mb-8">
+      <aside>
+        <a href="/" class="text-xl font-bold tracking-tight text-secondary">
+          <span class="text-primary">Gaco</span>Split
+        </a>
+        <p class="text-sm text-neutral-content/60 max-w-xs">
+          Gak Pusing Lagi Urusan Split Bill.<br />
+          Dibikin pake ❤️ buat lu yang males ribet ngitung pas makan bareng.
         </p>
-
-        <form id="addSharedItemForm" class="flex flex-wrap gap-2">
-          <select id="sharedMenuSelect" class="select select-bordered flex-1 min-w-[180px]" required>
-            <option value="">— Pilih menu —</option>
-          </select>
-
-          <input
-            type="number"
-            id="sharedQuantityInput"
-            placeholder="Jumlah"
-            min="1"
-            max="99"
-            value="1"
-            required
-            class="input input-bordered w-20"
-          />
-
-          <button type="submit" id="addSharedBtn" class="btn btn-secondary">Tambah</button>
-        </form>
-
-        <div id="sharedError" class="text-error text-sm hidden">
-          Minimal 2 orang untuk menambah menu bersama
+      </aside>
+      <nav>
+        <h6 class="footer-title">Navigasi</h6>
+        <a href="/" class="link link-hover">Beranda</a>
+        <a href="/start" class="link link-hover">Mulai Hitung</a>
+        <a href="/#cara-kerja" class="link link-hover">Cara Kerja</a>
+      </nav>
+      <nav>
+        <h6 class="footer-title">Lainnya</h6>
+        <a
+          href="https://github.com/fjrfthrrhmn/GacoSplit"
+          class="link link-hover"
+          target="_blank"
+        >Open Source di GitHub</a>
+        <a href="#" class="link link-hover">Privasi — data lu gak disimpen</a>
+      </nav>
+      <nav>
+        <h6 class="footer-title">Sosial</h6>
+        <div class="grid grid-flow-col gap-4">
+          <a
+            href="https://github.com/fjrfthrrhmn"
+            target="_blank"
+            aria-label="GitHub"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              class="fill-current"
+            >
+              <path
+                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+              />
+            </svg>
+          </a>
         </div>
-
-        <div id="sharedItemsList">
-          <div class="empty-state text-base-content/40 text-sm italic text-center py-4">
-            Belum ada menu bersama.
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SECTION 5: RINGKASAN TAGIHAN -->
-    <div class="card card-border bg-base-100 shadow-sm">
-      <div class="card-body">
-        <h2 class="card-title text-lg">
-          💰 Ringkasan Tagihan
-        </h2>
-
-        <div id="summaryContent">
-          <div class="empty-state text-base-content/40 text-sm italic text-center py-4">
-            Tambahkan minimal 2 orang untuk melihat hasil perhitungan.
-          </div>
-        </div>
-
-        <div class="flex flex-wrap gap-2 mt-4">
-          <button id="copyButton" class="btn btn-primary flex-1">
-            📋 Salin Hasil
-          </button>
-          <button id="resetButton2" class="btn btn-error flex-1">
-            Mulai Baru
-          </button>
-        </div>
-      </div>
-    </div>
+      </nav>
+    </footer>
 
   </div>
 
   <!-- TOAST NOTIFICATION -->
-  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50 bg-success text-success-content px-6 py-3 rounded-xl shadow-lg font-medium">
-    ✅ Tersalin!
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50 bg-success text-success-content px-6 py-3 rounded-full shadow-lg font-medium flex items-center gap-2">
+    <!-- Checkmark icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    <span>Tersalin!</span>
   </div>
 
   <script src="/js/api.js"></script>

@@ -9,14 +9,14 @@ async function fetchGitHubProfile(username) {
     return {
       avatar_url: data.avatar_url,
       name: data.name || username,
-      bio: data.bio || '',
+      bio: data.bio || "",
       html_url: data.html_url,
       followers: data.followers ?? 0,
       following: data.following ?? 0,
       public_repos: data.public_repos ?? 0,
     };
   } catch (err) {
-    console.warn('GitHub fetch error:', err);
+    console.warn("GitHub fetch error:", err);
     return null;
   }
 }
@@ -41,7 +41,7 @@ async function renderTeamCards(containerId, members) {
         ...member,
         profile,
       };
-    })
+    }),
   );
 
   container.innerHTML = "";
@@ -59,11 +59,12 @@ async function renderTeamCards(containerId, members) {
 
               <!-- Avatar -->
                 <img
-                  src="${member.profile.avatar_url}"
-                  alt="${member.profile.name}"
-                  loading="lazy"
-                  class="max-w-12 rounded-full object-cover"
-                />
+  src="${member.profile.avatar_url}"
+  alt="${member.profile.name}"
+  loading="lazy"
+  style="height: 60px;"
+  class=" rounded-full object-cover"
+/>
 
               <!-- Info -->
               <div class="min-w-0">
@@ -107,7 +108,8 @@ async function renderTeamCards(containerId, members) {
 
               <!-- Fallback Avatar -->
               <div
-                class="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-semibold shrink-0"
+  style="height: 60px;"
+                class="rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-semibold shrink-0"
               >
                 ${member.role.charAt(0)}
               </div>
