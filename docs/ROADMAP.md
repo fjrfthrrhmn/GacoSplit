@@ -202,37 +202,3 @@
 | Deployment Pipeline   | CI/CD dengan GitHub Actions, Docker build               |
 | Documentation Final   | API docs, panduan deployment, panduan pengguna           |
 | Performance Testing   | Pastikan stabil dengan 100+ sesi concurrent             |
-
----
-
-## Target Timeline
-
-```mermaid
-gantt
-    title GacoSplit — Timeline Pengembangan
-    dateFormat  YYYY-MM-DD
-    
-    section Foundation
-    Inisiasi Proyek           :done, 2026-05-19, 1d
-    Design System             :done, 2026-05-19, 1d
-    
-    section UI Foundation
-    Layout & Responsive       :active, 2026-05-20, 4d
-    State Management          :        2026-05-24, 3d
-    DOM Rendering             :        2026-05-27, 2d
-    
-    section Backend
-    Data Model & Entities     :        2026-05-29, 2d
-    REST API                  :        2026-05-31, 3d
-    Service Logic             :        2026-06-03, 2d
-    Frontend Integration      :        2026-06-05, 2d
-    
-    section Testing & Polish
-    Integration Test          :        2026-06-07, 2d
-    UX Polish & Dark Mode     :        2026-06-09, 3d
-    
-    section Production
-    Security & Database       :        2026-06-12, 4d
-    Deployment                :        2026-06-16, 3d
-    Launch                    :        2026-06-19, 1d
-```

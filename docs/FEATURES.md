@@ -17,8 +17,9 @@
 | AC-02 | Input personal sukses | Item muncul di list personal    |
 | AC-03 | Input shared sukses   | Muncul notasi "dibagi n"        |
 | AC-04 | Shared dibagi rata    | Rp 18k ÷ 3 = Rp 6k/orang        |
-| AC-05 | Total akurat          | Personal + Shared = Grand Total |
-| AC-06 | Per orang benar       | Personal + Bagian Shared        |
+| AC-05 | Total akurat          | Personal + Shared = DPP         |
+| AC-06 | Per orang benar       | (Personal + Bagian Shared) × 1.11 (termasuk PPN) |
+| AC-10 | PPN 11%               | PPN dihitung 11% dari DPP per orang, ditampilkan terpisah |
 | AC-07 | Copy hasil            | Semua data ter-copy             |
 | AC-08 | Reset session         | Semua data clear                |
 | AC-09 | Hapus update shared   | Otomatis bagi ulang             |

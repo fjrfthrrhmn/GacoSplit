@@ -22,18 +22,36 @@
 //  Data hardcoded di sini sebagai fallback jika API gagal.
 // =========================================================================
 let menuItems = [
-    { name: "Mie Gacoan Level 1", price: 16000 },
-    { name: "Mie Gacoan Level 2", price: 17000 },
-    { name: "Mie Gacoan Level 3", price: 18000 },
-    { name: "Mie Gacoan Level 4", price: 19000 },
-    { name: "Mie Gacoan Level 5", price: 20000 },
-    { name: "Mie Katsu",            price: 20000 },
-    { name: "Mie Pangsit",          price: 20000 },
-    { name: "Dimsum",               price: 15000 },
-    { name: "Es Teh Manis",         price:  5000 },
-    { name: "Es Jeruk",             price:  6000 },
-    { name: "Tahu Crispy",          price:  8000 }
+  { name: "Mie Gacoan", price: 10000 },
+  { name: "Mie Gacoan lvl 6 - 8", price: 10900 },
+  { name: "Mie Hompimpa", price: 10000 },
+  { name: "Mie Hompimpa lvl 6 - 8", price: 10900 },
+  { name: "Mie Suit", price: 10000 },
+
+  { name: "Udang Keju", price: 9100 },
+  { name: "Udang Rambutan", price: 9100 },
+  { name: "Lumpia Udang", price: 9100 },
+  { name: "Siomay", price: 9100 },
+  { name: "Pangsit Goreng", price: 10000 },
+
+  { name: "Es Gobak Sodor", price: 9100 },
+  { name: "Es Teklek", price: 5900 },
+  { name: "Es Sluku Bathok", price: 5900 },
+  { name: "Es Petak Umpet", price: 9100 },
+
+  { name: "Air Mineral", price: 4100 },
+  { name: "Lemon Tea", price: 5900 },
+  { name: "Milo", price: 8200 },
+  { name: "Orange", price: 5000 },
+  { name: "Es Teh", price: 4100 },
+  { name: "Tea Tarik", price: 6400 },
+  { name: "Vanila Latte", price: 8200 },
+  { name: "Thai Tea", price: 8200 },
+  { name: "Thai Green Tea", price: 8200 },
+  { name: "Es Coklat", price: 8200 },
 ];
+
+// Sumber Data Menu: "https://www.tokopedia.com/blog/menu-mie-gacoan-tvl/"
 
 // =========================================================================
 //  STATE — Data utama aplikasi
@@ -41,13 +59,13 @@ let menuItems = [
 //  Struktur ini mengikuti docs/architecture/functionality.md
 // =========================================================================
 const state = {
-    sessionId: null,     // String | null — ID session dari backend
-    people: [],          // Array { id, name }
-    personalItems: [],   // Array { id, personId, name, price, quantity }
-    sharedItems: [],     // Array { id, name, price, quantity }
-    activePersonId: null, // String | null — orang yang sedang dipilih di tab
-    loading: false,      // Boolean — true saat ada API call berlangsung
-    calculationResult: null // Object | null — hasil dari API /calculate
+  sessionId: null, // String | null — ID session dari backend
+  people: [], // Array { id, name }
+  personalItems: [], // Array { id, personId, name, price, quantity }
+  sharedItems: [], // Array { id, name, price, quantity }
+  activePersonId: null, // String | null — orang yang sedang dipilih di tab
+  loading: false, // Boolean — true saat ada API call berlangsung
+  calculationResult: null, // Object | null — hasil dari API /calculate
 };
 
 // =========================================================================
@@ -65,33 +83,33 @@ const state = {
  * - Tidak boleh duplikat dengan nama yang sudah ada
  */
 function validasiNama(nama) {
-    const trimmed = nama.trim();
+  const trimmed = nama.trim();
 
-    // Rule: minimal 2 karakter
-    if (trimmed.length < 2) {
-        return "Nama harus minimal 2 karakter";
-    }
+  // Rule: minimal 2 karakter
+  if (trimmed.length < 2) {
+    return "Nama harus minimal 2 karakter";
+  }
 
-    // Rule: maksimal 30 karakter
-    if (trimmed.length > 30) {
-        return "Nama maksimal 30 karakter";
-    }
+  // Rule: maksimal 30 karakter
+  if (trimmed.length > 30) {
+    return "Nama maksimal 30 karakter";
+  }
 
-    // Rule: tidak boleh duplikat (case-insensitive)
-    const duplikat = state.people.some(
-        p => p.name.toLowerCase() === trimmed.toLowerCase()
-    );
-    if (duplikat) {
-        return "Nama sudah ada, gunakan nama lain";
-    }
+  // Rule: tidak boleh duplikat (case-insensitive)
+  const duplikat = state.people.some(
+    (p) => p.name.toLowerCase() === trimmed.toLowerCase(),
+  );
+  if (duplikat) {
+    return "Nama sudah ada, gunakan nama lain";
+  }
 
-    // Rule: maksimal 10 orang (docs: max 10)
-    if (state.people.length >= 10) {
-        return "Maksimal 10 peserta";
-    }
+  // Rule: maksimal 10 orang (docs: max 10)
+  if (state.people.length >= 10) {
+    return "Maksimal 10 peserta";
+  }
 
-    // Valid: tidak ada error
-    return null;
+  // Valid: tidak ada error
+  return null;
 }
 
 /*
@@ -99,14 +117,14 @@ function validasiNama(nama) {
  * Aturan: integer, min 1, max 99
  */
 function validasiQuantity(value) {
-    const num = parseInt(value, 10);
-    if (isNaN(num) || num < 1) {
-        return "Jumlah minimal 1";
-    }
-    if (num > 99) {
-        return "Jumlah maksimal 99";
-    }
-    return null;
+  const num = parseInt(value, 10);
+  if (isNaN(num) || num < 1) {
+    return "Jumlah minimal 1";
+  }
+  if (num > 99) {
+    return "Jumlah maksimal 99";
+  }
+  return null;
 }
 
 // =========================================================================
@@ -122,49 +140,49 @@ function validasiQuantity(value) {
  * Jika validasi gagal, tampilkan error di UI.
  */
 async function addPerson(name) {
-    // Validasi input
-    const error = validasiNama(name);
-    if (error) {
-        tampilkanError('personNameError', error);
-        return false;
+  // Validasi input
+  const error = validasiNama(name);
+  if (error) {
+    tampilkanError("personNameError", error);
+    return false;
+  }
+  sembunyikanError("personNameError");
+
+  // Validasi: session harus sudah siap
+  if (!state.sessionId) {
+    tampilkanToast("Session belum siap. Coba refresh halaman.");
+    return false;
+  }
+
+  // Tampilkan loading
+  state.loading = true;
+  tampilkanLoading();
+
+  try {
+    // Panggil API — dapatkan data dengan ID dari server
+    const person = await api.addPerson(state.sessionId, name.trim());
+
+    // Tambah ke state lokal dengan ID dari server
+    state.people.push({
+      id: person.id,
+      name: person.name,
+    });
+
+    // Kalau ini orang pertama, jadikan activePerson
+    if (state.people.length === 1) {
+      state.activePersonId = state.people[0].id;
     }
-    sembunyikanError('personNameError');
 
-    // Validasi: session harus sudah siap
-    if (!state.sessionId) {
-        tampilkanToast('Session belum siap. Coba refresh halaman.');
-        return false;
-    }
-
-    // Tampilkan loading
-    state.loading = true;
-    tampilkanLoading();
-
-    try {
-        // Panggil API — dapatkan data dengan ID dari server
-        const person = await api.addPerson(state.sessionId, name.trim());
-
-        // Tambah ke state lokal dengan ID dari server
-        state.people.push({
-            id: person.id,
-            name: person.name
-        });
-
-        // Kalau ini orang pertama, jadikan activePerson
-        if (state.people.length === 1) {
-            state.activePersonId = state.people[0].id;
-        }
-
-        sembunyikanLoading();
-        state.loading = false;
-        renderAll();
-        return true;
-    } catch (err) {
-        sembunyikanLoading();
-        state.loading = false;
-        tampilkanToast('Gagal menambah peserta: ' + err.message);
-        return false;
-    }
+    sembunyikanLoading();
+    state.loading = false;
+    renderAll();
+    return true;
+  } catch (err) {
+    sembunyikanLoading();
+    state.loading = false;
+    tampilkanToast("Gagal menambah peserta: " + err.message);
+    return false;
+  }
 }
 
 /*
@@ -173,31 +191,32 @@ async function addPerson(name) {
  * Juga hapus semua personalItems milik orang tersebut.
  */
 async function removePerson(id) {
-    if (!state.sessionId) return;
+  if (!state.sessionId) return;
 
-    state.loading = true;
-    tampilkanLoading();
+  state.loading = true;
+  tampilkanLoading();
 
-    try {
-        // Panggil API hapus orang (backend juga hapus item personal-nya)
-        await api.removePerson(state.sessionId, id);
+  try {
+    // Panggil API hapus orang (backend juga hapus item personal-nya)
+    await api.removePerson(state.sessionId, id);
 
-        state.people = state.people.filter(p => p.id !== id);
-        state.personalItems = state.personalItems.filter(i => i.personId !== id);
+    state.people = state.people.filter((p) => p.id !== id);
+    state.personalItems = state.personalItems.filter((i) => i.personId !== id);
 
-        // Jika activePerson dihapus, pindah ke orang pertama
-        if (state.activePersonId === id) {
-            state.activePersonId = state.people.length > 0 ? state.people[0].id : null;
-        }
-
-        sembunyikanLoading();
-        state.loading = false;
-        renderAll();
-    } catch (err) {
-        sembunyikanLoading();
-        state.loading = false;
-        tampilkanToast('Gagal menghapus peserta: ' + err.message);
+    // Jika activePerson dihapus, pindah ke orang pertama
+    if (state.activePersonId === id) {
+      state.activePersonId =
+        state.people.length > 0 ? state.people[0].id : null;
     }
+
+    sembunyikanLoading();
+    state.loading = false;
+    renderAll();
+  } catch (err) {
+    sembunyikanLoading();
+    state.loading = false;
+    tampilkanToast("Gagal menghapus peserta: " + err.message);
+  }
 }
 
 /*
@@ -206,52 +225,52 @@ async function removePerson(id) {
  * menuKey adalah nama menu dari dropdown.
  */
 async function addPersonalItem(personId, menuKey, quantity) {
-    // Validasi quantity
-    const qtyError = validasiQuantity(quantity);
-    if (qtyError) {
-        alert(qtyError);
-        return false;
-    }
+  // Validasi quantity
+  const qtyError = validasiQuantity(quantity);
+  if (qtyError) {
+    alert(qtyError);
+    return false;
+  }
 
-    // Cari data menu
-    const menuItem = menuItems.find(m => m.name === menuKey);
-    if (!menuItem) {
-        alert("Pilih menu yang valid");
-        return false;
-    }
+  // Cari data menu
+  const menuItem = menuItems.find((m) => m.name === menuKey);
+  if (!menuItem) {
+    alert("Pilih menu yang valid");
+    return false;
+  }
 
-    if (!state.sessionId) return false;
+  if (!state.sessionId) return false;
 
-    state.loading = true;
-    tampilkanLoading();
+  state.loading = true;
+  tampilkanLoading();
 
-    try {
-        const item = await api.addItem(state.sessionId, {
-            name: menuItem.name,
-            price: menuItem.price,
-            quantity: parseInt(quantity, 10),
-            isShared: false,
-            orderedBy: personId
-        });
+  try {
+    const item = await api.addItem(state.sessionId, {
+      name: menuItem.name,
+      price: menuItem.price,
+      quantity: parseInt(quantity, 10),
+      isShared: false,
+      orderedBy: personId,
+    });
 
-        state.personalItems.push({
-            id: item.id,
-            personId: personId,
-            name: item.name,
-            price: item.price,
-            quantity: item.quantity
-        });
+    state.personalItems.push({
+      id: item.id,
+      personId: personId,
+      name: item.name,
+      price: item.price,
+      quantity: item.quantity,
+    });
 
-        sembunyikanLoading();
-        state.loading = false;
-        renderAll();
-        return true;
-    } catch (err) {
-        sembunyikanLoading();
-        state.loading = false;
-        tampilkanToast('Gagal menambah pesanan: ' + err.message);
-        return false;
-    }
+    sembunyikanLoading();
+    state.loading = false;
+    renderAll();
+    return true;
+  } catch (err) {
+    sembunyikanLoading();
+    state.loading = false;
+    tampilkanToast("Gagal menambah pesanan: " + err.message);
+    return false;
+  }
 }
 
 /*
@@ -259,58 +278,61 @@ async function addPersonalItem(personId, menuKey, quantity) {
  * Tambah item bersama (shared) yang akan dibagi rata.
  */
 async function addSharedItem(menuKey, quantity) {
-    // Validasi: minimal 2 orang untuk shared item
-    if (state.people.length < 2) {
-        tampilkanError('sharedError', 'Minimal 2 orang untuk menambah menu bersama');
-        return false;
-    }
-    sembunyikanError('sharedError');
+  // Validasi: minimal 2 orang untuk shared item
+  if (state.people.length < 2) {
+    tampilkanError(
+      "sharedError",
+      "Minimal 2 orang untuk menambah menu bersama",
+    );
+    return false;
+  }
+  sembunyikanError("sharedError");
 
-    // Validasi quantity
-    const qtyError = validasiQuantity(quantity);
-    if (qtyError) {
-        alert(qtyError);
-        return false;
-    }
+  // Validasi quantity
+  const qtyError = validasiQuantity(quantity);
+  if (qtyError) {
+    alert(qtyError);
+    return false;
+  }
 
-    // Cari data menu
-    const menuItem = menuItems.find(m => m.name === menuKey);
-    if (!menuItem) {
-        alert("Pilih menu yang valid");
-        return false;
-    }
+  // Cari data menu
+  const menuItem = menuItems.find((m) => m.name === menuKey);
+  if (!menuItem) {
+    alert("Pilih menu yang valid");
+    return false;
+  }
 
-    if (!state.sessionId) return false;
+  if (!state.sessionId) return false;
 
-    state.loading = true;
-    tampilkanLoading();
+  state.loading = true;
+  tampilkanLoading();
 
-    try {
-        const item = await api.addItem(state.sessionId, {
-            name: menuItem.name,
-            price: menuItem.price,
-            quantity: parseInt(quantity, 10),
-            isShared: true,
-            orderedBy: null
-        });
+  try {
+    const item = await api.addItem(state.sessionId, {
+      name: menuItem.name,
+      price: menuItem.price,
+      quantity: parseInt(quantity, 10),
+      isShared: true,
+      orderedBy: null,
+    });
 
-        state.sharedItems.push({
-            id: item.id,
-            name: item.name,
-            price: item.price,
-            quantity: item.quantity
-        });
+    state.sharedItems.push({
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      quantity: item.quantity,
+    });
 
-        sembunyikanLoading();
-        state.loading = false;
-        renderAll();
-        return true;
-    } catch (err) {
-        sembunyikanLoading();
-        state.loading = false;
-        tampilkanToast('Gagal menambah menu bersama: ' + err.message);
-        return false;
-    }
+    sembunyikanLoading();
+    state.loading = false;
+    renderAll();
+    return true;
+  } catch (err) {
+    sembunyikanLoading();
+    state.loading = false;
+    tampilkanToast("Gagal menambah menu bersama: " + err.message);
+    return false;
+  }
 }
 
 /*
@@ -319,25 +341,25 @@ async function addSharedItem(menuKey, quantity) {
  * Digunakan oleh tombol hapus di kedua daftar.
  */
 async function removeItem(itemId) {
-    if (!state.sessionId) return;
+  if (!state.sessionId) return;
 
-    state.loading = true;
-    tampilkanLoading();
+  state.loading = true;
+  tampilkanLoading();
 
-    try {
-        await api.removeItem(state.sessionId, itemId);
+  try {
+    await api.removeItem(state.sessionId, itemId);
 
-        state.personalItems = state.personalItems.filter(i => i.id !== itemId);
-        state.sharedItems = state.sharedItems.filter(i => i.id !== itemId);
+    state.personalItems = state.personalItems.filter((i) => i.id !== itemId);
+    state.sharedItems = state.sharedItems.filter((i) => i.id !== itemId);
 
-        sembunyikanLoading();
-        state.loading = false;
-        renderAll();
-    } catch (err) {
-        sembunyikanLoading();
-        state.loading = false;
-        tampilkanToast('Gagal menghapus item: ' + err.message);
-    }
+    sembunyikanLoading();
+    state.loading = false;
+    renderAll();
+  } catch (err) {
+    sembunyikanLoading();
+    state.loading = false;
+    tampilkanToast("Gagal menghapus item: " + err.message);
+  }
 }
 
 /*
@@ -345,105 +367,123 @@ async function removeItem(itemId) {
  * Hapus semua data — kembali ke keadaan awal.
  */
 async function resetAll() {
-    if (!state.sessionId) {
-        resetStateLokal();
-        renderAll();
-        return;
-    }
+  if (!state.sessionId) {
+    resetStateLokal();
+    renderAll();
+    return;
+  }
 
-    state.loading = true;
-    tampilkanLoading();
+  state.loading = true;
+  tampilkanLoading();
 
-    try {
-        await api.resetSession(state.sessionId);
+  try {
+    await api.resetSession(state.sessionId);
 
-        const session = await api.createSession('Split Bill Gacoan');
-        state.sessionId = session.id;
+    const session = await api.createSession("Split Bill Gacoan");
+    state.sessionId = session.id;
 
-        resetStateLokal();
-        sembunyikanLoading();
-        state.loading = false;
-        renderAll();
-    } catch (err) {
-        sembunyikanLoading();
-        state.loading = false;
-        tampilkanToast('Gagal mereset session: ' + err.message);
-    }
+    resetStateLokal();
+    sembunyikanLoading();
+    state.loading = false;
+    renderAll();
+  } catch (err) {
+    sembunyikanLoading();
+    state.loading = false;
+    tampilkanToast("Gagal mereset session: " + err.message);
+  }
 }
 
 function resetStateLokal() {
-    state.people = [];
-    state.personalItems = [];
-    state.sharedItems = [];
-    state.activePersonId = null;
-    state.calculationResult = null;
+  state.people = [];
+  state.personalItems = [];
+  state.sharedItems = [];
+  state.activePersonId = null;
+  state.calculationResult = null;
 
-    sembunyikanError('personNameError');
-    sembunyikanError('peopleCountError');
-    sembunyikanError('sharedError');
+  sembunyikanError("personNameError");
+  sembunyikanError("peopleCountError");
+  sembunyikanError("sharedError");
 }
 
 // =========================================================================
 //  FUNGSI KALKULASI
-//  Rumus dari docs/architecture/functionality.md#f5-calculation-logic
+//  Rumus dari docs/ARCHITECTURE.md (dengan PPN 11%)
 //
 //  PersonalTotal(orang) = Σ(item.price × item.quantity)
 //  SharedTotal = Σ(sharedItem.price × sharedItem.quantity)
 //  SharedPerOrang = SharedTotal ÷ JumlahOrang
-//  TotalPerOrang = PersonalTotal + SharedPerOrang
+//  DasarPengenaanPajak = PersonalTotal + SharedPerOrang
+//  PPN = DasarPengenaanPajak × 11% (dibulatkan)
+//  TotalPerOrang = PersonalTotal + SharedPerOrang + PPN
 // =========================================================================
+
+const PPN_RATE = 0.11;
 
 /*
  * hitungTagihan() → object
- * Mengembalikan hasil kalkulasi lengkap.
+ * Mengembalikan hasil kalkulasi lengkap (termasuk PPN 11%).
  * Tidak memodifikasi state — hanya baca (pure function).
  */
 function hitungTagihan() {
-    const jumlahOrang = state.people.length;
+  const jumlahOrang = state.people.length;
 
-    // Hitung total shared: jumlah dari semua (price × quantity) item bersama
-    const sharedTotal = state.sharedItems.reduce(
-        (total, item) => total + (item.price * item.quantity),
-        0
+  // Hitung total shared: jumlah dari semua (price × quantity) item bersama
+  const sharedTotal = state.sharedItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0,
+  );
+
+  // Shared portion per orang: dibagi rata
+  const sharedPerOrang = jumlahOrang > 0 ? sharedTotal / jumlahOrang : 0;
+
+  // Hitung per orang
+  const perOrang = state.people.map((person) => {
+    // Cari semua item personal milik orang ini
+    const itemsPerson = state.personalItems.filter(
+      (i) => i.personId === person.id,
     );
 
-    // Shared portion per orang: dibagi rata
-    const sharedPerOrang = jumlahOrang > 0 ? sharedTotal / jumlahOrang : 0;
+    // Hitung total personal: Σ(price × quantity)
+    const personalTotal = itemsPerson.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0,
+    );
 
-    // Hitung per orang
-    const perOrang = state.people.map(person => {
-        // Cari semua item personal milik orang ini
-        const itemsPerson = state.personalItems.filter(i => i.personId === person.id);
+    // Dasar Pengenaan Pajak (DPP) = personal + bagian shared
+    const dpp = personalTotal + sharedPerOrang;
 
-        // Hitung total personal: Σ(price × quantity)
-        const personalTotal = itemsPerson.reduce(
-            (total, item) => total + (item.price * item.quantity),
-            0
-        );
+    // PPN 11% dari DPP, dibulatkan ke rupiah penuh
+    const ppn = Math.round(dpp * PPN_RATE);
 
-        // Total akhir = personal + bagian shared
-        const totalAkhir = personalTotal + sharedPerOrang;
-
-        return {
-            personId: person.id,
-            nama: person.name,
-            items: itemsPerson,
-            personalTotal: personalTotal,
-            sharedPortion: sharedPerOrang,
-            totalAkhir: totalAkhir
-        };
-    });
-
-    // Grand total = jumlah semua totalAkhir
-    const grandTotal = perOrang.reduce((sum, p) => sum + p.totalAkhir, 0);
+    // Total akhir = personal + bagian shared + PPN
+    const totalAkhir = dpp + ppn;
 
     return {
-        perOrang: perOrang,
-        sharedTotal: sharedTotal,
-        sharedPerOrang: sharedPerOrang,
-        grandTotal: grandTotal,
-        jumlahOrang: jumlahOrang
+      personId: person.id,
+      nama: person.name,
+      items: itemsPerson,
+      personalTotal: personalTotal,
+      sharedPortion: sharedPerOrang,
+      ppn: ppn,
+      totalAkhir: totalAkhir,
     };
+  });
+
+  // Grand total = jumlah semua totalAkhir
+  const grandTotal = perOrang.reduce((sum, p) => sum + p.totalAkhir, 0);
+
+  // Total PPN = jumlah semua ppn per orang
+  const ppnTotal = perOrang.reduce((sum, p) => sum + p.ppn, 0);
+
+  return {
+    perOrang: perOrang,
+    sharedTotal: sharedTotal,
+    sharedPerOrang: sharedPerOrang,
+    ppnRate: PPN_RATE,
+    ppnTotal: ppnTotal,
+    grandTotal: grandTotal,
+    jumlahOrang: jumlahOrang,
+  };
 }
 
 // =========================================================================
@@ -455,10 +495,10 @@ function hitungTagihan() {
  * Set teks error dan tampilkan elemen error.
  */
 function tampilkanError(elementId, pesan) {
-    const el = document.getElementById(elementId);
-    if (!el) return;
-    el.textContent = pesan;
-    el.classList.add('visible');
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  el.textContent = pesan;
+  el.classList.add("visible");
 }
 
 /*
@@ -466,9 +506,9 @@ function tampilkanError(elementId, pesan) {
  * Sembunyikan elemen error.
  */
 function sembunyikanError(elementId) {
-    const el = document.getElementById(elementId);
-    if (!el) return;
-    el.classList.remove('visible');
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  el.classList.remove("visible");
 }
 
 // =========================================================================
@@ -490,12 +530,12 @@ function sembunyikanError(elementId) {
  * Memperbarui semua area DOM: orang, item personal, shared item, summary.
  */
 function renderAll() {
-    renderPeople();
-    renderPersonalItems();
-    renderSharedItems();
-    renderSummary();
-    renderMenuDropdowns();
-    updateButtonStates();
+  renderPeople();
+  renderPersonalItems();
+  renderSharedItems();
+  renderSummary();
+  renderMenuDropdowns();
+  updateButtonStates();
 }
 
 /*
@@ -504,65 +544,68 @@ function renderAll() {
  * Juga mengisi dropdown pemilihan orang di form personal item.
  */
 function renderPeople() {
-    const container = document.getElementById('peopleList');
-    const emptyEl = document.getElementById('peopleEmpty');
-    const errorEl = document.getElementById('peopleCountError');
+  const container = document.getElementById("peopleList");
+  const emptyEl = document.getElementById("peopleEmpty");
+  const errorEl = document.getElementById("peopleCountError");
 
-    // Hapus semua konten kecuali empty state placeholder
-    // Simpan referensi ke elemen empty state
-    container.innerHTML = '';
-    container.appendChild(emptyEl);
+  // Hapus semua konten kecuali empty state placeholder
+  // Simpan referensi ke elemen empty state
+  container.innerHTML = "";
+  container.appendChild(emptyEl);
 
-    if (state.people.length === 0) {
-        // Tidak ada orang — tampilkan empty state
-        emptyEl.style.display = 'block';
+  if (state.people.length === 0) {
+    // Tidak ada orang — tampilkan empty state
+    emptyEl.style.display = "block";
 
-        // Sembunyikan error count
-        sembunyikanError('peopleCountError');
+    // Sembunyikan error count
+    sembunyikanError("peopleCountError");
 
-        // Kosongkan dropdown pemilihan orang
-        isiDropdownOrang([]);
-        return;
+    // Kosongkan dropdown pemilihan orang
+    isiDropdownOrang([]);
+    return;
+  }
+
+  // Ada orang — sembunyikan empty state
+  emptyEl.style.display = "none";
+
+  // Tampilkan error jika kurang dari 2 orang
+  if (state.people.length < 2) {
+    tampilkanError(
+      "peopleCountError",
+      "Minimal 2 orang untuk memulai perhitungan",
+    );
+  } else {
+    sembunyikanError("peopleCountError");
+  }
+
+  // Render chip untuk setiap orang
+  state.people.forEach((person) => {
+    const chip = document.createElement("span");
+    chip.className = "person-chip";
+    if (state.activePersonId === person.id) {
+      chip.classList.add("active");
     }
+    chip.dataset.personId = person.id;
 
-    // Ada orang — sembunyikan empty state
-    emptyEl.style.display = 'none';
+    // Nama orang
+    const nameSpan = document.createElement("span");
+    nameSpan.textContent = person.name;
+    chip.appendChild(nameSpan);
 
-    // Tampilkan error jika kurang dari 2 orang
-    if (state.people.length < 2) {
-        tampilkanError('peopleCountError', 'Minimal 2 orang untuk memulai perhitungan');
-    } else {
-        sembunyikanError('peopleCountError');
-    }
+    // Tombol hapus (×)
+    const btnHapus = document.createElement("button");
+    btnHapus.type = "button";
+    btnHapus.className = "remove-person";
+    btnHapus.dataset.personId = person.id;
+    btnHapus.textContent = "×";
+    btnHapus.title = "Hapus " + person.name;
+    chip.appendChild(btnHapus);
 
-    // Render chip untuk setiap orang
-    state.people.forEach(person => {
-        const chip = document.createElement('span');
-        chip.className = 'person-chip';
-        if (state.activePersonId === person.id) {
-            chip.classList.add('active');
-        }
-        chip.dataset.personId = person.id;
+    container.appendChild(chip);
+  });
 
-        // Nama orang
-        const nameSpan = document.createElement('span');
-        nameSpan.textContent = person.name;
-        chip.appendChild(nameSpan);
-
-        // Tombol hapus (×)
-        const btnHapus = document.createElement('button');
-        btnHapus.type = 'button';
-        btnHapus.className = 'remove-person';
-        btnHapus.dataset.personId = person.id;
-        btnHapus.textContent = '×';
-        btnHapus.title = 'Hapus ' + person.name;
-        chip.appendChild(btnHapus);
-
-        container.appendChild(chip);
-    });
-
-    // Isi ulang dropdown pemilihan orang di form personal
-    isiDropdownOrang(state.people);
+  // Isi ulang dropdown pemilihan orang di form personal
+  isiDropdownOrang(state.people);
 }
 
 /*
@@ -570,26 +613,26 @@ function renderPeople() {
  * Mengisi <select id="personalPersonSelect"> dengan opsi orang.
  */
 function isiDropdownOrang(daftarOrang) {
-    const select = document.getElementById('personalPersonSelect');
-    if (!select) return;
+  const select = document.getElementById("personalPersonSelect");
+  if (!select) return;
 
-    // Simpan nilai yang sedang dipilih (jika ada)
-    const currentValue = select.value;
+  // Simpan nilai yang sedang dipilih (jika ada)
+  const currentValue = select.value;
 
-    // Kosongkan lalu isi ulang
-    select.innerHTML = '<option value="">— Pilih orang —</option>';
+  // Kosongkan lalu isi ulang
+  select.innerHTML = '<option value="">— Pilih orang —</option>';
 
-    daftarOrang.forEach(person => {
-        const option = document.createElement('option');
-        option.value = person.id;
-        option.textContent = person.name;
-        select.appendChild(option);
-    });
+  daftarOrang.forEach((person) => {
+    const option = document.createElement("option");
+    option.value = person.id;
+    option.textContent = person.name;
+    select.appendChild(option);
+  });
 
-    // Kembalikan pilihan sebelumnya jika masih ada
-    if (currentValue && daftarOrang.some(p => p.id === currentValue)) {
-        select.value = currentValue;
-    }
+  // Kembalikan pilihan sebelumnya jika masih ada
+  if (currentValue && daftarOrang.some((p) => p.id === currentValue)) {
+    select.value = currentValue;
+  }
 }
 
 /*
@@ -597,61 +640,68 @@ function isiDropdownOrang(daftarOrang) {
  * Merender daftar item personal per orang.
  */
 function renderPersonalItems() {
-    const container = document.getElementById('personalItemsList');
-    if (!container) return;
+  const container = document.getElementById("personalItemsList");
+  if (!container) return;
 
-    // Filter: hanya item untuk activePerson (atau tampilkan semua jika tidak ada active)
-    let itemsToShow = state.personalItems;
-    if (state.activePersonId) {
-        itemsToShow = state.personalItems.filter(i => i.personId === state.activePersonId);
-    }
+  // Filter: hanya item untuk activePerson (atau tampilkan semua jika tidak ada active)
+  let itemsToShow = state.personalItems;
+  if (state.activePersonId) {
+    itemsToShow = state.personalItems.filter(
+      (i) => i.personId === state.activePersonId,
+    );
+  }
 
-    container.innerHTML = '';
+  container.innerHTML = "";
 
-    if (itemsToShow.length === 0) {
-        container.innerHTML = '<div class="empty-state">Belum ada pesanan pribadi.</div>';
-        return;
-    }
+  if (itemsToShow.length === 0) {
+    container.innerHTML =
+      '<div class="empty-state">Belum ada pesanan pribadi.</div>';
+    return;
+  }
 
-    // Dapatkan nama active person untuk label
-    const activePerson = state.people.find(p => p.id === state.activePersonId);
-    const label = activePerson ? 'Pesanan ' + activePerson.name : 'Pesanan Pribadi';
+  // Dapatkan nama active person untuk label
+  const activePerson = state.people.find((p) => p.id === state.activePersonId);
+  const label = activePerson
+    ? "Pesanan " + activePerson.name
+    : "Pesanan Pribadi";
 
-    // Header label
-    const header = document.createElement('div');
-    header.style.cssText = 'font-weight:600; margin-bottom:8px; font-size:0.9rem; color:#555;';
-    header.textContent = label;
-    container.appendChild(header);
+  // Header label
+  const header = document.createElement("div");
+  header.style.cssText =
+    "font-weight:600; margin-bottom:8px; font-size:0.9rem; color:#555;";
+  header.textContent = label;
+  container.appendChild(header);
 
-    // Render setiap item personal
-    itemsToShow.forEach(item => {
-        const row = document.createElement('div');
-        row.className = 'item-row';
+  // Render setiap item personal
+  itemsToShow.forEach((item) => {
+    const row = document.createElement("div");
+    row.className = "item-row";
 
-        // Informasi item: nama dan jumlah
-        const info = document.createElement('div');
-        info.className = 'item-info';
-        info.innerHTML = `${item.name} <strong>× ${item.quantity}</strong>`;
+    // Informasi item: nama dan jumlah
+    const info = document.createElement("div");
+    info.className = "item-info";
+    info.innerHTML = `${item.name} <strong>× ${item.quantity}</strong>`;
 
-        // Harga
-        const harga = document.createElement('div');
-        harga.className = 'item-price';
-        harga.textContent = 'Rp ' + (item.price * item.quantity).toLocaleString('id-ID');
+    // Harga
+    const harga = document.createElement("div");
+    harga.className = "item-price";
+    harga.textContent =
+      "Rp " + (item.price * item.quantity).toLocaleString("id-ID");
 
-        // Tombol hapus
-        const btnHapus = document.createElement('button');
-        btnHapus.type = 'button';
-        btnHapus.className = 'danger';
-        btnHapus.dataset.itemId = item.id;
-        btnHapus.textContent = 'Hapus';
-        btnHapus.style.cssText = 'padding:4px 10px; font-size:0.8rem;';
+    // Tombol hapus
+    const btnHapus = document.createElement("button");
+    btnHapus.type = "button";
+    btnHapus.className = "danger";
+    btnHapus.dataset.itemId = item.id;
+    btnHapus.textContent = "Hapus";
+    btnHapus.style.cssText = "padding:4px 10px; font-size:0.8rem;";
 
-        row.appendChild(info);
-        row.appendChild(harga);
-        row.appendChild(btnHapus);
+    row.appendChild(info);
+    row.appendChild(harga);
+    row.appendChild(btnHapus);
 
-        container.appendChild(row);
-    });
+    container.appendChild(row);
+  });
 }
 
 /*
@@ -659,59 +709,66 @@ function renderPersonalItems() {
  * Merender daftar item bersama (shared).
  */
 function renderSharedItems() {
-    const container = document.getElementById('sharedItemsList');
-    if (!container) return;
+  const container = document.getElementById("sharedItemsList");
+  if (!container) return;
 
-    container.innerHTML = '';
+  container.innerHTML = "";
 
-    if (state.sharedItems.length === 0) {
-        container.innerHTML = '<div class="empty-state">Belum ada menu bersama.</div>';
-        return;
-    }
+  if (state.sharedItems.length === 0) {
+    container.innerHTML =
+      '<div class="empty-state">Belum ada menu bersama.</div>';
+    return;
+  }
 
-    state.sharedItems.forEach(item => {
-        const row = document.createElement('div');
-        row.className = 'item-row';
+  state.sharedItems.forEach((item) => {
+    const row = document.createElement("div");
+    row.className = "item-row";
 
-        // Informasi item
-        const info = document.createElement('div');
-        info.className = 'item-info';
+    // Informasi item
+    const info = document.createElement("div");
+    info.className = "item-info";
 
-        // Label shared badge
-        const badge = '<span class="shared-badge">Bersama</span>';
-        info.innerHTML = `${item.name} <strong>× ${item.quantity}</strong> ${badge}`;
+    // Label shared badge
+    const badge = '<span class="shared-badge">Bersama</span>';
+    info.innerHTML = `${item.name} <strong>× ${item.quantity}</strong> ${badge}`;
 
-        // Harga total
-        const total = item.price * item.quantity;
-        const harga = document.createElement('div');
-        harga.className = 'item-price';
-        harga.textContent = 'Rp ' + total.toLocaleString('id-ID');
+    // Harga total
+    const total = item.price * item.quantity;
+    const harga = document.createElement("div");
+    harga.className = "item-price";
+    harga.textContent = "Rp " + total.toLocaleString("id-ID");
 
-        // Tombol hapus
-        const btnHapus = document.createElement('button');
-        btnHapus.type = 'button';
-        btnHapus.className = 'danger';
-        btnHapus.dataset.itemId = item.id;
-        btnHapus.textContent = 'Hapus';
-        btnHapus.style.cssText = 'padding:4px 10px; font-size:0.8rem;';
+    // Tombol hapus
+    const btnHapus = document.createElement("button");
+    btnHapus.type = "button";
+    btnHapus.className = "danger";
+    btnHapus.dataset.itemId = item.id;
+    btnHapus.textContent = "Hapus";
+    btnHapus.style.cssText = "padding:4px 10px; font-size:0.8rem;";
 
-        row.appendChild(info);
-        row.appendChild(harga);
-        row.appendChild(btnHapus);
+    row.appendChild(info);
+    row.appendChild(harga);
+    row.appendChild(btnHapus);
 
-        container.appendChild(row);
-    });
+    container.appendChild(row);
+  });
 
-    // Tampilkan info pembagian
-    if (state.people.length >= 2) {
-        const infoBagi = document.createElement('div');
-        infoBagi.style.cssText = 'font-size:0.85rem; color:#666; margin-top:8px; font-style:italic;';
-        const sharedTotal = state.sharedItems.reduce((s, i) => s + (i.price * i.quantity), 0);
-        const perOrang = sharedTotal / state.people.length;
-        infoBagi.textContent = `Total bersama: Rp ${sharedTotal.toLocaleString('id-ID')} — ` +
-            `dibagi ${state.people.length} orang = Rp ${perOrang.toLocaleString('id-ID')}/orang`;
-        container.appendChild(infoBagi);
-    }
+  // Tampilkan info pembagian
+  if (state.people.length >= 2) {
+    const infoBagi = document.createElement("div");
+    infoBagi.style.cssText =
+      "font-size:0.85rem; color:#666; margin-top:8px; font-style:italic;";
+    const sharedTotal = state.sharedItems.reduce(
+      (s, i) => s + i.price * i.quantity,
+      0,
+    );
+    const perOrang = sharedTotal / state.people.length;
+    infoBagi.textContent =
+      `Total bersama: Rp ${sharedTotal.toLocaleString("id-ID")} — ` +
+      `dibagi ${state.people.length} orang = Rp ${perOrang.toLocaleString("id-ID")}/orang` +
+      ` (sebelum PPN 11%)`;
+    container.appendChild(infoBagi);
+  }
 }
 
 /*
@@ -719,75 +776,103 @@ function renderSharedItems() {
  * Merender ringkasan tagihan: total per orang + grand total.
  */
 function renderSummary() {
-    const container = document.getElementById('summaryContent');
-    if (!container) return;
+  const container = document.getElementById("summaryContent");
+  if (!container) return;
 
-    // Validasi: minimal 2 orang untuk kalkulasi
-    if (state.people.length < 2) {
-        container.innerHTML = '<div class="empty-state">Tambahkan minimal 2 orang untuk melihat hasil perhitungan.</div>';
-        return;
-    }
+  // Validasi: minimal 2 orang untuk kalkulasi
+  if (state.people.length < 2) {
+    container.innerHTML =
+      '<div class="empty-state">Tambahkan minimal 2 orang untuk melihat hasil perhitungan.</div>';
+    return;
+  }
 
-    // Hitung tagihan
-    const hasil = hitungTagihan();
+  // Hitung tagihan
+  const hasil = hitungTagihan();
 
-    // Bangun HTML summary
-    let html = '<div class="summary-grid">';
+  // Bangun HTML summary
+  let html = '<div class="summary-grid">';
 
-    // Per orang
-    hasil.perOrang.forEach(p => {
-        html += `
+  // Per orang
+  hasil.perOrang.forEach((p) => {
+    html += `
             <div class="summary-row">
                 <span><strong>${p.nama}</strong></span>
-                <span>Rp ${p.totalAkhir.toLocaleString('id-ID')}</span>
+                <span>Rp ${p.totalAkhir.toLocaleString("id-ID")}</span>
             </div>
         `;
 
-        // Detail item personal (jika ada)
-        if (p.items.length > 0) {
-            p.items.forEach(item => {
-                const subtotal = item.price * item.quantity;
-                html += `
+    // Detail item personal (jika ada)
+    if (p.items.length > 0) {
+      p.items.forEach((item) => {
+        const subtotal = item.price * item.quantity;
+        html += `
                     <div style="display:flex; justify-content:space-between; padding:2px 0 2px 16px; font-size:0.85rem; color:#666;">
                         <span>${item.name} × ${item.quantity}</span>
-                        <span>Rp ${subtotal.toLocaleString('id-ID')}</span>
+                        <span>Rp ${subtotal.toLocaleString("id-ID")}</span>
                     </div>
                 `;
-            });
-        }
+      });
+    }
 
-        // Bagian shared
-        if (hasil.sharedPerOrang > 0) {
-            html += `
+    // Bagian shared
+    if (hasil.sharedPerOrang > 0) {
+      html += `
                 <div style="display:flex; justify-content:space-between; padding:2px 0 2px 16px; font-size:0.85rem; color:#92400e;">
                     <span>Bagian menu bersama</span>
-                    <span>Rp ${hasil.sharedPerOrang.toLocaleString('id-ID')}</span>
+                    <span>Rp ${hasil.sharedPerOrang.toLocaleString("id-ID")}</span>
                 </div>
             `;
-        }
-    });
+    }
 
-    // Grand total
-    html += `
+    // PPN 11%
+    if (p.ppn > 0) {
+      html += `
+                <div style="display:flex; justify-content:space-between; padding:2px 0 2px 16px; font-size:0.85rem; color:#166534;">
+                    <span>PPN 11%</span>
+                    <span>Rp ${p.ppn.toLocaleString("id-ID")}</span>
+                </div>
+            `;
+    } else if (hasil.sharedPerOrang > 0 || p.items.length > 0) {
+      // Ada tagihan tapi PPN = 0 karena dibulatkan
+      html += `
+                <div style="display:flex; justify-content:space-between; padding:2px 0 2px 16px; font-size:0.85rem; color:#166534;">
+                    <span>PPN 11%</span>
+                    <span>Rp 0</span>
+                </div>
+            `;
+    }
+  });
+
+  // Grand total
+  html += `
         <div class="summary-row total">
-            <span>Grand Total</span>
-            <span>Rp ${hasil.grandTotal.toLocaleString('id-ID')}</span>
+            <span>Grand Total <span style="font-weight:400; font-size:0.75rem; color:#666;">(termasuk PPN 11%)</span></span>
+            <span>Rp ${hasil.grandTotal.toLocaleString("id-ID")}</span>
         </div>
     `;
 
-    // Informasi shared
-    if (hasil.sharedTotal > 0) {
-        html += `
+  // Informasi shared
+  if (hasil.sharedTotal > 0) {
+    html += `
             <div style="font-size:0.85rem; color:#666; margin-top:8px;">
-                Total menu bersama: Rp ${hasil.sharedTotal.toLocaleString('id-ID')}
-                (Rp ${hasil.sharedPerOrang.toLocaleString('id-ID')}/orang)
+                Total menu bersama: Rp ${hasil.sharedTotal.toLocaleString("id-ID")}
+                (Rp ${hasil.sharedPerOrang.toLocaleString("id-ID")}/orang)
             </div>
         `;
-    }
+  }
 
-    html += '</div>';
+  // Informasi PPN
+  if (hasil.ppnTotal > 0) {
+    html += `
+            <div style="font-size:0.85rem; color:#166534; margin-top:4px;">
+                Total PPN 11%: Rp ${hasil.ppnTotal.toLocaleString("id-ID")}
+            </div>
+        `;
+  }
 
-    container.innerHTML = html;
+  html += "</div>";
+
+  container.innerHTML = html;
 }
 
 /*
@@ -795,32 +880,33 @@ function renderSummary() {
  * Mengisi semua dropdown menu Gacoan dengan data menuItems.
  */
 function renderMenuDropdowns() {
-    // Daftar selector dropdown yang perlu diisi
-    const selectors = ['personalMenuSelect', 'sharedMenuSelect'];
+  // Daftar selector dropdown yang perlu diisi
+  const selectors = ["personalMenuSelect", "sharedMenuSelect"];
 
-    selectors.forEach(id => {
-        const select = document.getElementById(id);
-        if (!select) return;
+  selectors.forEach((id) => {
+    const select = document.getElementById(id);
+    if (!select) return;
 
-        // Simpan nilai yang sedang dipilih
-        const currentValue = select.value;
+    // Simpan nilai yang sedang dipilih
+    const currentValue = select.value;
 
-        // Kosongkan
-        select.innerHTML = '<option value="">— Pilih menu —</option>';
+    // Kosongkan
+    select.innerHTML = '<option value="">— Pilih menu —</option>';
 
-        // Isi menu
-        menuItems.forEach(item => {
-            const option = document.createElement('option');
-            option.value = item.name;       // value = nama menu
-            option.textContent = item.name + ' — Rp ' + item.price.toLocaleString('id-ID');
-            select.appendChild(option);
-        });
-
-        // Kembalikan pilihan sebelumnya
-        if (currentValue) {
-            select.value = currentValue;
-        }
+    // Isi menu
+    menuItems.forEach((item) => {
+      const option = document.createElement("option");
+      option.value = item.name; // value = nama menu
+      option.textContent =
+        item.name + " — Rp " + item.price.toLocaleString("id-ID");
+      select.appendChild(option);
     });
+
+    // Kembalikan pilihan sebelumnya
+    if (currentValue) {
+      select.value = currentValue;
+    }
+  });
 }
 
 /*
@@ -829,10 +915,10 @@ function renderMenuDropdowns() {
  * Contoh: shared item disabled jika < 2 orang.
  */
 function updateButtonStates() {
-    const sharedBtn = document.getElementById('addSharedBtn');
-    if (sharedBtn) {
-        sharedBtn.disabled = state.people.length < 2;
-    }
+  const sharedBtn = document.getElementById("addSharedBtn");
+  if (sharedBtn) {
+    sharedBtn.disabled = state.people.length < 2;
+  }
 }
 
 // =========================================================================
@@ -845,47 +931,47 @@ function updateButtonStates() {
  * Overlay mencakup seluruh halaman dengan spinner + teks.
  */
 function buatLoadingOverlay() {
-    if (document.getElementById('loadingOverlay')) return;
+  if (document.getElementById("loadingOverlay")) return;
 
-    const overlay = document.createElement('div');
-    overlay.id = 'loadingOverlay';
-    overlay.style.cssText = [
-        'position: fixed',
-        'inset: 0',
-        'background: rgba(255,255,255,0.8)',
-        'display: none',
-        'align-items: center',
-        'justify-content: center',
-        'flex-direction: column',
-        'z-index: 9999',
-        'backdrop-filter: blur(2px)'
-    ].join(';');
+  const overlay = document.createElement("div");
+  overlay.id = "loadingOverlay";
+  overlay.style.cssText = [
+    "position: fixed",
+    "inset: 0",
+    "background: rgba(255,255,255,0.8)",
+    "display: none",
+    "align-items: center",
+    "justify-content: center",
+    "flex-direction: column",
+    "z-index: 9999",
+    "backdrop-filter: blur(2px)",
+  ].join(";");
 
-    overlay.innerHTML = [
-        '<div style="width:40px;height:40px;border:4px solid #e5e7eb;border-top-color:#3b82f6;border-radius:50%;animation:spin 0.8s linear infinite;"></div>',
-        '<p style="margin-top:12px;color:#6b7280;font-size:0.9rem;">Memproses...</p>'
-    ].join('');
+  overlay.innerHTML = [
+    '<div style="width:40px;height:40px;border:4px solid #e5e7eb;border-top-color:#3b82f6;border-radius:50%;animation:spin 0.8s linear infinite;"></div>',
+    '<p style="margin-top:12px;color:#6b7280;font-size:0.9rem;">Memproses...</p>',
+  ].join("");
 
-    // Tambah keyframes spinner (hanya sekali)
-    if (!document.getElementById('loadingSpinnerStyle')) {
-        const style = document.createElement('style');
-        style.id = 'loadingSpinnerStyle';
-        style.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
-        document.head.appendChild(style);
-    }
+  // Tambah keyframes spinner (hanya sekali)
+  if (!document.getElementById("loadingSpinnerStyle")) {
+    const style = document.createElement("style");
+    style.id = "loadingSpinnerStyle";
+    style.textContent = "@keyframes spin { to { transform: rotate(360deg); } }";
+    document.head.appendChild(style);
+  }
 
-    document.body.appendChild(overlay);
+  document.body.appendChild(overlay);
 }
 
 function tampilkanLoading() {
-    buatLoadingOverlay();
-    const overlay = document.getElementById('loadingOverlay');
-    if (overlay) overlay.style.display = 'flex';
+  buatLoadingOverlay();
+  const overlay = document.getElementById("loadingOverlay");
+  if (overlay) overlay.style.display = "flex";
 }
 
 function sembunyikanLoading() {
-    const overlay = document.getElementById('loadingOverlay');
-    if (overlay) overlay.style.display = 'none';
+  const overlay = document.getElementById("loadingOverlay");
+  if (overlay) overlay.style.display = "none";
 }
 
 // =========================================================================
@@ -900,30 +986,32 @@ function sembunyikanLoading() {
  * 3. Render UI dan pasang event listener
  */
 async function initApp() {
-    tampilkanLoading();
+  tampilkanLoading();
 
-    try {
-        const menuDariApi = await api.fetchMenu();
-        if (menuDariApi && menuDariApi.length > 0) {
-            menuItems = menuDariApi;
-        }
-    } catch (err) {
-        console.warn('Gagal fetch menu dari API, pakai data lokal:', err.message);
+  try {
+    const menuDariApi = await api.fetchMenu();
+    if (menuDariApi && menuDariApi.length > 0) {
+      menuItems = menuDariApi;
     }
+  } catch (err) {
+    console.warn("Gagal fetch menu dari API, pakai data lokal:", err.message);
+  }
 
-    try {
-        const session = await api.createSession('Split Bill Gacoan');
-        state.sessionId = session.id;
-    } catch (err) {
-        console.error('Gagal membuat session:', err.message);
-        tampilkanToast('Gagal terhubung ke server. Beberapa fitur mungkin tidak tersedia.');
-    }
+  try {
+    const session = await api.createSession("Split Bill Gacoan");
+    state.sessionId = session.id;
+  } catch (err) {
+    console.error("Gagal membuat session:", err.message);
+    tampilkanToast(
+      "Gagal terhubung ke server. Beberapa fitur mungkin tidak tersedia.",
+    );
+  }
 
-    sembunyikanLoading();
+  sembunyikanLoading();
 
-    renderMenuDropdowns();
-    renderAll();
-    initEventListeners();
+  renderMenuDropdowns();
+  renderAll();
+  initEventListeners();
 }
 
 // =========================================================================
@@ -941,147 +1029,150 @@ async function initApp() {
  * Hanya dipanggil SATU KALI.
  */
 function initEventListeners() {
+  // ----- FORM TAMBAH ORANG -----
+  const formOrang = document.getElementById("addPersonForm");
+  if (formOrang) {
+    formOrang.addEventListener("submit", async function (e) {
+      e.preventDefault();
 
-    // ----- FORM TAMBAH ORANG -----
-    const formOrang = document.getElementById('addPersonForm');
-    if (formOrang) {
-        formOrang.addEventListener('submit', async function(e) {
-            e.preventDefault();
+      const input = document.getElementById("personNameInput");
+      const nama = input.value;
 
-            const input = document.getElementById('personNameInput');
-            const nama = input.value;
+      const berhasil = await addPerson(nama);
 
-            const berhasil = await addPerson(nama);
-
-            if (berhasil) {
-                input.value = '';
-                input.focus();
-            }
-        });
-    }
-
-    // ----- FORM TAMBAH PERSONAL ITEM -----
-    const formPersonal = document.getElementById('addPersonalItemForm');
-    if (formPersonal) {
-        formPersonal.addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            const personSelect = document.getElementById('personalPersonSelect');
-            const menuSelect = document.getElementById('personalMenuSelect');
-            const qtyInput = document.getElementById('personalQuantityInput');
-
-            const personId = personSelect.value;
-            const menuKey = menuSelect.value;
-            const quantity = qtyInput.value;
-
-            if (!personId) {
-                alert('Pilih orang terlebih dahulu');
-                return;
-            }
-
-            if (!menuKey) {
-                alert('Pilih menu');
-                return;
-            }
-
-            const berhasil = await addPersonalItem(personId, menuKey, quantity);
-
-            if (berhasil) {
-                menuSelect.value = '';
-                qtyInput.value = '1';
-            }
-        });
-    }
-
-    // ----- FORM TAMBAH SHARED ITEM -----
-    const formShared = document.getElementById('addSharedItemForm');
-    if (formShared) {
-        formShared.addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            const menuSelect = document.getElementById('sharedMenuSelect');
-            const qtyInput = document.getElementById('sharedQuantityInput');
-
-            const menuKey = menuSelect.value;
-            const quantity = qtyInput.value;
-
-            if (!menuKey) {
-                alert('Pilih menu');
-                return;
-            }
-
-            const berhasil = await addSharedItem(menuKey, quantity);
-
-            if (berhasil) {
-                menuSelect.value = '';
-                qtyInput.value = '1';
-            }
-        });
-    }
-
-    // ----- EVENT DELEGATION: HAPUS ORANG & ITEM -----
-    // Satu listener untuk semua klik di dalam #peopleList
-    const peopleList = document.getElementById('peopleList');
-    if (peopleList) {
-        peopleList.addEventListener('click', function(e) {
-            // Cek apakah yang diklik adalah tombol hapus orang
-            const btn = e.target.closest('.remove-person');
-            if (btn && btn.dataset.personId) {
-                removePerson(btn.dataset.personId);
-                return;
-            }
-
-            // Cek apakah yang diklik adalah chip orang (untuk pilih activePerson)
-            const chip = e.target.closest('.person-chip');
-            if (chip && chip.dataset.personId) {
-                state.activePersonId = chip.dataset.personId;
-                renderAll();
-                return;
-            }
-        });
-    }
-
-    // ----- EVENT DELEGATION: HAPUS ITEM (PERSONAL & SHARED) -----
-    // Satu listener untuk klik hapus di personalItemsList
-    const personalList = document.getElementById('personalItemsList');
-    if (personalList) {
-        personalList.addEventListener('click', function(e) {
-            const btn = e.target.closest('button[data-item-id]');
-            if (btn && btn.dataset.itemId) {
-                removeItem(btn.dataset.itemId);
-            }
-        });
-    }
-
-    // Satu listener untuk klik hapus di sharedItemsList
-    const sharedList = document.getElementById('sharedItemsList');
-    if (sharedList) {
-        sharedList.addEventListener('click', function(e) {
-            const btn = e.target.closest('button[data-item-id]');
-            if (btn && btn.dataset.itemId) {
-                removeItem(btn.dataset.itemId);
-            }
-        });
-    }
-
-    // ----- TOMBOL COPY HASIL -----
-    const copyBtn = document.getElementById('copyButton');
-    if (copyBtn) {
-        copyBtn.addEventListener('click', copyResult);
-    }
-
-    // ----- TOMBOL RESET / MULAI BARU -----
-    const resetBtns = document.querySelectorAll('#resetButton, #resetButton2');
-    resetBtns.forEach(btn => {
-        btn.addEventListener('click', async function() {
-            if (state.people.length === 0 && state.personalItems.length === 0 && state.sharedItems.length === 0) {
-                return;
-            }
-            if (confirm('Mulai baru akan menghapus semua data. Lanjutkan?')) {
-                await resetAll();
-            }
-        });
+      if (berhasil) {
+        input.value = "";
+        input.focus();
+      }
     });
+  }
+
+  // ----- FORM TAMBAH PERSONAL ITEM -----
+  const formPersonal = document.getElementById("addPersonalItemForm");
+  if (formPersonal) {
+    formPersonal.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const personSelect = document.getElementById("personalPersonSelect");
+      const menuSelect = document.getElementById("personalMenuSelect");
+      const qtyInput = document.getElementById("personalQuantityInput");
+
+      const personId = personSelect.value;
+      const menuKey = menuSelect.value;
+      const quantity = qtyInput.value;
+
+      if (!personId) {
+        alert("Pilih orang terlebih dahulu");
+        return;
+      }
+
+      if (!menuKey) {
+        alert("Pilih menu");
+        return;
+      }
+
+      const berhasil = await addPersonalItem(personId, menuKey, quantity);
+
+      if (berhasil) {
+        menuSelect.value = "";
+        qtyInput.value = "1";
+      }
+    });
+  }
+
+  // ----- FORM TAMBAH SHARED ITEM -----
+  const formShared = document.getElementById("addSharedItemForm");
+  if (formShared) {
+    formShared.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const menuSelect = document.getElementById("sharedMenuSelect");
+      const qtyInput = document.getElementById("sharedQuantityInput");
+
+      const menuKey = menuSelect.value;
+      const quantity = qtyInput.value;
+
+      if (!menuKey) {
+        alert("Pilih menu");
+        return;
+      }
+
+      const berhasil = await addSharedItem(menuKey, quantity);
+
+      if (berhasil) {
+        menuSelect.value = "";
+        qtyInput.value = "1";
+      }
+    });
+  }
+
+  // ----- EVENT DELEGATION: HAPUS ORANG & ITEM -----
+  // Satu listener untuk semua klik di dalam #peopleList
+  const peopleList = document.getElementById("peopleList");
+  if (peopleList) {
+    peopleList.addEventListener("click", function (e) {
+      // Cek apakah yang diklik adalah tombol hapus orang
+      const btn = e.target.closest(".remove-person");
+      if (btn && btn.dataset.personId) {
+        removePerson(btn.dataset.personId);
+        return;
+      }
+
+      // Cek apakah yang diklik adalah chip orang (untuk pilih activePerson)
+      const chip = e.target.closest(".person-chip");
+      if (chip && chip.dataset.personId) {
+        state.activePersonId = chip.dataset.personId;
+        renderAll();
+        return;
+      }
+    });
+  }
+
+  // ----- EVENT DELEGATION: HAPUS ITEM (PERSONAL & SHARED) -----
+  // Satu listener untuk klik hapus di personalItemsList
+  const personalList = document.getElementById("personalItemsList");
+  if (personalList) {
+    personalList.addEventListener("click", function (e) {
+      const btn = e.target.closest("button[data-item-id]");
+      if (btn && btn.dataset.itemId) {
+        removeItem(btn.dataset.itemId);
+      }
+    });
+  }
+
+  // Satu listener untuk klik hapus di sharedItemsList
+  const sharedList = document.getElementById("sharedItemsList");
+  if (sharedList) {
+    sharedList.addEventListener("click", function (e) {
+      const btn = e.target.closest("button[data-item-id]");
+      if (btn && btn.dataset.itemId) {
+        removeItem(btn.dataset.itemId);
+      }
+    });
+  }
+
+  // ----- TOMBOL COPY HASIL -----
+  const copyBtn = document.getElementById("copyButton");
+  if (copyBtn) {
+    copyBtn.addEventListener("click", copyResult);
+  }
+
+  // ----- TOMBOL RESET / MULAI BARU -----
+  const resetBtns = document.querySelectorAll("#resetButton, #resetButton2");
+  resetBtns.forEach((btn) => {
+    btn.addEventListener("click", async function () {
+      if (
+        state.people.length === 0 &&
+        state.personalItems.length === 0 &&
+        state.sharedItems.length === 0
+      ) {
+        return;
+      }
+      if (confirm("Mulai baru akan menghapus semua data. Lanjutkan?")) {
+        await resetAll();
+      }
+    });
+  });
 }
 
 // =========================================================================
@@ -1095,52 +1186,91 @@ function initEventListeners() {
  * Format mengikuti template di functionality.md#f6.
  */
 function formatHasil() {
-    const hasil = hitungTagihan();
-    let teks = '';
+  const hasil = hitungTagihan();
+  let teks = "";
 
-    // Header
-    teks += '📋 Rincian Tagihan Gacoan\n';
-    teks += '━━━━━━━━━━━━━━━━━━━━━━\n';
-    teks += '\n';
+  // Header
+  teks += "📋 Rincian Tagihan Gacoan\n";
+  teks += "━━━━━━━━━━━━━━━━━━━━━━\n";
+  teks += "\n";
 
-    // Per orang
-    hasil.perOrang.forEach(p => {
-        teks += p.nama + ': Rp ' + Math.round(p.totalAkhir).toLocaleString('id-ID') + '\n';
+  // Per orang
+  hasil.perOrang.forEach((p) => {
+    teks +=
+      p.nama +
+      ": Rp " +
+      Math.round(p.totalAkhir).toLocaleString("id-ID") +
+      "\n";
 
-        // Detail item personal
-        p.items.forEach(item => {
-            const subtotal = item.price * item.quantity;
-            teks += '  - ' + item.name + ' (' + item.quantity + 'x) = Rp ' +
-                subtotal.toLocaleString('id-ID') + '\n';
-        });
-
-        // Bagian shared
-        if (hasil.sharedPerOrang > 0) {
-            teks += '  - Bagian menu bersama = Rp ' +
-                Math.round(hasil.sharedPerOrang).toLocaleString('id-ID') + '\n';
-        }
-
-        teks += '\n';
+    // Detail item personal
+    p.items.forEach((item) => {
+      const subtotal = item.price * item.quantity;
+      teks +=
+        "  - " +
+        item.name +
+        " (" +
+        item.quantity +
+        "x) = Rp " +
+        subtotal.toLocaleString("id-ID") +
+        "\n";
     });
 
-    // Shared items detail
-    if (hasil.sharedTotal > 0) {
-        teks += '━━━ Menu Bersama ━━━\n';
-        state.sharedItems.forEach(item => {
-            const subtotal = item.price * item.quantity;
-            teks += '  ' + item.name + ' (' + item.quantity + 'x) = Rp ' +
-                subtotal.toLocaleString('id-ID') + '\n';
-        });
-        teks += '  Total bersama: Rp ' + hasil.sharedTotal.toLocaleString('id-ID') + '\n';
-        teks += '  Per orang: Rp ' + Math.round(hasil.sharedPerOrang).toLocaleString('id-ID') + '\n';
-        teks += '\n';
+    // Bagian shared
+    if (hasil.sharedPerOrang > 0) {
+      teks +=
+        "  - Bagian menu bersama = Rp " +
+        Math.round(hasil.sharedPerOrang).toLocaleString("id-ID") +
+        "\n";
     }
 
-    // Grand total
-    teks += '━━━━━━━━━━━━━━━━━━━━━━\n';
-    teks += 'Total: Rp ' + Math.round(hasil.grandTotal).toLocaleString('id-ID') + '\n';
+    // PPN 11%
+    if (p.ppn > 0) {
+      teks +=
+        "  - PPN 11% = Rp " +
+        p.ppn.toLocaleString("id-ID") +
+        "\n";
+    }
 
-    return teks;
+    teks += "\n";
+  });
+
+  // PPN summary
+  if (hasil.ppnTotal > 0) {
+    teks += "━━━ PPN 11% ━━━\n";
+    teks +=
+      "  Total PPN: Rp " + hasil.ppnTotal.toLocaleString("id-ID") + "\n";
+    teks += "\n";
+  }
+
+  // Shared items detail
+  if (hasil.sharedTotal > 0) {
+    teks += "━━━ Menu Bersama ━━━\n";
+    state.sharedItems.forEach((item) => {
+      const subtotal = item.price * item.quantity;
+      teks +=
+        "  " +
+        item.name +
+        " (" +
+        item.quantity +
+        "x) = Rp " +
+        subtotal.toLocaleString("id-ID") +
+        "\n";
+    });
+    teks +=
+      "  Total bersama: Rp " + hasil.sharedTotal.toLocaleString("id-ID") + "\n";
+    teks +=
+      "  Per orang: Rp " +
+      Math.round(hasil.sharedPerOrang).toLocaleString("id-ID") +
+      "\n";
+    teks += "\n";
+  }
+
+  // Grand total
+  teks += "━━━━━━━━━━━━━━━━━━━━━━\n";
+  teks +=
+    "Total: Rp " + Math.round(hasil.grandTotal).toLocaleString("id-ID") + "\n";
+
+  return teks;
 }
 
 /*
@@ -1150,30 +1280,31 @@ function formatHasil() {
  * Feedback: tampilkan toast "Tersalin!".
  */
 function copyResult() {
-    // Validasi: pastikan ada data untuk di-copy
-    if (state.people.length < 2) {
-        alert('Tambahkan minimal 2 orang dan pesanan terlebih dahulu');
-        return;
-    }
+  // Validasi: pastikan ada data untuk di-copy
+  if (state.people.length < 2) {
+    alert("Tambahkan minimal 2 orang dan pesanan terlebih dahulu");
+    return;
+  }
 
-    const teks = formatHasil();
+  const teks = formatHasil();
 
-    // Cek apakah browser mendukung Clipboard API modern
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-        // Clipboard API (didukung Chrome 66+, Firefox 63+, Safari 13.1+)
-        navigator.clipboard.writeText(teks)
-            .then(function() {
-                tampilkanToast('Tersalin!');
-            })
-            .catch(function(err) {
-                // Jika gagal (misal: izin ditolak), fallback ke metode lama
-                console.warn('Clipboard API gagal, pakai fallback:', err);
-                fallbackCopy(teks);
-            });
-    } else {
-        // Browser lama — fallback
+  // Cek apakah browser mendukung Clipboard API modern
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    // Clipboard API (didukung Chrome 66+, Firefox 63+, Safari 13.1+)
+    navigator.clipboard
+      .writeText(teks)
+      .then(function () {
+        tampilkanToast("Tersalin!");
+      })
+      .catch(function (err) {
+        // Jika gagal (misal: izin ditolak), fallback ke metode lama
+        console.warn("Clipboard API gagal, pakai fallback:", err);
         fallbackCopy(teks);
-    }
+      });
+  } else {
+    // Browser lama — fallback
+    fallbackCopy(teks);
+  }
 }
 
 /*
@@ -1182,39 +1313,39 @@ function copyResult() {
  * Bekerja di hampir semua browser.
  */
 function fallbackCopy(teks) {
-    // Buat elemen textarea sementara
-    const textarea = document.createElement('textarea');
-    textarea.value = teks;
+  // Buat elemen textarea sementara
+  const textarea = document.createElement("textarea");
+  textarea.value = teks;
 
-    // Sembunyikan secara visual tapi tetap di DOM
-    textarea.style.position = 'fixed';
-    textarea.style.left = '-9999px';
-    textarea.style.top = '-9999px';
-    textarea.style.width = '1px';
-    textarea.style.height = '1px';
-    textarea.style.opacity = '0';
-    textarea.readOnly = true;
+  // Sembunyikan secara visual tapi tetap di DOM
+  textarea.style.position = "fixed";
+  textarea.style.left = "-9999px";
+  textarea.style.top = "-9999px";
+  textarea.style.width = "1px";
+  textarea.style.height = "1px";
+  textarea.style.opacity = "0";
+  textarea.readOnly = true;
 
-    document.body.appendChild(textarea);
+  document.body.appendChild(textarea);
 
-    try {
-        // Select dan copy
-        textarea.focus();
-        textarea.select();
-        const berhasil = document.execCommand('copy');
+  try {
+    // Select dan copy
+    textarea.focus();
+    textarea.select();
+    const berhasil = document.execCommand("copy");
 
-        if (berhasil) {
-            tampilkanToast('Tersalin!');
-        } else {
-            alert('Gagal menyalin. Silakan salin manual.');
-        }
-    } catch (err) {
-        console.error('Fallback copy gagal:', err);
-        alert('Gagal menyalin. Silakan salin manual.');
-    } finally {
-        // Hapus textarea dari DOM
-        document.body.removeChild(textarea);
+    if (berhasil) {
+      tampilkanToast("Tersalin!");
+    } else {
+      alert("Gagal menyalin. Silakan salin manual.");
     }
+  } catch (err) {
+    console.error("Fallback copy gagal:", err);
+    alert("Gagal menyalin. Silakan salin manual.");
+  } finally {
+    // Hapus textarea dari DOM
+    document.body.removeChild(textarea);
+  }
 }
 
 /*
@@ -1223,19 +1354,19 @@ function fallbackCopy(teks) {
  * Toast akan otomatis menghilang setelah 2 detik.
  */
 function tampilkanToast(pesan) {
-    const toast = document.getElementById('toast');
-    if (!toast) return;
+  const toast = document.getElementById("toast");
+  if (!toast) return;
 
-    // Set pesan
-    toast.textContent = pesan;
+  // Set pesan
+  toast.textContent = pesan;
 
-    // Tampilkan dengan animasi
-    toast.classList.add('visible');
+  // Tampilkan dengan animasi
+  toast.classList.add("visible");
 
-    // Hapus toast setelah 2 detik
-    setTimeout(function() {
-        toast.classList.remove('visible');
-    }, 2000);
+  // Hapus toast setelah 2 detik
+  setTimeout(function () {
+    toast.classList.remove("visible");
+  }, 2000);
 }
 
 // =========================================================================

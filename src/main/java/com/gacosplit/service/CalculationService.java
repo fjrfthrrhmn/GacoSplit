@@ -51,6 +51,13 @@ import org.springframework.stereotype.Service;
  */
 public class CalculationService {
 
+    /*
+     * PPN (Pajak Pertambahan Nilai) — Indonesia VAT rate.
+     * Berlaku 11% sejak 1 April 2022 (UU HPP).
+     * Digunakan untuk menghitung pajak dari total pesanan per orang.
+     */
+    private static final BigDecimal PPN_RATE = new BigDecimal("0.11");
+
     private final ItemRepository itemRepository;
 
     /*
@@ -78,11 +85,13 @@ public class CalculationService {
      *     b. Total tagihan = personalTotal + sharedPerPerson
      *  6. Grand total = jumlah semua tagihan per orang
      *
-     *  Rumus (dari docs/architecture/functionality.md#f5):
+     *  Rumus (dari docs/ARCHITECTURE.md):
      *    PersonalTotal(orang) = Σ(item.price × item.quantity)
      *    SharedTotal = Σ(sharedItem.price × sharedItem.quantity)
      *    SharedPerOrang = SharedTotal ÷ JumlahOrang
-     *    TotalPerOrang = PersonalTotal + SharedPerOrang
+     *    DasarPengenaanPajak = PersonalTotal + SharedPerOrang
+     *    PPN = DasarPengenaanPajak × 11% (dibulatkan ke rupiah penuh)
+     *    TotalPerOrang = PersonalTotal + SharedPerOrang + PPN
      *
      *  Edge cases:
      *  - Session tanpa orang → return error
@@ -187,13 +196,21 @@ public class CalculationService {
 
             // Total yang harus dibayar = personal + shared portion
             BigDecimal amountOwed = personalTotal.add(sharedPerPerson);
-            grandTotal = grandTotal.add(amountOwed);
+
+            // Hitung PPN 11% dari Dasar Pengenaan Pajak (personal + shared)
+            BigDecimal ppn = amountOwed.multiply(PPN_RATE)
+                    .setScale(0, RoundingMode.HALF_UP);
+
+            // Total akhir setelah PPN
+            BigDecimal totalAfterPpn = amountOwed.add(ppn);
+            grandTotal = grandTotal.add(totalAfterPpn);
 
             // Set transient fields di Person entity
             // (berguna kalau entity ini dipakai lagi nanti)
             person.setPersonalTotal(personalTotal);
             person.setSharedPortion(sharedPerPerson);
-            person.setAmountOwed(amountOwed);
+            person.setAmountOwed(totalAfterPpn);
+            person.setPpn(ppn);
 
             // Format response per orang
             Map<String, Object> personResult = new HashMap<>();
@@ -201,7 +218,8 @@ public class CalculationService {
             personResult.put("name", person.getName());
             personResult.put("personalTotal", personalTotal);
             personResult.put("sharedPortion", sharedPerPerson);
-            personResult.put("total", amountOwed);
+            personResult.put("ppn", ppn);
+            personResult.put("total", totalAfterPpn);
             personResult.put("items", itemDetails);
 
             perPersonList.add(personResult);
@@ -235,6 +253,15 @@ public class CalculationService {
         result.put("peopleCount", peopleCount);
         result.put("sharedTotal", sharedTotal);
         result.put("sharedPerPerson", sharedPerPerson);
+
+        // Hitung total PPN dari semua orang
+        BigDecimal ppnTotal = BigDecimal.ZERO;
+        for (Map<String, Object> p : perPersonList) {
+            ppnTotal = ppnTotal.add((BigDecimal) p.get("ppn"));
+        }
+        result.put("ppnRate", PPN_RATE);
+        result.put("ppnTotal", ppnTotal);
+
         result.put("grandTotal", grandTotal);
         result.put("perPerson", perPersonList);
         result.put("sharedItems", sharedItemDetails);

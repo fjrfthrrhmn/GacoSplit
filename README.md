@@ -36,6 +36,42 @@ GacoSplit menyediakan:
 - Perhitungan otomatis total tagihan dan jumlah per orang
 - Reset sesi dan ekspor hasil (salin ke clipboard)
 
+## Menu Gacoan
+
+> Sumber Data Menu: "https://www.tokopedia.com/blog/menu-mie-gacoan-tvl/"
+
+```
+let menuItems = [
+  { name: "Mie Gacoan", price: 10000 },
+  { name: "Mie Gacoan lvl 6 - 8", price: 10900 },
+  { name: "Mie Hompimpa", price: 10000 },
+  { name: "Mie Hompimpa lvl 6 - 8", price: 10900 },
+  { name: "Mie Suit", price: 10000 },
+
+  { name: "Udang Keju", price: 9100 },
+  { name: "Udang Rambutan", price: 9100 },
+  { name: "Lumpia Udang", price: 9100 },
+  { name: "Siomay", price: 9100 },
+  { name: "Pangsit Goreng", price: 10000 },
+
+  { name: "Es Gobak Sodor", price: 9100 },
+  { name: "Es Teklek", price: 5900 },
+  { name: "Es Sluku Bathok", price: 5900 },
+  { name: "Es Petak Umpet", price: 9100 },
+
+  { name: "Air Mineral", price: 4100 },
+  { name: "Lemon Tea", price: 5900 },
+  { name: "Milo", price: 8200 },
+  { name: "Orange", price: 5000 },
+  { name: "Es Teh", price: 4100 },
+  { name: "Tea Tarik", price: 6400 },
+  { name: "Vanila Latte", price: 8200 },
+  { name: "Thai Tea", price: 8200 },
+  { name: "Thai Green Tea", price: 8200 },
+  { name: "Es Coklat", price: 8200 },
+];
+```
+
 ---
 
 ## Arsitektur Sistem
@@ -101,11 +137,14 @@ Perhitungan terdiri dari dua komponen:
 
 1. **Total Personal** — Jumlah seluruh item yang dipesan secara individu.
 2. **Bagian Shared** — Total item bersama dibagi rata ke seluruh peserta.
+3. **PPN 11%** — Pajak Pertambahan Nilai dari Dasar Pengenaan Pajak (personal + bagian shared).
 
 Rumus akhir:
 
 ```
-JumlahTagihan = TotalPersonal + (TotalShared / JumlahPeserta)
+DPP = TotalPersonal + (TotalShared / JumlahPeserta)
+PPN = DPP × 11% (dibulatkan ke rupiah penuh)
+TotalTagihan = DPP + PPN
 ```
 
 ---

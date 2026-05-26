@@ -108,6 +108,9 @@ public class Person {
     @Transient
     private BigDecimal amountOwed;
 
+    @Transient
+    private BigDecimal ppn;
+
     /*
      * =============================================================
      *  CONSTRUCTORS
@@ -176,5 +179,13 @@ public class Person {
 
     public void setAmountOwed(BigDecimal amountOwed) {
         this.amountOwed = amountOwed;
+    }
+
+    public BigDecimal getPpn() {
+        return ppn;
+    }
+
+    public void setPpn(BigDecimal ppn) {
+        this.ppn = ppn;
     }
 }

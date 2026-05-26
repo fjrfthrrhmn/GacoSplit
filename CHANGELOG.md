@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.4.0] - 2026-05-26
+
+### Added
+- **PPN 11% (Pajak Pertambahan Nilai)** — perhitungan otomatis PPN dari Dasar Pengenaan Pajak per orang:
+  - `CalculationService.java`: konstanta `PPN_RATE`, perhitungan PPN = DPP × 11% (dibulatkan HALF_UP), field `ppn` di response
+  - `Person.java`: field `@Transient ppn` untuk menyimpan nilai PPN per orang
+  - `app.js`: konstanta `PPN_RATE`, perhitungan PPN di `hitungTagihan()`, tampilan PPN di `renderSummary()` (per orang + total), format PPN di `formatHasil()`
+- **Menu Gacoan sync**: `MenuController.java` diperbarui dengan menu dari `README.md` (24 item Gacoan lengkap: Mie, Cemilan, Es, Minuman)
+- **Dokumentasi**: rumus PPN ditambahkan ke `README.md`, `docs/ARCHITECTURE.md`, `docs/FEATURES.md`
+
+### Changed
+- Rumus perhitungan: `TotalPerOrang = (PersonalTotal + SharedPerOrang) × (1 + 11%)`
+- `MenuController.java`: dari `HashMap` ke `LinkedHashMap` untuk menjaga urutan menu
+
+---
+
 ## [0.3.0] - 2026-05-24
 
 ### Added

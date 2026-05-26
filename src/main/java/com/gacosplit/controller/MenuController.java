@@ -2,6 +2,7 @@ package com.gacosplit.controller;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,20 +44,45 @@ public class MenuController {
      *
      * Nanti bisa diganti dengan query ke database.
      */
-    private static final Map<String, BigDecimal> MENU_ITEMS = new HashMap<>();
+    /*
+     * Data menu Gacoan dari README.md.
+     * Sumber: https://www.tokopedia.com/blog/menu-mie-gacoan-tvl/
+     * Sync dengan data di frontend (src/main/resources/static/js/app.js).
+     */
+    private static final Map<String, BigDecimal> MENU_ITEMS = new LinkedHashMap<>();
 
     static {
-        MENU_ITEMS.put("Mie Gacoan Level 1", new BigDecimal("16000"));
-        MENU_ITEMS.put("Mie Gacoan Level 2", new BigDecimal("17000"));
-        MENU_ITEMS.put("Mie Gacoan Level 3", new BigDecimal("18000"));
-        MENU_ITEMS.put("Mie Gacoan Level 4", new BigDecimal("19000"));
-        MENU_ITEMS.put("Mie Gacoan Level 5", new BigDecimal("20000"));
-        MENU_ITEMS.put("Mie Katsu", new BigDecimal("20000"));
-        MENU_ITEMS.put("Mie Pangsit", new BigDecimal("20000"));
-        MENU_ITEMS.put("Dimsum", new BigDecimal("15000"));
-        MENU_ITEMS.put("Es Teh Manis", new BigDecimal("5000"));
-        MENU_ITEMS.put("Es Jeruk", new BigDecimal("6000"));
-        MENU_ITEMS.put("Tahu Crispy", new BigDecimal("8000"));
+        /* Mie */
+        MENU_ITEMS.put("Mie Gacoan", new BigDecimal("10000"));
+        MENU_ITEMS.put("Mie Gacoan lvl 6 - 8", new BigDecimal("10900"));
+        MENU_ITEMS.put("Mie Hompimpa", new BigDecimal("10000"));
+        MENU_ITEMS.put("Mie Hompimpa lvl 6 - 8", new BigDecimal("10900"));
+        MENU_ITEMS.put("Mie Suit", new BigDecimal("10000"));
+
+        /* Cemilan */
+        MENU_ITEMS.put("Udang Keju", new BigDecimal("9100"));
+        MENU_ITEMS.put("Udang Rambutan", new BigDecimal("9100"));
+        MENU_ITEMS.put("Lumpia Udang", new BigDecimal("9100"));
+        MENU_ITEMS.put("Siomay", new BigDecimal("9100"));
+        MENU_ITEMS.put("Pangsit Goreng", new BigDecimal("10000"));
+
+        /* Es */
+        MENU_ITEMS.put("Es Gobak Sodor", new BigDecimal("9100"));
+        MENU_ITEMS.put("Es Teklek", new BigDecimal("5900"));
+        MENU_ITEMS.put("Es Sluku Bathok", new BigDecimal("5900"));
+        MENU_ITEMS.put("Es Petak Umpet", new BigDecimal("9100"));
+
+        /* Minuman */
+        MENU_ITEMS.put("Air Mineral", new BigDecimal("4100"));
+        MENU_ITEMS.put("Lemon Tea", new BigDecimal("5900"));
+        MENU_ITEMS.put("Milo", new BigDecimal("8200"));
+        MENU_ITEMS.put("Orange", new BigDecimal("5000"));
+        MENU_ITEMS.put("Es Teh", new BigDecimal("4100"));
+        MENU_ITEMS.put("Tea Tarik", new BigDecimal("6400"));
+        MENU_ITEMS.put("Vanila Latte", new BigDecimal("8200"));
+        MENU_ITEMS.put("Thai Tea", new BigDecimal("8200"));
+        MENU_ITEMS.put("Thai Green Tea", new BigDecimal("8200"));
+        MENU_ITEMS.put("Es Coklat", new BigDecimal("8200"));
     }
 
     // ==================================================================

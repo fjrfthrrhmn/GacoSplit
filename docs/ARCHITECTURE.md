@@ -12,16 +12,26 @@ Item    { String id, name; BigDecimal price; Integer quantity; Boolean isShared;
 
 ## Functionality
 
-| ID  | Feature                                                  |
-| :-- | :------------------------------------------------------- |
-| F1  | Buat session (UUID + timestamp)                          |
-| F2  | Tambah/hapus orang (min 2, max 10)                       |
-| F3  | Input pesanan personal per orang (template/custom)       |
-| F4  | Input shared item — dibagi rata ke semua orang           |
-| F5  | Hitung: `AmountOwed = PersonalTotal + (SharedTotal ÷ n)` |
-| F6  | Copy hasil ke clipboard                                  |
+| ID  | Feature                                                                       |
+| :-- | :---------------------------------------------------------------------------- |
+| F1  | Buat session (UUID + timestamp)                                               |
+| F2  | Tambah/hapus orang (min 2, max 10)                                            |
+| F3  | Input pesanan personal per orang (template/custom)                            |
+| F4  | Input shared item — dibagi rata ke semua orang                                |
+| F5  | Hitung: `AmountOwed = (PersonalTotal + (SharedTotal ÷ n)) × (1 + 11%)`       |
+| F6  | Copy hasil ke clipboard                                                       |
 
-**Calculation Example:** Personal (Fajar 23k, Rudi 20k, Toni 15k) + Shared 18k ÷ 3 = Fajar 29k, Rudi 26k, Toni 21k.
+**Calculation Formula:**
+```
+PersonalTotal(orang) = Σ(item.price × item.quantity)
+SharedTotal = Σ(sharedItem.price × sharedItem.quantity)
+SharedPerOrang = SharedTotal ÷ n
+DPP = PersonalTotal + SharedPerOrang
+PPN = DPP × 11% (dibulatkan ke rupiah penuh)
+TotalPerOrang = DPP + PPN
+```
+
+**Calculation Example:** Personal (Fajar 23k, Rudi 20k, Toni 15k) + Shared 18k ÷ 3 = DPP Fajar 29k, Rudi 26k, Toni 21k; PPN 11% = Fajar 3.190, Rudi 2.860, Toni 2.310 → Total Fajar 32.190, Rudi 28.860, Toni 23.310.
 
 **Validation:** Nama required (2–30 chars), harga max 999.999, quantity 1–99, min 2 orang.
 
