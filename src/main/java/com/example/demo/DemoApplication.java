@@ -7,13 +7,22 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /*
  * =========================================================================
- *  GacoSplitApplication — entry point
+ *  DemoApplication — Entry point aplikasi (pintu masuk server)
  * =========================================================================
  *
- *  @SpringBootApplication:
- *  - @Configuration: menjadikan class ini sumber definisi bean
- *  - @EnableAutoConfiguration: konfigurasi otomatis Spring Boot
- *  - @ComponentScan: scan komponen di package ini dan sub-package-nya
+ *  File ini adalah yang pertama dijalankan pas kita ketik:
+ *  ./mvnw.cmd spring-boot:run
+ *
+ *  Method main() bakal nyalain server Spring Boot, yang otomatis:
+ *  1. Nge-scan semua file @Controller, @Service, @Repository
+ *  2. Nyambung ke database H2
+ *  3. Siap nerima HTTP request di port 8080
+ *
+ *  Kenapa ada scanBasePackages + @EntityScan + @EnableJpaRepositories?
+ *  Karena entry point di package "com.example.demo", sedangkan entity,
+ *  repository, dan service kita ada di "com.gacosplit".
+ *  Spring cuma scan package-nya sendiri secara default — jadi kita
+ *  perlu kasih tahu secara manual.
  * =========================================================================
  */
 

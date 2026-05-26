@@ -89,17 +89,9 @@ public class MenuController {
     //  1. GET /api/menu — Ambil daftar menu
     // ==================================================================
     /*
-     * Fungsi: Mengembalikan daftar menu Gacoan yang tersedia.
-     *
-     * Output (200 OK):
-     *   [
-     *     { "name": "Mie Gacoan Level 1", "price": 16000 },
-     *     { "name": "Mie Gacoan Level 2", "price": 17000 },
-     *     ...
-     *   ]
-     *
-     * Kenapa GET? Karena hanya membaca data, tidak mengubah apapun.
-     * Ini adalah endpoint publik — tidak perlu authentication.
+     * Mengirim daftar menu Gacoan ke frontend (app.js).
+     * Data di-loop dari MENU_ITEMS dan diubah formatnya jadi array JSON.
+     * Endpoint ini cuma baca (read-only) — gak ada yang berubah di server.
      */
     @GetMapping
     public ResponseEntity<List<Map<String, Object>>> getMenu() {

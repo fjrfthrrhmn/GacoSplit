@@ -6,15 +6,22 @@ import org.springframework.stereotype.Repository;
 
 /*
  * =========================================================================
- *  PersonRepository — akses data Person ke database
+ *  PersonRepository — Akses data tabel persons
  * =========================================================================
  *
- *  Sama seperti SessionRepository: extends JpaRepository.
- *  Semua method CRUD standar otomatis tersedia.
+ *  extends JpaRepository<Person, String>:
+ *  - Person: entity yang dikelola
+ *  - String: tipe data primary key (UUID)
  *
- *  Nanti di Fase 3.3 akan ditambah method kustom:
- *  - findBySessionId(String sessionId) → cari semua person dalam session
- *  - countBySessionId(String sessionId) → hitung jumlah person
+ *  Method GRATIS dari JpaRepository:
+ *  - findAll()       → ambil semua person
+ *  - findById(id)    → cari person berdasarkan ID
+ *  - save(person)    → simpan person baru / update
+ *  - delete(person)  → hapus person
+ *
+ *  Kalau butuh query spesifik (misal cari person dalam satu session),
+ *  tinggal tambah method dengan nama yang sesuai — Spring otomatis
+ *  bikin query-nya dari nama method.
  * =========================================================================
  */
 
@@ -22,14 +29,8 @@ import org.springframework.stereotype.Repository;
 public interface PersonRepository extends JpaRepository<Person, String> {
 
     /*
-     * Query method: Spring Data JPA akan otomatis membuat
-     * implementasi dari method ini berdasarkan nama method.
-     *
-     * Contoh: findBySessionId(String sessionId)
-     * akan menghasilkan query:
-     *   SELECT * FROM persons WHERE session_id = ?
-     *
-     * Method ini akan ditambahkan nanti saat membuat Service Layer
-     * (Fase 3.3).
+     * Saat ini pake method standar dari JpaRepository.
+     * Method kustom kayak findBySessionId() bisa ditambah kapan aja —
+     * Spring Data JPA otomatis bikin implementasinya dari nama method.
      */
 }
