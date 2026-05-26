@@ -170,18 +170,18 @@ Akses aplikasi di `http://localhost:8080`
 
 ## Dokumentasi
 
-| Dokumen | Deskripsi |
-|---|---|
-| `DESIGN.md` | SSOT — Apple-inspired design system |
-| `AGENTS.md` | Definisi peran agen dan keahlian pengembangan |
-| `CHANGELOG.md` | Catatan perubahan dan iterasi pengembangan |
-| `ROADMAP.md` | Milestone pengembangan |
-| `docs/PRODUCT.md` | Gambaran produk, problem, solusi, tech stack |
-| `docs/FEATURES.md` | Prioritas MoSCoW, acceptance criteria, roadmap fitur |
-| `docs/ARCHITECTURE.md` | Data model, fungsionalitas, API endpoints |
-| `docs/UX-FLOW.md` | Alur pengguna dari awal hingga hasil |
-| `docs/UI-UX.md` | Token desain: warna, tipografi, shadow, spacing |
-| `docs/UX-WRITING.md` | Panduan UX writing dan copy |
+| Dokumen                | Deskripsi                                            |
+| ---------------------- | ---------------------------------------------------- |
+| `DESIGN.md`            | SSOT — Apple-inspired design system                  |
+| `AGENTS.md`            | Definisi peran agen dan keahlian pengembangan        |
+| `CHANGELOG.md`         | Catatan perubahan dan iterasi pengembangan           |
+| `ROADMAP.md`           | Milestone pengembangan                               |
+| `docs/PRODUCT.md`      | Gambaran produk, problem, solusi, tech stack         |
+| `docs/FEATURES.md`     | Prioritas MoSCoW, acceptance criteria, roadmap fitur |
+| `docs/ARCHITECTURE.md` | Data model, fungsionalitas, API endpoints            |
+| `docs/UX-FLOW.md`      | Alur pengguna dari awal hingga hasil                 |
+| `docs/UI-UX.md`        | Token desain: warna, tipografi, shadow, spacing      |
+| `docs/UX-WRITING.md`   | Panduan UX writing dan copy                          |
 
 ---
 

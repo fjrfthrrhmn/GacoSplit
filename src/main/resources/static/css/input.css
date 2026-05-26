@@ -1,40 +1,27 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-  :root {
-    --background: 0 0% 99.2157%;
-    --foreground: 0 0% 0%;
-    --card: 0 0% 99.2157%;
-    --card-foreground: 0 0% 0%;
-    --popover: 0 0% 98.8235%;
-    --popover-foreground: 0 0% 0%;
-    --primary: 328.2530 91.8200% 58.1972%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 194.1535 130.0850% 43.6488%;
-    --secondary-foreground: 223.8136 -172.5242% 100.0000%;
-    --muted: 0 0% 96.0784%;
-    --muted-foreground: 0 0% 32.1569%;
-    --accent: 355.7174 96.5265% 97.1876%;
-    --accent-foreground: 0 0% 0%;
-    --destructive: 358.4416 74.7573% 59.6078%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 240 17.0732% 91.9608%;
-    --input: 0 0% 92.1569%;
-    --ring: 0 0% 0%;
-    --font-sans: "Geist", ui-sans-serif, sans-serif, system-ui;
-    --font-serif: "Lora", ui-serif, serif;
-    --font-mono: "DM Mono", monospace;
-    --radius: 1.4rem;
-    --tracking-normal: -0.025em;
-    --spacing: 0.27rem;
-  }
-
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+:root {
+  --background: 0 0% 99.2157%;
+  --foreground: 0 0% 0%;
+  --card: 0 0% 99.2157%;
+  --card-foreground: 0 0% 0%;
+  --popover: 0 0% 98.8235%;
+  --popover-foreground: 0 0% 0%;
+  --primary: 328.2530 91.8200% 58.1972%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 194.1535 130.0850% 43.6488%;
+  --secondary-foreground: 223.8136 -172.5242% 100.0000%;
+  --muted: 0 0% 96.0784%;
+  --muted-foreground: 0 0% 32.1569%;
+  --accent: 355.7174 96.5265% 97.1876%;
+  --accent-foreground: 0 0% 0%;
+  --destructive: 358.4416 74.7573% 59.6078%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 240 17.0732% 91.9608%;
+  --input: 0 0% 92.1569%;
+  --ring: 0 0% 0%;
+  --font-sans: "Geist", ui-sans-serif, sans-serif, system-ui;
+  --font-serif: "Lora", ui-serif, serif;
+  --font-mono: "DM Mono", monospace;
+  --radius: 1.4rem;
+  --tracking-normal: -0.025em;
+  --spacing: 0.27rem;
 }

@@ -57,13 +57,11 @@ async function renderTeamCards(containerId, members) {
             <!-- LEFT -->
             <div class="flex items-center gap-4 min-w-0 flex-1">
 
-              <!-- Avatar -->
-                <img
+              <img
   src="${member.profile.avatar_url}"
   alt="${member.profile.name}"
   loading="lazy"
-  style="height: 60px;"
-  class=" rounded-full object-cover"
+  class="w-10 h-10 md:w-12 md:h-12 min-w-10 min-h-10 md:min-w-12 md:min-h-12 rounded-full object-cover flex-none"
 />
 
               <!-- Info -->
@@ -108,8 +106,7 @@ async function renderTeamCards(containerId, members) {
 
               <!-- Fallback Avatar -->
               <div
-  style="height: 60px;"
-                class="rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-semibold shrink-0"
+                class="w-10 h-10 md:w-12 md:h-12 min-w-10 min-h-10 md:min-w-12 md:min-h-12 rounded-full bg-zinc-900/10 text-primary flex items-center justify-center text-sm font-semibold shrink-0"
               >
                 ${member.role.charAt(0)}
               </div>

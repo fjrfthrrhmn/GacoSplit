@@ -1,25 +1,20 @@
 <!doctype html>
-<html lang="id" data-theme="gaco" xmlns:th="http://www.thymeleaf.org">
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GacoSplit — Gak Pusing Lagi Urusan Split Bill!</title>
-    <link rel="stylesheet" href="/css/output.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=DM+Mono:wght@300;400;500&display=swap"
-      rel="stylesheet"
-    />
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/styles.css" />
   </head>
-  <body class="font-sans bg-white">
+  <body>
     <!-- ============================================================
        HERO SECTION — First Impression
        ============================================================ -->
-    <section class="hero min-h-[90vh] bg-base-100 overflow-hidden relative">
+    <section class="min-h-[90vh] bg-white overflow-hidden relative">
       <!-- Decorative blobs -->
       <div
-        class="absolute -top-40 -right-40 w-96 h-96 bg-primary rounded-full blur-3xl"
+        class="absolute -top-40 -right-40 w-96 h-96 bg-pink-500 rounded-full blur-3xl"
         style="opacity: 20%"
       ></div>
       <div
@@ -27,54 +22,30 @@
         style="opacity: 20%"
       ></div>
 
-      <div class="hero-content text-center relative z-10 max-w-3xl">
+      <div
+        class="my-10 md:mt-24 flex flex-col items-center text-center relative z-10 max-w-4xl mx-auto px-6"
+      >
         <div class="space-y-8">
-          <div
-            class="badge badge-soft badge-primary bg-primary/10 border text-primary px-4 py-4 text-sm font-medium"
-          >
-            Buat lu yang makan Gacoan bareng
-          </div>
+          <div class="badge badge-primary">Gacoan bareng Yuk</div>
 
           <h1 class="text-5xl lg:text-7xl font-medium tracking-tight">
             Split Bill Gacoan
-            <span class="text-secondary block mt-2 font-bold italic"
+            <span class="text-accent block mt-2 font-bold italic"
               >Gak Pusing Lagi!</span
             >
           </h1>
 
           <p
-            class="text-lg lg:text-xl text-base-content/80 max-w-2xl mx-auto leading-relaxed"
+            class="text-lg lg:text-xl text-body max-w-2xl mx-auto leading-relaxed"
           >
             Tinggal masukin pesanan masing-masing, gua otomatis hitung siapa
             bayar berapa.
-            <strong class="text-base-content">No math, no drama.</strong>
+            <strong>No math, no drama.</strong>
           </p>
 
           <div class="flex flex-col sm:flex-row gap-2 justify-center pt-4">
-            <a
-              href="/start"
-              class="btn btn-primary btn-md px-10 text-base gap-2 shadow-lg shadow-primary/30 rounded-full"
-            >
-              Mulai Hitung!
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            </a>
-            <a
-              href="#cara-kerja"
-              class="btn btn-soft btn-md px-10 rounded-full"
-            >
-              Gini Caranya
-            </a>
+            <a href="/start" class="btn btn-primary"> Mulai Hitung! </a>
+            <a href="#cara-kerja" class="btn btn-secondary"> Gini Caranya </a>
           </div>
         </div>
       </div>
@@ -84,69 +55,46 @@
        CARA KERJA — Step-by-step
        ============================================================ -->
     <section id="cara-kerja" class="py-20 lg:py-28">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
         <div class="text-start mb-16 space-y-4">
           <h1 class="text-4xl lg:text-5xl font-medium tracking-tight">
             Gampang,
-            <span class="text-secondary block mt-2 font-bold italic"
+            <span class="text-accent block mt-2 font-bold italic"
               >Cuma 3 Langkah!</span
             >
           </h1>
-          <p class="text-base-content/60 text-lg max-w-xl">
+          <p class="text-muted text-lg max-w-xl">
             Gak perlu jadi matematikawan buat split bill. Tinggal klik-klik
             doang.
           </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
-          <!-- Step 1 -->
-          <div
-            class="card card-border bg-base-200 shadow-sm hover:shadow-md transition-shadow"
-          >
-            <div class="card-body items-center text-center p-8">
-              <div
-                class="w-14 h-14 bg-primary/10 rounded-2xl text-primary flex items-center justify-center text-2xl font-medium mb-4 font-mono"
-              >
-                1
-              </div>
-              <h3 class="card-title text-xl">Tambah Bestie</h3>
-              <p class="text-base-content/60">
+          <div class="card">
+            <div class="card-body">
+              <div class="card-step-icon icon-primary">1</div>
+              <h3 class="text-xl font-medium">Tambah Bestie</h3>
+              <p class="text-muted">
                 Masukin nama-nama temen yang ikut makan. Bisa sampe 10 orang,
                 santai aja.
               </p>
             </div>
           </div>
-
-          <!-- Step 2 -->
-          <div
-            class="card card-border bg-base-200 shadow-sm hover:shadow-md transition-shadow"
-          >
-            <div class="card-body items-center text-center p-8">
-              <div
-                class="w-14 h-14 rounded-2xl bg-secondary/10 text-secondary flex items-center justify-center text-2xl font-extrabold mb-4 font-mono"
-              >
-                2
-              </div>
-              <h3 class="card-title text-xl">Input Makanan</h3>
-              <p class="text-base-content/60">
+          <div class="card">
+            <div class="card-body">
+              <div class="card-step-icon icon-secondary">2</div>
+              <h3 class="text-xl font-medium">Input Makanan</h3>
+              <p class="text-muted">
                 Pilih menu Gacoan favorit — tinggal klik, harga otomatis keisi.
                 Ada yang dimakan bareng? Bisa pisah.
               </p>
             </div>
           </div>
-
-          <!-- Step 3 -->
-          <div
-            class="card card-border bg-base-200 shadow-sm hover:shadow-md transition-shadow"
-          >
-            <div class="card-body items-center text-center p-8">
-              <div
-                class="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-2xl font-extrabold mb-4 font-mono"
-              >
-                3
-              </div>
-              <h3 class="card-title text-xl">Salin & Share</h3>
-              <p class="text-base-content/60">
+          <div class="card">
+            <div class="card-body">
+              <div class="card-step-icon icon-primary">3</div>
+              <h3 class="text-xl font-medium">Salin & Share</h3>
+              <p class="text-muted">
                 Dapet rincian per orang, tinggal salin dan kirim ke grup WA. Gak
                 ada lagi tuh drama utang-piutang.
               </p>
@@ -160,21 +108,19 @@
        ABOUT SECTION — Kenapa Gua Dibikin?
        ============================================================ -->
     <section id="tentang" class="py-20 lg:py-28">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
         <div class="text-start mb-16 space-y-4">
           <h1 class="text-4xl lg:text-5xl font-medium tracking-tight">
             Kenapa Gua Dibikin?
           </h1>
-          <p class="text-base-content/60 text-lg max-w-xl">
+          <p class="text-muted text-lg max-w-xl">
             Gak perlu jadi matematikawan buat split bill. Tinggal klik-klik
             doang.
           </p>
         </div>
 
         <div class="">
-          <p
-            class="max-w-2xl text-lg leading-relaxed text-base-content/80 mb-6"
-          >
+          <p class="max-w-2xl text-lg leading-relaxed text-body mb-6">
             Lu pernah gak sih abis makan Gacoan bareng temen-temen, terus pas
             bayar pada saling liat? "Eh tadi lo pesen apa aja?" "Ini minumannya
             siapa yang minum?" Terus ujung-ujungnya ada yang ngerasa dibayarin
@@ -198,7 +144,7 @@
               />
             </strong>
           </p>
-          <p class="max-w-2xl text-lg leading-relaxed text-base-content/80">
+          <p class="max-w-2xl text-lg leading-relaxed text-body">
             Nah, dari situ gua dibikin. Biar gak ada lagi tuh drama split bill.
             Tinggal masukin, gua hitung, beres.
             <strong>Simple, kan?</strong>
@@ -211,9 +157,9 @@
        TEAM SECTION — Yang Dibikin Oleh
        ============================================================ -->
     <section class="py-20 lg:py-28 border-t">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
         <div
-          class="grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-12 items-start"
+          class="grid grid-cols-1 lg:grid-cols-2 md:gap-x-20 md:gap-y-12 items-start"
         >
           <!-- Left: GitHub profile cards -->
           <div id="team-cards">
@@ -225,11 +171,11 @@
             <div class="text-start mb-16 space-y-4">
               <h1 class="text-4xl lg:text-5xl font-medium tracking-tight">
                 Yang
-                <span class="text-secondary block mt-2 font-bold italic"
+                <span class="text-accent block mt-2 font-bold italic"
                   >Dibikin Oleh</span
                 >
               </h1>
-              <p class="text-base-content/60 text-lg max-w-xl">
+              <p class="text-muted text-lg max-w-xl">
                 Tim kecil yang satu visi: bikin split bill lebih simpel, cepat,
                 dan gak bikin circle pertemanan pecah 😭
               </p>
@@ -242,39 +188,35 @@
     <!-- ============================================================
        FOOTER
        ============================================================ -->
-    <footer
-      class="footer sm:footer-horizontal bg-neutral text-neutral-content p-10"
-    >
+    <footer class="footer">
       <aside>
-        <a href="/" class="text-xl font-bold tracking-tight text-secondary">
-          <span class="text-primary">Gaco</span>Split
+        <a href="/" class="text-xl font-bold tracking-tight text-accent">
+          <span class="text-[hsl(var(--primary))]">Gaco</span>Split
         </a>
-        <p class="text-sm text-neutral-content/60 max-w-xs">
+        <p class="text-gray-400 max-w-xs">
           Gak Pusing Lagi Urusan Split Bill.<br />
           Dibikin pake ❤️ buat lu yang males ribet ngitung pas makan bareng.
         </p>
       </aside>
       <nav>
         <h6 class="footer-title">Navigasi</h6>
-        <a href="/start" class="link link-hover">Mulai Hitung</a>
-        <a href="#cara-kerja" class="link link-hover">Cara Kerja</a>
-        <a href="#tentang" class="link link-hover">Tentang</a>
+        <a href="/start" class="footer-link">Mulai Hitung</a>
+        <a href="#cara-kerja" class="footer-link">Cara Kerja</a>
+        <a href="#tentang" class="footer-link">Tentang</a>
       </nav>
       <nav>
         <h6 class="footer-title">Lainnya</h6>
         <a
           href="https://github.com/fjrfthrrhmn/GacoSplit"
-          class="link link-hover"
+          class="footer-link"
           target="_blank"
           >Open Source di GitHub</a
         >
-        <a href="#" class="link link-hover"
-          >Privasi — data lu gak disimpen men</a
-        >
+        <a href="#" class="footer-link">Privasi — data lu gak disimpen men</a>
       </nav>
       <nav>
         <h6 class="footer-title">Sosial</h6>
-        <div class="grid grid-flow-col gap-4">
+        <div class="flex gap-4">
           <a
             href="https://github.com/fjrfthrrhmn"
             target="_blank"
@@ -293,7 +235,7 @@
             </svg>
           </a>
           <a
-            href="https://instagram.com/username"
+            href="https://instagram.com/fjrfthrrhmn"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram"
@@ -321,26 +263,18 @@
           {
             username: "fjrfthrrhmn",
             role: "Frontend",
-            reason:
-              '"Seorang developer yang capek ngitung manual pas makan Gacoan. Jadi daripada ngeluh, sekalian bikin solusi wkwk."',
           },
           {
             username: "shmmas",
             role: "Backend",
-            reason:
-              '"Backend-nya harus cepet, akurat, dan gak lemot pas ngitung puluhan item pesenan. Biar gak ada drama eh kok itungannya beda di grup WA."',
           },
           {
             username: "fjrfthrrhmn",
             role: "UI/UX",
-            reason:
-              '"Mau mastiin pengalaman make-nya mulus dari awal sampe akhir. Gak ada istilah tombolnya di mana — semua harus intuituif."',
           },
           {
             username: "fjrfthrrhmn",
             role: "Data Model",
-            reason:
-              '"Data model-nya harus bener biar gak pusing pas develop fitur baru. Relasi entitas jelas, query cepet, kode rapi."',
           },
         ]);
       });
