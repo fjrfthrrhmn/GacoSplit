@@ -92,7 +92,7 @@ body {
   color: hsl(var(--secondary-foreground));
   padding: 0.75rem 2.5rem;
   font-size: 1rem;
-  box-shadow: 0 10px 15px -3px hsl(var(--primary) / 0.3);
+  box-shadow: 0 10px 15px -3px hsl(var(--secondary) / 0.3);
 }
 .btn-secondary:hover {
   opacity: 0.9;
@@ -159,7 +159,7 @@ body {
   align-items: center;
   gap: 0.5rem;
   border-radius: 9999px;
-  padding: 0.2rem 1.25rem;
+  padding: 0.2rem 1rem;
   font-size: 0.875rem;
   font-weight: 500;
 }
@@ -167,6 +167,9 @@ body {
   background-color: hsl(var(--primary) / 0.1);
   border: 1px solid hsl(var(--primary) / 0.2);
   color: hsl(var(--primary));
+}
+.badge-default {
+  border: 1px solid hsl(var(--foreground) / 0.2);
 }
 
 /* ===== Form Inputs ===== */

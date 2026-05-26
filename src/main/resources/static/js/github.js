@@ -51,7 +51,7 @@ async function renderTeamCards(containerId, members) {
 
     if (member.profile) {
       wrapper.innerHTML = `
-        <a href="${member.profile.html_url}" class="border-b border-base-200 py-4">
+        <a href="${member.profile.html_url}" class="py-4">
           <div class="flex items-center justify-between gap-4">
 
             <!-- LEFT -->
@@ -61,7 +61,7 @@ async function renderTeamCards(containerId, members) {
   src="${member.profile.avatar_url}"
   alt="${member.profile.name}"
   loading="lazy"
-  class="w-10 h-10 md:w-12 md:h-12 min-w-10 min-h-10 md:min-w-12 md:min-h-12 rounded-full object-cover flex-none"
+  class="border-4 border-white shadow-md w-10 h-10 md:w-16 md:h-16 min-w-10 min-h-10 md:min-w-16 md:min-h-16 rounded-full object-cover flex-none"
 />
 
               <!-- Info -->
@@ -77,7 +77,7 @@ async function renderTeamCards(containerId, members) {
                   </h4>
                 </a>
 
-                <p class="text-sm text-base-content/60 truncate">
+                <p class="text-sm text-zinc-500 truncate">
                   ${member.profile.bio || "No bio available."}
                 </p>
               </div>
@@ -86,7 +86,7 @@ async function renderTeamCards(containerId, members) {
 
             <!-- RIGHT -->
             <div class="shrink-0">
-              <span class="text-xs sm:text-sm text-base-content/50">
+              <span class="text-xs sm:text-sm badge badge-default">
                 ${member.role}
               </span>
             </div>
@@ -126,7 +126,7 @@ async function renderTeamCards(containerId, members) {
 
             <!-- RIGHT -->
             <div class="shrink-0">
-              <span class="text-xs sm:text-sm text-base-content/50">
+              <span class="text-xs sm:text-sm  badge badge-default">
                 ${member.role}
               </span>
             </div>
