@@ -14,7 +14,7 @@
 <br/>
 
 <p align="center">
-  <img src="./public/LOGO.png" alt="GacoSplit Logo" width="200" />
+  <img src="./public/LOGO.png" alt="GacoSplit Logo" width="400" />
 </p>
 <p align="center">
   <strong>Split bill Gacoan — gak pusing lagi urusan bayar-bayaran!</strong><br/>
