@@ -1,145 +1,57 @@
-# GacoSplit
+<p align="center">
+  <img src="https://img.shields.io/badge/Java-17%2B-ED8B00?logo=openjdk&logoColor=white" alt="Java 17+"/>
+  <img src="https://img.shields.io/badge/Spring_Boot-4.0.6-6DB33F?logo=springboot&logoColor=white" alt="Spring Boot 4.0.6"/>
+  <img src="https://img.shields.io/badge/TailwindCSS-v3-06B6D4?logo=tailwindcss&logoColor=white" alt="TailwindCSS v3"/>
+  <img src="https://img.shields.io/badge/H2-Database-004088?logo=h2&logoColor=white" alt="H2 Database"/>
+  <img src="https://img.shields.io/badge/license-MIT-blue" alt="License MIT"/>
+  <img src="https://img.shields.io/github/last-commit/fjrfthrrhmn/GacoSplit" alt="Last Commit"/>
+</p>
 
-## Ringkasan
+<h1 align="center">🍜 GacoSplit</h1>
+<p align="center">
+  <strong>Split bill Gacoan — gak pusing lagi urusan bayar-bayaran!</strong><br/>
+  Aplikasi web buat ngitung tagihan makan bareng, auto include PPN 11%.
+</p>
 
-GacoSplit adalah aplikasi berbasis web yang dirancang untuk menyederhanakan proses pembagian tagihan makan bersama, khususnya untuk kasus penggunaan di restoran Gacoan.
-
-Dalam skenario makan bersama, biasanya satu orang membayar seluruh tagihan terlebih dahulu, yang kemudian memerlukan perhitungan manual untuk menentukan jumlah yang harus dibayar setiap peserta. Hal ini sering menimbulkan ketidakakuratan dan ketidaknyamanan sosial. GacoSplit menyelesaikan masalah ini dengan menyediakan sistem perhitungan yang terstruktur dan otomatis.
-
----
-
-## Latar Belakang Masalah
-
-Makan bersama sering menghadirkan beberapa tantangan:
-
-- Perhitungan biaya secara manual memakan waktu dan rentan kesalahan
-- Item yang dimakan bersama (shared) menimbulkan ketidakjelasan dalam pembagian biaya
-- Terdapat potensi gesekan sosial saat meminta pembayaran dari peserta lain
-
----
-
-## Solusi
-
-GacoSplit menyediakan:
-
-- Sistem input terstruktur untuk pesanan pribadi dan pesanan bersama
-- Perhitungan otomatis jumlah yang harus dibayar setiap peserta
-- Rincian transparan seluruh pengeluaran per peserta
+<p align="center">
+  <a href="#-project-overview">Overview</a> •
+  <a href="#-fitur">Fitur</a> •
+  <a href="#-menu-gacoan">Menu</a> •
+  <a href="#-arsitektur">Arsitektur</a> •
+  <a href="#-memulai">Memulai</a> •
+  <a href="#-teams">Teams</a>
+</p>
 
 ---
 
-## Fitur Utama
+## 📋 Project Overview
 
-- Menambah dan mengelola peserta dalam sesi
-- Input pesanan pribadi untuk setiap individu
-- Dukungan untuk item bersama yang dibagi rata ke seluruh peserta
-- Perhitungan otomatis total tagihan dan jumlah per orang
-- Reset sesi dan ekspor hasil (salin ke clipboard)
+GacoSplit lahir dari masalah klasik: abis makan bareng, pada sibuk ngitung pake kalkulator HP, ujung-ujungnya ada yang ngerasa dibayarin kurang atau kebanyakan. Aplikasi ini nyelesain itu semua — tinggal masukin pesanan, beres.
 
-## Menu Gacoan
+### Cara Kerja
 
-> Sumber Data Menu: "https://www.tokopedia.com/blog/menu-mie-gacoan-tvl/"
+| Tahap | Kegiatan |
+|-------|----------|
+| **1** | Buat sesi dan masukin nama temen-temen yang ikut makan |
+| **2** | Pilih menu Gacoan — ada yang pesen sendiri, ada yang dimakan bareng |
+| **3** | Sistem otomatis hitung total per orang + PPN 11% |
+| **4** | Tinggal salin hasilnya dan kirim ke grup WhatsApp |
 
-```
-let menuItems = [
-  { name: "Mie Gacoan", price: 10000 },
-  { name: "Mie Gacoan lvl 6 - 8", price: 10900 },
-  { name: "Mie Hompimpa", price: 10000 },
-  { name: "Mie Hompimpa lvl 6 - 8", price: 10900 },
-  { name: "Mie Suit", price: 10000 },
+### Fitur Utama
 
-  { name: "Udang Keju", price: 9100 },
-  { name: "Udang Rambutan", price: 9100 },
-  { name: "Lumpia Udang", price: 9100 },
-  { name: "Siomay", price: 9100 },
-  { name: "Pangsit Goreng", price: 10000 },
-
-  { name: "Es Gobak Sodor", price: 9100 },
-  { name: "Es Teklek", price: 5900 },
-  { name: "Es Sluku Bathok", price: 5900 },
-  { name: "Es Petak Umpet", price: 9100 },
-
-  { name: "Air Mineral", price: 4100 },
-  { name: "Lemon Tea", price: 5900 },
-  { name: "Milo", price: 8200 },
-  { name: "Orange", price: 5000 },
-  { name: "Es Teh", price: 4100 },
-  { name: "Tea Tarik", price: 6400 },
-  { name: "Vanila Latte", price: 8200 },
-  { name: "Thai Tea", price: 8200 },
-  { name: "Thai Green Tea", price: 8200 },
-  { name: "Es Coklat", price: 8200 },
-];
-```
+| Fitur | Deskripsi |
+|-------|-----------|
+| **👥 Kelola Peserta** | Tambah & hapus peserta (2–10 orang) |
+| **🍝 Input Personal** | Masing-masing pesen menu sendiri-sendiri |
+| **🤝 Menu Bersama** | Item bareng dibagi rata ke semua peserta |
+| **🧮 Auto Calculate** | Total per orang + PPN langsung muncul |
+| **📋 Salin Hasil** | Copy rincian tagihan ke clipboard |
+| **🔄 Reset Sesi** | Mulai dari awal tanpa reload halaman |
+| **💸 PPN 11%** | Pajak dihitung otomatis dari DPP per orang |
 
 ---
 
-## Arsitektur Sistem
-
-Proyek ini mengikuti **arsitektur monolitik** menggunakan satu aplikasi Spring Boot yang melayani logika backend dan sumber daya frontend secara bersamaan.
-
-### Backend
-
-- Java dengan Spring Boot
-- RESTful API untuk penanganan sesi dan perhitungan
-- Basis data embedded
-
-### Frontend
-
-- HTML yang dirender dari server (Thymeleaf)
-- Vanilla JavaScript untuk interaktivitas
-- **TailwindCSS v3** untuk styling — build via PostCSS
-
----
-
-## Struktur Proyek
-
-```
-gacosplit/
-├── package.json              # Node dependencies
-├── tailwind.config.js        # Tailwind v3 config (referensi docs/UI-UX.md)
-├── postcss.config.js         # PostCSS plugin config
-├── pom.xml                   # Maven build
-├── src/
-│   ├── main/
-│   │   ├── java/com/gacosplit/
-│   │   │   ├── controller/
-│   │   │   ├── service/
-│   │   │   ├── model/
-│   │   │   └── repository/
-│   │   └── resources/
-│   │       ├── templates/          # HTML Thymeleaf
-│   │       ├── static/
-│   │       │   ├── css/
-│   │       │   │   ├── input.css   # Entry Tailwind + CSS variables
-│   │       │   │   └── output.css  # Build output
-│   │       │   └── js/
-│   │       └── application.properties
-│   └── test/
-├── docs/                    # Dokumentasi (CAPITALIZE, flat)
-│   ├── ARCHITECTURE.md
-│   ├── FEATURES.md
-│   ├── PRODUCT.md
-│   ├── UI-UX.md
-│   ├── UX-FLOW.md
-│   └── UX-WRITING.md
-├── DESIGN.md                # SSOT (Single Source of Truth)
-├── AGENTS.md
-├── CHANGELOG.md
-└── README.md
-```
-
----
-
-## Logika Perhitungan Inti
-
-Perhitungan terdiri dari dua komponen:
-
-1. **Total Personal** — Jumlah seluruh item yang dipesan secara individu.
-2. **Bagian Shared** — Total item bersama dibagi rata ke seluruh peserta.
-3. **PPN 11%** — Pajak Pertambahan Nilai dari Dasar Pengenaan Pajak (personal + bagian shared).
-
-Rumus akhir:
+## 🧮 Logika Perhitungan
 
 ```
 DPP = TotalPersonal + (TotalShared / JumlahPeserta)
@@ -147,83 +59,142 @@ PPN = DPP × 11% (dibulatkan ke rupiah penuh)
 TotalTagihan = DPP + PPN
 ```
 
+Setiap orang liat rinciannya: total pesanan sendiri + bagian menu bareng + PPN 11%. Hasil akhir tinggal di-copy ke WhatsApp.
+
 ---
 
-## Memulai
+## 🥟 Menu Gacoan
+
+> Data menu bersumber dari [Tokopedia Blog](https://www.tokopedia.com/blog/menu-mie-gacoan-tvl/).
+
+| Menu | Kategori | Harga |
+|------|----------|-------|
+| Mie Gacoan | Mie | Rp 10.000 |
+| Mie Gacoan lvl 6 – 8 | Mie | Rp 10.900 |
+| Mie Hompimpa | Mie | Rp 10.000 |
+| Mie Hompimpa lvl 6 – 8 | Mie | Rp 10.900 |
+| Mie Suit | Mie | Rp 10.000 |
+| Udang Keju | Cemilan | Rp 9.100 |
+| Udang Rambutan | Cemilan | Rp 9.100 |
+| Lumpia Udang | Cemilan | Rp 9.100 |
+| Siomay | Cemilan | Rp 9.100 |
+| Pangsit Goreng | Cemilan | Rp 10.000 |
+| Es Gobak Sodor | Es | Rp 9.100 |
+| Es Teklek | Es | Rp 5.900 |
+| Es Sluku Bathok | Es | Rp 5.900 |
+| Es Petak Umpet | Es | Rp 9.100 |
+| Air Mineral | Minuman | Rp 4.100 |
+| Lemon Tea | Minuman | Rp 5.900 |
+| Milo | Minuman | Rp 8.200 |
+| Orange | Minuman | Rp 5.000 |
+| Es Teh | Minuman | Rp 4.100 |
+| Tea Tarik | Minuman | Rp 6.400 |
+| Vanila Latte | Minuman | Rp 8.200 |
+| Thai Tea | Minuman | Rp 8.200 |
+| Thai Green Tea | Minuman | Rp 8.200 |
+| Es Coklat | Minuman | Rp 8.200 |
+
+---
+
+## 🏗️ Arsitektur
+
+Aplikasi ini **monolitik** — backend dan frontend jalan dalam satu server Spring Boot. User buka halaman di browser, JavaScript ngomong sama API backend, backend ngurus data dan perhitungan.
+
+### Tech Stack
+
+| Layer | Teknologi |
+|-------|-----------|
+| **Backend** | Java 17+, Spring Boot 4.0.6, Maven |
+| **Frontend** | Thymeleaf, Vanilla JS, TailwindCSS v3 (CDN) |
+| **Database** | H2 (file-based: `~/test`) |
+| **ORM** | Spring Data JPA + Hibernate 7 |
+
+### 📂 Isi Folder `src/com/`
+
+| Folder | File | Fungsi |
+|--------|------|--------|
+| `example/demo/` | `DemoApplication.java` | Entry point aplikasi — yang pertama dijalankan pas server start |
+| `example/demo/controller/` | `PageController.java` | Routing halaman web: URL `/` → `index.html`, `/start` → `start.html` |
+| `gacosplit/config/` | `H2ConsoleConfig.java` | Mengaktifkan H2 Console biar bisa liat database lewat browser |
+| `gacosplit/controller/` | `SessionController.java` | REST API untuk CRUD session, orang, item, dan kalkulasi |
+| `gacosplit/controller/` | `MenuController.java` | REST API daftar menu Gacoan — 24 item lengkap dengan harga |
+| `gacosplit/model/` | `Session.java`, `Person.java`, `Item.java` | Entity JPA — struktur tabel database dalam bentuk Java object |
+| `gacosplit/model/dto/` | `SessionRequest.java`, `SessionResponse.java` | DTO — format data yang dikirim ke frontend (lebih ringan dari entity) |
+| `gacosplit/repository/` | `SessionRepository.java` dkk | Jembatan ke database — panggil method, gak perlu nulis SQL |
+| `gacosplit/service/` | `CalculationService.java` | Logic utama: hitung DPP, PPN 11%, total per orang |
+| `gacosplit/service/` | `SessionService.java` | Logic bisnis: validasi, session management, CRUD |
+
+### 🔑 Function Penting
+
+| Function | Lokasi | Penjelasan |
+|----------|--------|------------|
+| `hitungTagihan()` | `app.js` | Otak perhitungan di frontend — ngitung total + PPN tiap orang |
+| `renderSummary()` | `app.js` | Nampilin hasil perhitungan ke layar biar user bisa liat |
+| `formatHasil()` | `app.js` | Ubah hasil jadi teks rapi buat di-copy ke WhatsApp |
+| `calculate()` | `SessionController.java` | Endpoint API yang panggil `CalculationService` buat hitung tagihan |
+| `findBySessionIdAndIsSharedTrue()` | `ItemRepository.java` | Query otomatis buat ambil semua item bersama dalam satu session |
+
+---
+
+## 🛠️ Memulai
 
 ### Prasyarat
 
-- Java 17+
-- Maven
-- Node.js 18+ (untuk build CSS)
+- **Java 17+** — [Download JDK](https://adoptium.net/)
+- **Maven** (opsional — pakai `mvnw.cmd` bawaan project)
 
 ### Instalasi
 
 ```bash
 git clone https://github.com/fjrfthrrhmn/GacoSplit.git
 cd GacoSplit
+./mvnw.cmd spring-boot:run
 ```
 
-Install dependencies dan build CSS:
+Buka `http://localhost:8080` di browser dan klik **Mulai Hitung!**.
 
-```bash
-npm install
-npm run build:css
-```
-
-Jalankan aplikasi:
-
-```bash
-./mvnw spring-boot:run
-```
-
-Akses aplikasi di `http://localhost:8080`
+> Frontend pake TailwindCSS via CDN — gak perlu `npm install` atau build CSS.
 
 ---
 
-## Prinsip Desain
+## 👥 Teams
 
-- Kesederhanaan di atas fleksibilitas
-- Interaksi cepat dengan langkah minimal
-- Penggunaan utama dari perangkat seluler (mobile-first)
-- Logika perhitungan yang jelas dan transparan
-
----
-
-## Keterbatasan
-
-- Item bersama dibagi rata (tidak ada rasio kustom)
-- Tidak ada autentikasi atau akun pengguna persisten
-- Dirancang untuk penggunaan sesi tunggal (lingkup MVP)
+| Name | Role | GitHub | Instagram |
+|------|------|--------|-----------|
+| Fajar Fathurrahman | Frontend Developer & UI/UX | [@fjrfthrrhmn](https://github.com/fjrfthrrhmn) | [@fjrfthrrhmn](https://instagram.com/fjrfthrrhmn) |
+| Fajar Fathurrahman | Backend Developer & Data Model | [@fjrfthrrhmn](https://github.com/fjrfthrrhmn) | [@fjrfthrrhmn](https://instagram.com/fjrfthrrhmn) |
+| Shmmas | Backend Developer | [@shmmas](https://github.com/shmmas) | — |
 
 ---
 
-## Pengembangan ke Depan
+## 📚 Dokumentasi
 
-- Berbagi sesi melalui tautan atau kode QR
-- Riwayat transaksi
-- Input struk berbasis OCR
-- Dukungan Progressive Web App (PWA)
-
----
-
-## Dokumentasi
-
-| Dokumen                | Deskripsi                                            |
-| ---------------------- | ---------------------------------------------------- |
-| `DESIGN.md`            | SSOT — Apple-inspired design system                  |
-| `AGENTS.md`            | Definisi peran agen dan keahlian pengembangan        |
-| `CHANGELOG.md`         | Catatan perubahan dan iterasi pengembangan           |
-| `ROADMAP.md`           | Milestone pengembangan                               |
-| `docs/PRODUCT.md`      | Gambaran produk, problem, solusi, tech stack         |
-| `docs/FEATURES.md`     | Prioritas MoSCoW, acceptance criteria, roadmap fitur |
-| `docs/ARCHITECTURE.md` | Data model, fungsionalitas, API endpoints            |
-| `docs/UX-FLOW.md`      | Alur pengguna dari awal hingga hasil                 |
-| `docs/UI-UX.md`        | Token desain: warna, tipografi, shadow, spacing      |
-| `docs/UX-WRITING.md`   | Panduan UX writing dan copy                          |
+| Dokumen | Deskripsi |
+|---------|-----------|
+| [`DESIGN.md`](DESIGN.md) | SSOT — Apple-inspired design system (warna, font, layout) |
+| [`AGENTS.md`](AGENTS.md) | Role definitions untuk AI agents dan tim pengembangan |
+| [`CHANGELOG.md`](CHANGELOG.md) | Riwayat rilis dan catatan perubahan tiap versi |
+| [`docs/PRODUCT.md`](docs/PRODUCT.md) | Gambaran produk, problem yang dipecahkan, dan solusi |
+| [`docs/FEATURES.md`](docs/FEATURES.md) | Prioritas MoSCoW, acceptance criteria, roadmap fitur |
+| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Data model, endpoint API, dan arsitektur sistem |
+| [`docs/ROADMAP.md`](docs/ROADMAP.md) | Milestone pengembangan dan rencana ke depan |
+| [`docs/UI-UX.md`](docs/UI-UX.md) | Token desain: palet warna, tipografi, shadow, spacing |
+| [`docs/UX-FLOW.md`](docs/UX-FLOW.md) | Alur pengguna dari awal buka aplikasi sampai hasil |
+| [`docs/UX-WRITING.md`](docs/UX-WRITING.md) | Panduan copywriting dan tone of voice aplikasi |
 
 ---
 
-## Lisensi
+## ⚠️ Keterbatasan & Rencana
 
-Proyek ini dikembangkan untuk tujuan edukasi dan pembuatan prototipe.
+| Keterbatasan Saat Ini | Rencana ke Depan |
+|-----------------------|------------------|
+| Item bersama dibagi rata (belum ada rasio kustom) | Berbagi sesi via tautan / QR code |
+| Belum ada autentikasi / akun pengguna | Riwayat transaksi antar sesi |
+| Data disimpan di H2 lokal | Input struk via OCR |
+| Lingkup MVP — satu sesi sekali pakai | Progressive Web App (PWA) & Dark mode |
+
+---
+
+<p align="center">
+  Dibikin dengan ❤️ — biar gak ada lagi drama split bill di circle pertemanan 😭
+</p>

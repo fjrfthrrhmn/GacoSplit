@@ -32,7 +32,7 @@ build/
 ### Node / Tailwind ###
 node_modules/
 package-lock.json
-src/main/resources/static/css/styles.css
+# src/main/resources/static/css/styles.css — tracked: hand-written design tokens
 
 ### VS Code ###
 .vscode/

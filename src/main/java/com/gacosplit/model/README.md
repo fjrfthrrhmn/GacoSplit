@@ -1,21 +1,28 @@
-# model/
+# Model — Struktur Data (Entity)
 
-Package ini berisi **Entity JPA** dan **DTO**.
+Folder ini berisi **entity class**, yaitu representasi data dari database dalam bentuk object Java.
+Setiap file di sini = satu tabel di database.
 
-## Entities (Tabel Database)
+## 📌 Tujuan
 
-| File           | Tabel        | Deskripsi                     |
-| -------------- | ------------ | ----------------------------- |
-| `Session.java` | `sessions`   | Sesi split bill (induk data)  |
-| `Person.java`  | `persons`    | Peserta dalam sesi            |
-| `Item.java`    | `items`      | Item pesanan (personal/shared)|
+- Mendefinisikan **struktur tabel** di database lewat kode Java (tanpa SQL manual)
+- Nyimpen data sementara pas aplikasi jalan — object entity diisi dari database atau dari input user
+- Jadi **acuan** buat repository dan service soal bentuk data
+- Pake JPA (Java Persistence API) biar kita tinggal panggil method, gak perlu nulis query SQL
 
-## DTO (dto/)
+## 📂 Isi Folder
 
-| File                  | Fungsi                         |
-| --------------------- | ------------------------------ |
-| `SessionRequest.java` | Request body untuk buat sesi   |
-| `SessionResponse.java`| Response body data sesi lengkap |
+| File           | Fungsi                                                                                                                                                                                                                                         |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Session.java` | Representasi sesi split bill. Nyimpen `id` (UUID), `name` (nama sesi), `createdAt` (waktu dibuat). Satu session punya banyak orang (`Person`) dan banyak item (`Item`).                                                                        |
+| `Person.java`  | Representasi peserta. Nyimpen `id`, `name`, dan `session` (sesi tempat dia ikut). Juga punya field sementara (`@Transient`) kayak `personalTotal`, `sharedPortion`, `amountOwed`, dan `ppn` — ini dihitung otomatis, gak disimpan di database. |
+| `Item.java`    | Representasi pesanan makanan/minuman. Nyimpen `name`, `price`, `quantity`, `isShared` (true kalo dimakan bareng), `orderedBy` (siapa yang pesan — null kalo item bersama), dan `session` (sesi tempat item ini dipesan).                       |
 
-> Entity = struktur tabel database.
-> DTO = format komunikasi API (beda dengan entity).
+## Tips
+
+- Relasi antar tabel (Session → Person, Session → Item) diatur pake anotasi `@OneToMany` atau `@ManyToOne`
+
+## 📎 Related
+
+- `/gacosplit/model/dto` — versi sederhana dari entity buat dikirim via API
+- `/gacosplit/repository` — interface buat akses data entity ke database

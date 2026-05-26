@@ -1,25 +1,30 @@
-# templates/
+# Templates — Halaman HTML Aplikasi
 
-Folder ini berisi file **HTML template** yang dirender oleh Thymeleaf.
+Folder ini berisi file **HTML template** yang di-render oleh Thymeleaf (template engine bawaan Spring Boot).
+Setiap file di sini = satu halaman web yang bisa dibuka user.
 
-## Cara Kerja
+## 📌 Tujuan
 
-1. `PageController.java` me-return nama view, misalnya `"index"`
-2. Thymeleaf mencari file yang sesuai di folder ini: `templates/index.html`
-3. HTML dikirim ke browser user
+- Nyediain struktur HTML untuk setiap halaman aplikasi
+- Pisahin **tampilan** (HTML/CSS) dari **logic** (Java/JavaScript)
+- Semua resource (CSS, JS, gambar) di-link dari sini
 
-## Daftar Halaman
+## 📂 Isi Folder
 
-| File                | Route            | Method Controller         | Halaman                    |
-|---------------------|------------------|---------------------------|----------------------------|
-| `index.html`        | `/`              | `home()`                  | Landing page               |
-| `about.html`        | `/tentang`       | `about()`                 | Tentang aplikasi           |
-| `addfriends.html`   | `/tambah-teman`  | `addFriends()`            | Tambah peserta             |
-| `orderinput.html`   | `/order-input`   | `orderInput()`            | Input pesanan              |
-| `result.html`       | `/hasil`         | `result()`                | Hasil perhitungan          |
-| `splithistory.html` | `/riwayat`       | `history()`               | Riwayat split bill         |
+| File         | Fungsi                                                                                                                                                                                                                 |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `index.html` | **Landing page** — halaman pertama yang dilihat user pas buka `http://localhost:8080/`. Isinya hero section, penjelasan cara kerja (3 langkah), about section, dan footer. Pake Tailwind CDN + `styles.css`.           |
+| `start.html` | **Halaman utama aplikasi** — di sini user bikin sesi split bill, nambah orang, milih menu, liat hasil perhitungan. Ini SPA (Single Page Application): semua interaksi terjadi di satu halaman tanpa pindah-pindah URL. |
 
-## Catatan
+## Tips
 
-- File di `templates/` TIDAK bisa diakses langsung lewat URL (harus lewat Controller).
-- Semua file HTML di sini adalah plain HTML (tanpa framework CSS) agar fokus belajar Spring Boot MVC.
+- File `index.html` dan `start.html` di-load dari `PageController.java` — method `home()` buat `/` dan method `start()` buat `/start`
+- Kedua halaman pake **Tailwind via CDN** (`<script src="https://cdn.tailwindcss.com"></script>`) — jadi gak perlu build CSS
+- `start.html` pake banyak **inline style** di `<style>` untuk komponen yang di-generate JavaScript (kayak `.person-chip`, `.toast`)
+- Kalo mau ganti teks atau layout, langsung edit di sini. Kalo mau ganti warna atau gaya, edit `styles.css`
+
+## 📎 Related
+
+- `/resources/static/css/styles.css` — styling yang dipake di halaman-halaman ini
+- `/resources/static/js` — JavaScript yang ngerender dan ngatur interaksi di `start.html`
+- `/example/demo/controller/PageController.java` — controller yang nentuin halaman mana yang ditampilkan

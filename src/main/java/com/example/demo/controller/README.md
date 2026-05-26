@@ -1,18 +1,26 @@
-# controller/
+# Controller — Pengatur Halaman Web
 
-Folder ini berisi **Controller** — komponen yang menangani request HTTP dan menentukan response (halaman HTML atau data JSON).
+Folder ini berisi **Page Controller**, yaitu bagian dari aplikasi yang bertugas nentuin halaman HTML mana yang harus ditampilkan ketika user membuka URL tertentu.
 
-## Fungsi
+## 📌 Tujuan
 
-| File                   | Penjelasan                                                                                                        |
-| ---------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `PageController.java`  | Mengatur routing halaman web dengan `@Controller`. Setiap method me-return nama view (file HTML di `templates/`). |
-| `HelloController.java` | Contoh REST API sederhana dengan `@RestController`. Me-return data teks, bukan halaman HTML.                      |
+- **Routing halaman**: menghubungkan URL (misal `/` atau `/start`) ke file HTML yang sesuai
+- **Return view name**: method di sini cuma ngembaliin nama file template, Thymeleaf yang nanti render jadi HTML
+- Pisahin **routing** dari **logic bisnis** — controller cari tahu halaman mana yang diminta, bukan ngitung atau ngolah data
 
-## Cara Kerja
+## 📂 Isi Folder
 
-1. User membuka URL (misal: `http://localhost:8080/tambah-teman`)
-2. Spring Boot mencari method `@GetMapping("/tambah-teman")` di Controller
-3. Method menjalankan logika (jika ada) dan me-return nama view
-4. Thymeleaf mencari file HTML yang sesuai di `src/main/resources/templates/`
-5. HTML dikirim ke browser user
+| File                  | Fungsi                                                                                                                                                                                                                                                            |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `PageController.java` | Controller yang handle semua halaman web aplikasi. Method `home()` untuk `/` (landing page), `start()` untuk `/start` (halaman utama kalkulator split bill). Pake anotasi `@Controller` biar Spring Boot tahu ini controller yang ngerender view, bukan REST API. |
+
+## Tips
+
+Method di PageController ditandai `@Controller` (bukan `@RestController`), karena tugasnya nampilin HTML, bukan balikin data JSON. Coba buka `http://localhost:8080/` dan `http://localhost:8080/start` — dua halaman itu diatur dari sini.
+
+Penggunaan `@GetMapping("/...")` nentuin path URL-nya. Nama yang di-_return_ (misal `"index"`) adalah nama file template di folder `templates/`.
+
+## 📎 Related
+
+- `/resources/templates` — tempat file HTML yang dirender Thymeleaf
+- `/gacosplit/controller` — buat REST API (balikin JSON), bukan halaman web
