@@ -1,17 +1,4 @@
 <p align="center">
-  <img src="./public/HOME PAGE.png" alt="GacoSplit Homepage Preview" width="100%" style="border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.08);" />
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Java-17%2B-ED8B00?logo=openjdk&logoColor=white" alt="Java 17+"/>
-  <img src="https://img.shields.io/badge/Spring_Boot-4.0.6-6DB33F?logo=springboot&logoColor=white" alt="Spring Boot 4.0.6"/>
-  <img src="https://img.shields.io/badge/TailwindCSS-v3-06B6D4?logo=tailwindcss&logoColor=white" alt="TailwindCSS v3"/>
-  <img src="https://img.shields.io/badge/H2-Database-004088?logo=h2&logoColor=white" alt="H2 Database"/>
-  <img src="https://img.shields.io/badge/license-MIT-blue" alt="License MIT"/>
-  <img src="https://img.shields.io/github/last-commit/fjrfthrrhmn/GacoSplit" alt="Last Commit"/>
-</p>
-
-<p align="center">
   <img src="./public/LOGO.png" alt="GacoSplit Logo" width="400" />
 </p>
 <p align="center">
@@ -20,6 +7,18 @@
 </p>
 
 ---
+
+<p align="center">
+  <img src="./public/HOME PAGE.png" alt="GacoSplit Homepage Preview" width="100%" style="border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.08);" />
+</p>
+<p align="center">
+  <img src="https://img.shields.io/badge/Java-17%2B-ED8B00?logo=openjdk&logoColor=white" alt="Java 17+"/>
+  <img src="https://img.shields.io/badge/Spring_Boot-4.0.6-6DB33F?logo=springboot&logoColor=white" alt="Spring Boot 4.0.6"/>
+  <img src="https://img.shields.io/badge/TailwindCSS-v3-06B6D4?logo=tailwindcss&logoColor=white" alt="TailwindCSS v3"/>
+  <img src="https://img.shields.io/badge/H2-Database-004088?logo=h2&logoColor=white" alt="H2 Database"/>
+  <img src="https://img.shields.io/badge/license-MIT-blue" alt="License MIT"/>
+  <img src="https://img.shields.io/github/last-commit/fjrfthrrhmn/GacoSplit" alt="Last Commit"/>
+</p>
 
 ## 📋 Project Overview
 
