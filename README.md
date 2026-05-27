@@ -1,14 +1,6 @@
 <p align="center">
-  <img src="./public/Banner.png" alt="GacoSplit Banner" width="100%" />
+  <img src="./public/HOME PAGE.png" alt="GacoSplit Homepage Preview" width="100%" style="border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.08);" />
 </p>
-
-<br/>
-
-<p align="center">
-  <img src="./public/HOME PAGE.png" alt="GacoSplit Homepage Preview" width="85%" style="border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.08);" />
-</p>
-
-<br/>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Java-17%2B-ED8B00?logo=openjdk&logoColor=white" alt="Java 17+"/>
@@ -19,24 +11,12 @@
   <img src="https://img.shields.io/github/last-commit/fjrfthrrhmn/GacoSplit" alt="Last Commit"/>
 </p>
 
-<br/>
-
 <p align="center">
-  <img src="./public/LOGO.png" alt="GacoSplit Logo" width="96" />
+  <img src="./public/LOGO.png" alt="GacoSplit Logo" width="400" />
 </p>
 <p align="center">
   <strong>Split bill Gacoan — gak pusing lagi urusan bayar-bayaran!</strong><br/>
   Aplikasi web untuk menghitung pembagian tagihan makan bareng secara otomatis. Khusus dirancang buat menu Mie Gacoan.
-</p>
-
-<p align="center">
-  <a href="#-project-overview">Overview</a> •
-  <a href="#-fitur">Fitur</a> •
-  <a href="#-menu-gacoan">Menu</a> •
-  <a href="#-arsitektur">Arsitektur</a> •
-  <a href="#-branding--visual-identity">Branding</a> •
-  <a href="#-memulai">Memulai</a> •
-  <a href="#-teams">Teams</a>
 </p>
 
 ---
